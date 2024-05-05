@@ -2,10 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Регистрация</title>
+    <title>Войти в аккаунт</title>
 </head>
 <body>
     {% block content %}
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
         <form method="post" action="">
             {% csrf_token %}
             <table>
