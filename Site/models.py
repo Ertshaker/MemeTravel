@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+
 
 # Create your models here.
 
@@ -12,14 +14,12 @@ class Meme(models.Model):
     description = models.TextField()
 
 
-class Account(models.Model):
-    id = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
-    login = models.CharField(max_length=100)
+class Account(AbstractUser):
     avatar = models.ImageField(upload_to='avatars/')
-    email = models.CharField(max_length=100)
     favorites = models.ManyToManyField(Meme)
+
+    class Meta(AbstractUser.Meta):
+        swappable = "AUTH_USER_MODEL"
 
 
 class Status(models.Model):

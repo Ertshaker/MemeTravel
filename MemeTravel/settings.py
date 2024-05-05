@@ -50,6 +50,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+AUTH_USER_MODEL = "Site.Account"
+
 ROOT_URLCONF = 'MemeTravel.urls'
 
 TEMPLATES = [
