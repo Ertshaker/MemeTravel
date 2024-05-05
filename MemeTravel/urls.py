@@ -21,4 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),
     path('encyclopedia/', encyclopedia),
+    path('authorization/', user_register),
+    path('login/', user_login),
+    path('logout/', user_logout),
 ]

@@ -9,9 +9,9 @@
         <form method="post" action="">
             {% csrf_token %}
             <table>
-                {{ registration_form }}
+                {{ login_form }}
             </table>
-            <input type="submit" class="authorization" value="Зарегистрироваться">
+            <input type="submit" class="login" value="Зарегистрироваться">
         </form>
         {{ error }}
     {% endblock content %}
