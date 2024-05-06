@@ -1,6 +1,5 @@
 from PIL import Image
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from .forms import *
@@ -102,4 +101,14 @@ def add_meme(request):
             return HttpResponseRedirect('/encyclopedia', locals())
     else:
         form = AddMemeForm()
-        return render(request, 'addmeme.html', {'addmeme_form': form})
+        return render(request, 'create/meme.html', {'addmeme_form': form})
+
+
+def create_route(request, *args, **kwargs):
+    route = args[0]
+    if route == "friend":
+        return render(request, 'create/friend.html')
+    elif route == "account":
+        return render(request, 'create/account.html')
+    elif route == "meme":
+        return add_meme(request)
