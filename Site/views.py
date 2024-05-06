@@ -27,7 +27,7 @@ def user_login(request):
                 login(request, user)
             else:
                 print("Invalid login details: {0}, {1}".format(username, password))
-                messages.error(request, 'Неверные логин или пароль!.')
+                messages.error(request, 'Неверные логин или пароль!')
                 return HttpResponseRedirect('/login', locals())
         else:
             return HttpResponseRedirect('/login', locals())
@@ -45,10 +45,18 @@ def user_register(request):
             confirmed_password = form.cleaned_data.get('confirm_password')
             if password != confirmed_password:
                 print("Invalid password details: {0}, {1}".format(password, confirmed_password))
-                messages.error(request, 'Пароли не совпадают!.')
+                messages.error(request, 'Пароли не совпадают!')
+                return HttpResponseRedirect('/authorization', locals())
+
             email = form.cleaned_data.get('email')
             first_name = form.cleaned_data.get('first_name')
             last_name = form.cleaned_data.get('last_name')
+            All_users = Account.objects.all().values_list('username', flat=True)
+            if username in All_users:
+                print("This username is already taken! ({0})".format(username))
+                messages.error(request, 'Это имя уже занято!')
+                return HttpResponseRedirect('/authorization', locals())
+
             user = Account.objects.create_user(username, email, password)
             user.last_name = last_name
             user.first_name = first_name

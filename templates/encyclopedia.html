@@ -11,7 +11,7 @@
     <tr><th>Номер</th><th>Название</th><th>Популярность</th><th>Картиночка</th></tr>
     {% for meme in memes %}
         <tr><td>{{ meme.id }}</td><td>{{ meme.name }}</td>
-            <td>{{ meme.popularity }}</td><td> <img src="{{meme.path_to_img.url}}"/> </td></tr>
+            <td>{{ meme.popularity }}</td><td> <img src="{{meme.path_to_img.url}}" width="120" height="120" /> </td></tr>
     {% endfor %}
 </table>
         <button onclick="location.href = '/addmeme'">Добавить новый мем</button> 
