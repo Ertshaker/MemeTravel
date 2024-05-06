@@ -17,7 +17,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path
 from Site.views import *
-
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -28,5 +27,9 @@ urlpatterns = [
     path('authorization/', user_register),
     path('login/', user_login),
     path('logout/', user_logout),
-    re_path(r'create/(\D*)/$', create_view)
+    re_path(r'create/(\D*)/$', create_route)
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

@@ -2,9 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Добавление мема</title>
 </head>
 <body>
-<h1>ЗДЕСЬ БУДУТ ВАЩИ МЕМИ</h1>
+    {% block content %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table>
+                {{ addmeme_form }}
+            </table>
+            <input type="submit" class="addmeme" value="Добавить">
+        </form>
+        {{ error }}
+    {% endblock content %}
 </body>
 </html>
