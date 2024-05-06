@@ -35,3 +35,6 @@ class AddMemeForm(forms.ModelForm):
     class Meta:
         model = Meme
         fields = ['name', 'date', 'date_peek', 'popularity', 'path_to_img', 'description']
+
+
+#Маму ебал
