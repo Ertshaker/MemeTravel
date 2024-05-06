@@ -26,7 +26,7 @@ def user_login(request):
                 login(request, user)
             else:
                 print("Invalid login details: {0}, {1}".format(username, password))
-                messages.error(request, 'Неверные логин или пароль!')
+                messages.info(request, 'Неверные логин или пароль!')
                 return HttpResponseRedirect('/login', locals())
         else:
             return HttpResponseRedirect('/login', locals())
