@@ -1,7 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from django.contrib.auth import *
+from django.contrib.auth import authenticate, login, logout
 from .forms import *
 
 from Site.models import *
@@ -58,3 +57,11 @@ def user_register(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/', locals())
+
+
+def create_view(request, *args, **kwargs):
+    route = args[0]
+    if route == "friend":
+        return render(request, 'create/friend.html')
+    elif route == "account":
+        return render(request, 'create/account.html')
