@@ -82,7 +82,7 @@ def add_meme(request):
             popularity = form.cleaned_data.get('popularity')
             path_to_img = form.cleaned_data.get('path_to_img')
             description = form.cleaned_data.get('description')
-            meme = Meme(name=name, date=date, date_peek=date_peek, popularity=popularity, description=description, path_to_img=img)
+            meme = Meme(name=name, date=date, date_peek=date_peek, popularity=popularity, description=description, path_to_img=path_to_img)
             if meme is not None:
                 meme.save()
             else:

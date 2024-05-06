@@ -22,6 +22,7 @@ class LoginForm(forms.Form):
     password = forms.CharField(label='Пароль', required=True, max_length=30,
                                widget=forms.PasswordInput(attrs={'type': 'password'}))
 
+
 # class AddMemeForm(forms.Form):
 #     name = forms.CharField(label='Название', required=True, max_length=30,
 #                                widget=forms.TextInput(attrs={'type': 'text'}))
@@ -34,7 +35,9 @@ class LoginForm(forms.Form):
 class AddMemeForm(forms.ModelForm):
     class Meta:
         model = Meme
-        fields = ['name', 'date', 'date_peek', 'popularity', 'path_to_img', 'description']
-
+        fields = "__all__"
+        labels = {'name': 'Название', 'date': 'Дата появления', 'date_peek': 'Дата самой высокой популярности',
+                  'popularity': 'Популярность', 'path_to_img': 'Изображение', 'description': 'Описание'}
+        widgets = {'date':forms.TextInput(attrs={'type': 'date'}), 'date_peek':forms.TextInput(attrs={'type': 'date'})}
 
 #Маму ебал
