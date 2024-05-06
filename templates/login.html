@@ -18,6 +18,11 @@
             </table>
             <input type="submit" class="login" value="Зарегистрироваться">
         </form>
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
     {% endblock content %}
 </body>
 </html>

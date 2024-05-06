@@ -6,12 +6,6 @@
 </head>
 <body>
     {% block content %}
-        {% for message in messages %}
-            <div class="message {{ message.tags }}">
-                {{ message }}
-            </div>
-        {% endfor %}
-        
         <form method="post" action="">
             {% csrf_token %}
             <table>
@@ -19,6 +13,11 @@
             </table>
             <input type="submit" class="authorization" value="Зарегистрироваться">
         </form>
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
     {% endblock content %}
 </body>
 </html>
