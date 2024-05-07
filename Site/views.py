@@ -12,9 +12,23 @@ from Site.models import *
 
 def index(request):
     return render(request, 'inxex.html')
+
+
 def encyclopedia(request):
     memes = Meme.objects.all()
-    return render(request, 'encyclopedia.html', {"memes": memes})
+    try:
+        user = Account.objects.get(id=request.session.get("_auth_user_id"))
+    except Account.DoesNotExist:
+        user = Account(username="Обыватель бездны")
+
+    context = {
+        "memes": memes,
+        "user": user
+    }
+
+    return render(request, 'encyclopedia.html', context=context)
+
+
 def user_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -34,6 +48,7 @@ def user_login(request):
     else:
         form = LoginForm()
         return render(request, 'login.html', {'login_form': form})
+
 
 def user_register(request):
     if request.method == 'POST':
@@ -86,6 +101,7 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/', locals())
 
+
 def add_meme(request):
     if request.method == 'POST':
         form = AddMemeForm(request.POST, request.FILES)
@@ -99,11 +115,13 @@ def add_meme(request):
             popularity = form.cleaned_data.get('popularity')
             path_to_img = form.cleaned_data.get('path_to_img')
             description = form.cleaned_data.get('description')
-            meme = Meme(name=name, date=date, date_peek=date_peek, popularity=popularity, description=description, path_to_img=path_to_img)
+            meme = Meme(name=name, date=date, date_peek=date_peek, popularity=popularity, description=description,
+                        path_to_img=path_to_img)
             if meme is not None:
                 meme.save()
             else:
-                print("Invalid meme details: {0}, {1}, {2}, {3}, {4}, {5}".format(name, date, date_peek, popularity, path_to_img, description))
+                print("Invalid meme details: {0}, {1}, {2}, {3}, {4}, {5}".format(name, date, date_peek, popularity,
+                                                                                  path_to_img, description))
                 messages.error(request, 'Что то пошло не так!')
                 return HttpResponseRedirect('/add_meme', locals())
             return HttpResponseRedirect('/encyclopedia', locals())
