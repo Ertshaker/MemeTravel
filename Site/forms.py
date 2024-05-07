@@ -53,5 +53,6 @@ class AddMemeForm(forms.ModelForm):
         widgets = {'date':forms.TextInput(attrs={'type': 'date'}), 'date_peek':forms.TextInput(attrs={'type': 'date'})}
 
 
-
+class ChangePasswordForm(forms.Form):
+    new_password = forms.CharField(label='Новый пароль', required=True, max_length=18)
 #Маму ебал
