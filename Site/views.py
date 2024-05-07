@@ -1,6 +1,6 @@
 
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from .forms import *
 from django.contrib import messages
@@ -11,11 +11,16 @@ from Site.models import *
 # Create your views here.
 
 def index(request):
-    return render(request, 'inxex.html')
+    context = {
+        "user": get_user(request.session)
+    }
+    return render(request, 'inxex.html', context=context)
 
 
 def encyclopedia(request):
     memes = Meme.objects.all()
+    user = get_user(request.session)
+
     galery = MemeGallery.objects.all()
     try:
         user = Account.objects.get(id=request.session.get("_auth_user_id"))
@@ -110,6 +115,7 @@ def add_meme(request):
         print(form.errors)
         if form.is_valid():
             instance = form.save(commit=False)
+
             name = form.cleaned_data.get('name')
             date = form.cleaned_data.get('date')
             date_peek = form.cleaned_data.get('date_peek')
@@ -143,3 +149,28 @@ def create_route(request, *args, **kwargs):
         return render(request, 'create/account.html')
     elif route == "meme":
         return add_meme(request)
+
+
+def get_user(session):
+    try:
+        user = Account.objects.get(id=session.get("_auth_user_id"))
+    except Account.DoesNotExist:
+        user = Account(username="Обыватель бездны")
+
+    return user
+
+def profile_view(request):
+    user = get_user(request.session)
+    if user.username == "Обыватель бездны":
+        messages.error(request, "Войди в аккаунт сначала дурень")
+        return HttpResponseRedirect('/')
+
+    if request.method == 'POST':
+        form = ChangePasswordForm(request.POST)
+        if not form.is_valid():
+            return HttpResponse('<img src="media/svofard_404.png"/>')
+        new_password = form.cleaned_data['new_password']
+        user.set_password(new_password)
+        user.save()
+
+    return render(request, 'profile.html', {"user": user, "ChangePasswordForm": ChangePasswordForm()})

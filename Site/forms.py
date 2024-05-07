@@ -29,6 +29,7 @@ class RegistrationForm(forms.Form):
     #                                    widget=forms.PasswordInput(attrs={'type': 'password'}))
 
 
+
 class LoginForm(forms.Form):
     username = forms.CharField(label='Логин', required=True, max_length=30,
                                widget=forms.TextInput(attrs={'type': 'text'}))
@@ -53,7 +54,9 @@ class AddMemeForm(forms.ModelForm):
                   'popularity': 'Популярность', 'description': 'Описание'}
         widgets = {'date': forms.TextInput(attrs={'type': 'date'}),
                    'date_peek': forms.TextInput(attrs={'type': 'date'})}
-
     Image = forms.ImageField(label="Изображение мема")
+
+class ChangePasswordForm(forms.Form):
+    new_password = forms.CharField(label='Новый пароль', required=True, max_length=18)
 
 #Маму ебал

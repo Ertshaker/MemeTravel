@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль</title>
+</head>
+<body>
+<table>
+    {% if user.avatar %}
+        <img src="{{ user.avatar.url }}" width="300" alt="Я даун"/> 
+    {% else  %}
+        <img src="/media/svofard_404.png" width="300"/>
+    {% endif %}
+    
+    
+    <tr>
+        <td>Псевдоним: </td>
+        <td>{{ user.username }}</td>
+    </tr>
+    <tr>
+        <td>Имя: </td>
+        <td>{{ user.first_name }}</td>
+    </tr>
+    <tr>
+        <td>Фамилия: </td>
+        <td>{{ user.last_name }}</td>
+    </tr>
+    <tr>
+        <td>Дата создания аккаунта: </td>
+        <td>{{ user.date_joined }}</td>
+    </tr>
+</table>
+    <h2>Сменить пароль</h2>
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            {{  ChangePasswordForm }}
+        </table>
+        <input type="submit" class="change-password" value="Сменить пароль">
+    </form>
+</body>
+</html>
