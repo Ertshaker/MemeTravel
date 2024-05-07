@@ -1,8 +1,8 @@
 from django import forms
 from PIL import Image
 
-from Site.models import Meme
-
+from Site.models import Meme, Account
+from django.contrib.auth.models import Group
 
 class RegistrationForm(forms.Form):
     username = forms.CharField(label='Логин', required=True, max_length=30,
@@ -14,6 +14,18 @@ class RegistrationForm(forms.Form):
     email = forms.CharField(label='Email', min_length=3, max_length=30)
     first_name = forms.CharField(label='Имя', max_length=30, widget=forms.TextInput(attrs={'type': 'text'}))
     last_name = forms.CharField(label='Фамилия', max_length=30, widget=forms.TextInput(attrs={'type': 'text'}))
+    avatar = forms.ImageField(label='Изображение')
+    favorite_memes = forms.ModelMultipleChoiceField(queryset=Meme.objects.all(), required=False)
+    status = forms.ModelChoiceField(queryset=Group.objects.all())
+    # class Meta:
+    #     model = Account
+    #     fields = "__all__"
+    #     labels = {'username':'Имя пользователя', 'password':'Пароль', 'email':'Email', 'first_name':'Имя', 'last_name':'Фамилия', 'avatar':'Изображение профиля'}
+    #     widgets = {'password': forms.PasswordInput(attrs={'type': 'password'})}
+    #
+    # confirm_password = forms.CharField(label='Повторите пароль', required=True, max_length=30,
+    #                                    widget=forms.PasswordInput(attrs={'type': 'password'}))
+
 
 
 class LoginForm(forms.Form):
@@ -39,5 +51,7 @@ class AddMemeForm(forms.ModelForm):
         labels = {'name': 'Название', 'date': 'Дата появления', 'date_peek': 'Дата самой высокой популярности',
                   'popularity': 'Популярность', 'path_to_img': 'Изображение', 'description': 'Описание'}
         widgets = {'date':forms.TextInput(attrs={'type': 'date'}), 'date_peek':forms.TextInput(attrs={'type': 'date'})}
+
+
 
 #Маму ебал

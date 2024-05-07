@@ -1,4 +1,4 @@
-from PIL import Image
+
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
@@ -37,7 +37,8 @@ def user_login(request):
 
 def user_register(request):
     if request.method == 'POST':
-        form = RegistrationForm(request.POST)
+        form = RegistrationForm(request.POST, request.FILES)
+        print(form.errors)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -50,6 +51,11 @@ def user_register(request):
             email = form.cleaned_data.get('email')
             first_name = form.cleaned_data.get('first_name')
             last_name = form.cleaned_data.get('last_name')
+            avatar = form.cleaned_data.get('avatar')
+            status = form.cleaned_data.get('status')
+            favorites = form.cleaned_data.get('favorite_memes')
+
+
             All_users = Account.objects.all().values_list('username', flat=True)
             if username in All_users:
                 print("This username is already taken! ({0})".format(username))
@@ -59,8 +65,12 @@ def user_register(request):
             user = Account.objects.create_user(username, email, password)
             user.last_name = last_name
             user.first_name = first_name
-            user.save()
+            user.avatar = avatar
+            user.favorites.set(favorites)
+
             if user is not None:
+                user.save()
+                status.user_set.add(user)
                 login(request, user)
             else:
                 return HttpResponseRedirect('/login', locals())
