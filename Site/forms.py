@@ -1,8 +1,10 @@
 from django import forms
+from multiupload.fields import MultiFileField, MultiMediaField, MultiImageField
 from PIL import Image
 
 from Site.models import Meme, Account
 from django.contrib.auth.models import Group
+
 
 class RegistrationForm(forms.Form):
     username = forms.CharField(label='Логин', required=True, max_length=30,
@@ -27,7 +29,6 @@ class RegistrationForm(forms.Form):
     #                                    widget=forms.PasswordInput(attrs={'type': 'password'}))
 
 
-
 class LoginForm(forms.Form):
     username = forms.CharField(label='Логин', required=True, max_length=30,
                                widget=forms.TextInput(attrs={'type': 'text'}))
@@ -49,9 +50,10 @@ class AddMemeForm(forms.ModelForm):
         model = Meme
         fields = "__all__"
         labels = {'name': 'Название', 'date': 'Дата появления', 'date_peek': 'Дата самой высокой популярности',
-                  'popularity': 'Популярность', 'path_to_img': 'Изображение', 'description': 'Описание'}
-        widgets = {'date':forms.TextInput(attrs={'type': 'date'}), 'date_peek':forms.TextInput(attrs={'type': 'date'})}
+                  'popularity': 'Популярность', 'description': 'Описание'}
+        widgets = {'date': forms.TextInput(attrs={'type': 'date'}),
+                   'date_peek': forms.TextInput(attrs={'type': 'date'})}
 
-
+    Image = forms.ImageField(label="Изображение мема")
 
 #Маму ебал
