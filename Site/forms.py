@@ -29,7 +29,6 @@ class RegistrationForm(forms.Form):
     #                                    widget=forms.PasswordInput(attrs={'type': 'password'}))
 
 
-
 class LoginForm(forms.Form):
     username = forms.CharField(label='Логин', required=True, max_length=30,
                                widget=forms.TextInput(attrs={'type': 'text'}))
@@ -51,11 +50,15 @@ class AddMemeForm(forms.ModelForm):
         model = Meme
         fields = "__all__"
         labels = {'name': 'Название', 'date': 'Дата появления', 'date_peek': 'Дата самой высокой популярности',
-                  'popularity': 'Популярность', 'description': 'Описание', 'path_to_img':'Изображение мема'}
+                  'popularity': 'Популярность', 'description': 'Описание', 'path_to_img': 'Изображение мема'}
         widgets = {'date': forms.TextInput(attrs={'type': 'date'}),
                    'date_peek': forms.TextInput(attrs={'type': 'date'})}
+
 
 class ChangePasswordForm(forms.Form):
     new_password = forms.CharField(label='Новый пароль', required=True, max_length=18)
 
-#Маму ебал
+
+class AddFriendForm(forms.Form):
+    friend_name = forms.CharField(label='Имя друга', max_length=30,
+                                         widget=forms.TextInput(attrs={'type': 'text'}))

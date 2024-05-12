@@ -28,6 +28,7 @@ urlpatterns = [
     path('login/', user_login),
     path('logout/', user_logout),
     path('profile/', profile_view),
+    path('friends/', friends_view),
     re_path(r'create/(\D*)/$', create_route)
 ]
 
