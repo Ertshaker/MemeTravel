@@ -184,7 +184,7 @@ def friends_view(request):
     sended_requests = Friend.objects.filter(user_id=user.id, accepted=False)
     got_requests = Friend.objects.filter(friend_id=user.id, accepted=False)
     return render(request, 'friends.html',
-                  {'friends': friends, 'sended_requests': sended_requests, 'got_requests': got_requests})
+                  {'friends': friends, 'sended_requests': sended_requests, 'got_requests': got_requests, 'user':user})
 
 
 def friends_add(request):

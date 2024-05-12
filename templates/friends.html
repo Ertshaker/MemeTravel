@@ -8,9 +8,14 @@
 <h2>Список друзей</h2>
 <table>
     {% if friends %}
-        <tr><th>Номер</th><th>Имя друга</th></tr>
+        <tr><th>Имя друга</th></tr>
         {% for friend in friends %}
-            <tr><td>1</td><td>{{ friend.friend_id }}</td></tr>
+            {% if user != friend.friend_id %}
+                <tr><td>{{ friend.friend_id }}</td></tr>
+            {% else %}
+                <tr><td>{{ friend.user_id }}</td></tr>
+            {% endif %}
+            
         {% endfor %}
     {% else %}
         У вас пока еще нет друзей! Вы их обязательно заимеете(в жопу)
@@ -21,9 +26,9 @@
 {% if sended_requests %}
 <h2>Список отправленных заявок</h2>
 <table>
-        <tr><th>Номер</th><th>Имя друга</th></tr>
+        <tr><th>Имя друга</th></tr>
         {% for friend in sended_requests %}
-            <tr><td>1</td><td>{{ friend.friend_id }}</td></tr>
+            <tr><td>{{ friend.friend_id }}</td></tr>
         {% endfor %}
     {% endif %}
     
@@ -32,9 +37,9 @@
 {% if got_requests %}
 <h2>Список полученных заявок</h2>
 <table>
-    <tr><th>Номер</th><th>Имя друга</th><th>Статус</th></tr>
+    <tr><th>Имя друга</th><th>Статус</th></tr>
         {% for friend in got_requests %}
-            <tr><td>1</td><td>{{ friend.user_id }}</td><td><button>Добавить</button></td></tr>
+            <tr><td>{{ friend.user_id }}</td><td><button>Добавить</button></td></tr>
         {% endfor %}
     {% endif %}
     
