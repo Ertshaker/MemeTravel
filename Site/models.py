@@ -28,7 +28,7 @@ class Friend(models.Model):
 
     user_id = models.ForeignKey(Account, on_delete=models.CASCADE)
     friend_id = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='friends')
-    link = models.BooleanField(default=False)
+    accepted = models.BooleanField(default=False)
 
 class MemeGallery(models.Model):
     class Meta:
