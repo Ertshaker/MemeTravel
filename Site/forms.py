@@ -16,7 +16,7 @@ class RegistrationForm(forms.Form):
     email = forms.CharField(label='Email', min_length=3, max_length=30)
     first_name = forms.CharField(label='Имя', max_length=30, widget=forms.TextInput(attrs={'type': 'text'}))
     last_name = forms.CharField(label='Фамилия', max_length=30, widget=forms.TextInput(attrs={'type': 'text'}))
-    avatar = forms.ImageField(label='Изображение')
+    avatar = forms.ImageField(label='Изображение', required=False)
     favorite_memes = forms.ModelMultipleChoiceField(queryset=Meme.objects.all(), required=False)
     status = forms.ModelChoiceField(queryset=Group.objects.all())
     # class Meta:
@@ -51,10 +51,9 @@ class AddMemeForm(forms.ModelForm):
         model = Meme
         fields = "__all__"
         labels = {'name': 'Название', 'date': 'Дата появления', 'date_peek': 'Дата самой высокой популярности',
-                  'popularity': 'Популярность', 'description': 'Описание'}
+                  'popularity': 'Популярность', 'description': 'Описание', 'path_to_img':'Изображение мема'}
         widgets = {'date': forms.TextInput(attrs={'type': 'date'}),
                    'date_peek': forms.TextInput(attrs={'type': 'date'})}
-    Image = forms.ImageField(label="Изображение мема")
 
 class ChangePasswordForm(forms.Form):
     new_password = forms.CharField(label='Новый пароль', required=True, max_length=18)

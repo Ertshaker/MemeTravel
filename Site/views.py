@@ -1,4 +1,3 @@
-
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
@@ -77,7 +76,6 @@ def user_register(request):
             status = form.cleaned_data.get('status')
             favorites = form.cleaned_data.get('favorite_memes')
 
-
             All_users = Account.objects.all().values_list('username', flat=True)
             if username in All_users:
                 print("This username is already taken! ({0})".format(username))
@@ -120,21 +118,22 @@ def add_meme(request):
             date = form.cleaned_data.get('date')
             date_peek = form.cleaned_data.get('date_peek')
             popularity = form.cleaned_data.get('popularity')
-            images = form.cleaned_data.get('Image')
             description = form.cleaned_data.get('description')
+            image = form.cleaned_data.get('path_to_img')
 
-
-            meme = Meme(name=name, date=date, date_peek=date_peek, popularity=popularity, description=description)
+            meme = Meme(name=name, date=date, date_peek=date_peek, popularity=popularity, description=description,
+                        path_to_img=image)
 
             if meme is not None:
                 meme.save()
-                MemeGallery.objects.create(meme_id=Meme.objects.get(id=meme.id), image=images)
             else:
-                print("Invalid meme details: {0}, {1}, {2}, {3}, {4}, {5}".format(name, date, date_peek, popularity, description))
+                print("Invalid meme details: {0}, {1}, {2}, {3}, {4}, {5}".format(name, date, date_peek, popularity,
+                                                                                  description, image))
                 messages.error(request, 'Что то пошло не так!')
                 return HttpResponseRedirect('/add_meme', locals())
             return HttpResponseRedirect('/encyclopedia', locals())
         else:
+            messages.error(request, 'Что то пошло не так!')
             return HttpResponseRedirect('/encyclopedia', locals())
     else:
         form = AddMemeForm()
@@ -159,6 +158,7 @@ def get_user(session):
 
     return user
 
+
 def profile_view(request):
     user = get_user(request.session)
     if user.username == "Обыватель бездны":
@@ -168,7 +168,8 @@ def profile_view(request):
     if request.method == 'POST':
         form = ChangePasswordForm(request.POST)
         if not form.is_valid():
-            return HttpResponse('<img src="media/svofard_404.png"/>')
+            return HttpResponse(
+                '<img src="/media/svofard_404.png"/> <br>ТВОЙ ПАПАША ГНИДА СЛУЖИЛ ВО ВЬЕТНАМЕ?!!?!??!?!!?!?? <br> СЕР, ДА, СЕР!!!!')
         new_password = form.cleaned_data['new_password']
         user.set_password(new_password)
         user.save()

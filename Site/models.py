@@ -11,6 +11,7 @@ class Meme(models.Model):
     date_peek = models.DateField()
     popularity = models.IntegerField()
     description = models.TextField()
+    path_to_img = models.ImageField(upload_to='memes/')
 
 
 class Account(AbstractUser):
@@ -33,5 +34,5 @@ class MemeGallery(models.Model):
     class Meta:
         unique_together = (('meme_id', 'image'))
     meme_id = models.ForeignKey(Meme, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='memes/')
+    image = models.ImageField(upload_to='galery/memes/')
 
