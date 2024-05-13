@@ -6,6 +6,13 @@
 </head>
 <body>
 <table>
+    {% if messages %}
+    {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                <a style="font-size: 144px">{{ message }}</a>
+            </div>
+    {% endfor %}
+    {% endif %}
     {% if user.avatar %}
         <img src="{{ user.avatar.url }}" width="300" alt="Я даун"/> 
     {% else  %}
@@ -31,12 +38,26 @@
     </tr>
 </table>
     <h2>Сменить пароль</h2>
-    <form method="post" action="" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
-            {{  ChangePasswordForm }}
+            {{  ChangePasswordForm.as_table }}
         </table>
         <input type="submit" class="change-password" value="Сменить пароль">
     </form>
+    <h2>Избранное</h2>
+    
+        <table bgcolor="#00ffff">
+            <tr>
+                <th>Название</th>
+                <th>Фотокарточка</th>
+            </tr>
+            {% for meme in favorites %}
+            <tr>
+                <td>{{ meme.name }}</td>
+                <td><img src="{{ meme.path_to_img.url }}" width="300"/></td>
+            </tr>
+            {% endfor %}
+        </table>
 </body>
 </html>

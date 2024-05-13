@@ -1,8 +1,11 @@
+
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from .forms import *
 from django.contrib import messages
+from django.conf import settings
 
 from Site.models import *
 
@@ -11,14 +14,14 @@ from Site.models import *
 
 def index(request):
     context = {
-        "user": get_user(request.session)
+        "user": request.user
     }
     return render(request, 'inxex.html', context=context)
 
 
 def encyclopedia(request):
     memes = Meme.objects.all()
-    user = get_user(request.session)
+    user = request.user
 
     galery = MemeGallery.objects.all()
     try:
@@ -76,6 +79,7 @@ def user_register(request):
             status = form.cleaned_data.get('status')
             favorites = form.cleaned_data.get('favorite_memes')
 
+
             All_users = Account.objects.all().values_list('username', flat=True)
             if username in All_users:
                 print("This username is already taken! ({0})".format(username))
@@ -118,6 +122,7 @@ def add_meme(request):
             date = form.cleaned_data.get('date')
             date_peek = form.cleaned_data.get('date_peek')
             popularity = form.cleaned_data.get('popularity')
+            path_to_img = form.cleaned_data.get('path_to_img')
             description = form.cleaned_data.get('description')
             image = form.cleaned_data.get('path_to_img')
 
@@ -150,28 +155,30 @@ def create_route(request, *args, **kwargs):
         return add_meme(request)
 
 
-def get_user(session):
-    try:
-        user = Account.objects.get(id=session.get("_auth_user_id"))
-    except Account.DoesNotExist:
-        user = Account(username="Обыватель бездны")
-
-    return user
-
-
+@login_required(redirect_field_name='next', login_url=settings.LOGIN_URL)
 def profile_view(request):
-    user = get_user(request.session)
-    if user.username == "Обыватель бездны":
-        messages.error(request, "Войди в аккаунт сначала дурень")
-        return HttpResponseRedirect('/')
+    user = request.user
 
     if request.method == 'POST':
         form = ChangePasswordForm(request.POST)
         if not form.is_valid():
             return HttpResponse(
                 '<img src="/media/svofard_404.png"/> <br>ТВОЙ ПАПАША ГНИДА СЛУЖИЛ ВО ВЬЕТНАМЕ?!!?!??!?!!?!?? <br> СЕР, ДА, СЕР!!!!')
+        if not user.check_password(form.cleaned_data['old_password']):
+            messages.error(request, "ТЫ ДОЛБАЁБ")
+            return render(request, 'profile.html', {"user": user, "ChangePasswordForm": form})
+
+        # form.full_clean()
         new_password = form.cleaned_data['new_password']
         user.set_password(new_password)
         user.save()
 
-    return render(request, 'profile.html', {"user": user, "ChangePasswordForm": ChangePasswordForm()})
+        login(request, authenticate(username=user.username, password=user.password))
+        return render(request, 'profile.html', {"user": user, "ChangePasswordForm": form})
+
+    form = ChangePasswordForm()
+    favorites = user.favorites.all()
+    return render(request, 'profile.html', {"user": user, "ChangePasswordForm": form, 'favorites': favorites})
+
+def test_view(request):
+    return render(request, 'test.html')

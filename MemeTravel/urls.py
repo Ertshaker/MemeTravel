@@ -19,6 +19,7 @@ from django.urls import path, re_path
 from Site.views import *
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +29,7 @@ urlpatterns = [
     path('login/', user_login),
     path('logout/', user_logout),
     path('profile/', profile_view),
+    path('test/', test_view),
     re_path(r'create/(\D*)/$', create_route)
 ]
 

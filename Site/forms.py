@@ -1,5 +1,4 @@
 from django import forms
-from multiupload.fields import MultiFileField, MultiMediaField, MultiImageField
 from PIL import Image
 
 from Site.models import Meme, Account
@@ -29,7 +28,6 @@ class RegistrationForm(forms.Form):
     #                                    widget=forms.PasswordInput(attrs={'type': 'password'}))
 
 
-
 class LoginForm(forms.Form):
     username = forms.CharField(label='Логин', required=True, max_length=30,
                                widget=forms.TextInput(attrs={'type': 'text'}))
@@ -51,11 +49,13 @@ class AddMemeForm(forms.ModelForm):
         model = Meme
         fields = "__all__"
         labels = {'name': 'Название', 'date': 'Дата появления', 'date_peek': 'Дата самой высокой популярности',
-                  'popularity': 'Популярность', 'description': 'Описание', 'path_to_img':'Изображение мема'}
+                  'popularity': 'Популярность', 'description': 'Описание', 'path_to_img': 'Изображение мема'}
         widgets = {'date': forms.TextInput(attrs={'type': 'date'}),
                    'date_peek': forms.TextInput(attrs={'type': 'date'})}
 
-class ChangePasswordForm(forms.Form):
-    new_password = forms.CharField(label='Новый пароль', required=True, max_length=18)
 
-#Маму ебал
+class ChangePasswordForm(forms.Form):
+    old_password = forms.CharField(label='Старый пароль', required=True, max_length=255)
+    new_password = forms.CharField(label='Новый пароль', required=True, max_length=255)
+
+# Маму ебал
