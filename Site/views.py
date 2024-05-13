@@ -1,4 +1,3 @@
-
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
@@ -148,7 +147,7 @@ def add_meme(request):
 def create_route(request, *args, **kwargs):
     route = args[0]
     if route == "friend":
-        return render(request, 'create/friend.html')
+        return friends_add(request)
     elif route == "account":
         return render(request, 'create/account.html')
     elif route == "meme":
@@ -182,3 +181,50 @@ def profile_view(request):
 
 def test_view(request):
     return render(request, 'test.html')
+
+
+def friends_view(request):
+    user = get_user(request.session)
+    friends = Friend.objects.filter(user_id=user.id, accepted=True) | Friend.objects.filter(friend_id=user.id,
+                                                                                            accepted=True)
+    sended_requests = Friend.objects.filter(user_id=user.id, accepted=False)
+    got_requests = Friend.objects.filter(friend_id=user.id, accepted=False)
+    return render(request, 'friends.html',
+                  {'friends': friends, 'sended_requests': sended_requests, 'got_requests': got_requests, 'user':user})
+
+
+def friends_add(request):
+    if request.method == 'POST':
+        user = get_user(request.session)
+        form = AddFriendForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data.get('friend_name')
+            possible_friend = Account.objects.get(username=name)
+            all_friends = Friend.objects.all()
+            friend_request = Friend(user_id=user, friend_id=possible_friend, accepted=False)
+
+
+            if friend_request is not None:
+                if not Friend.objects.filter(user_id=user.id, friend_id=possible_friend.id):
+                    friend_request.save()
+                else:
+                    print("Objects already friends or requested!".format(user.username, name))
+                    messages.error(request, 'Кажется эта заявка уже есть или вы уже друзья!')
+                    return HttpResponseRedirect('/friends', locals())
+            else:
+                print("Invalid friend details: {0}".format(name))
+                messages.error(request, 'Что то пошло не так!')
+                return HttpResponseRedirect('/create/friend', locals())
+            return HttpResponseRedirect('/friends', locals())
+        else:
+            messages.error(request, 'Что то пошло не так!')
+            return HttpResponseRedirect('/profile', locals())
+    else:
+        form = AddFriendForm()
+        return render(request, 'create/friend.html', {'addfriend_form': form})
+
+def accept_friend(request, user_id):
+    user = get_user(request.session)
+    friend = Friend.objects.get(user_id=user_id, friend_id=user.id)
+    friend.accepted = True
+    return HttpResponseRedirect('/friends', locals())

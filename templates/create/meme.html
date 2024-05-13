@@ -13,7 +13,11 @@
             </table>
             <input type="submit" class="addmeme" value="Добавить">
         </form>
-        {{ error }}
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
     {% endblock content %}
 </body>
 </html>
