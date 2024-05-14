@@ -56,7 +56,7 @@
                 <th>Название</th>
                 <th>Фотокарточка</th>
             </tr>
-            {% for meme in favorites %}
+            {% for meme in user.favorites.all %}
             <tr>
                 <td>{{ meme.name }}</td>
                 <td><img src="{{ meme.path_to_img.url }}" width="300"/></td>
