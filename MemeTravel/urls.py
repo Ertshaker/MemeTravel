@@ -21,6 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 
+
 urlpatterns = [
     path('', index),
     path('meme/id<int:pk>', MemeDetailView.as_view()),
@@ -34,7 +35,8 @@ urlpatterns = [
     path('test/', test_view),
     path('another_test_subject', auth_views.PasswordChangeView.as_view()),
     path('user/<str:name>/friends/', friends_view),
-    re_path(r'create/(\D*)/$', create_route)
+    re_path(r'create/(\D*)/$', create_route),
+    path('meme/id<int:pk>/update', NewsUpdateView.as_view())
 ]
 
 if settings.DEBUG:

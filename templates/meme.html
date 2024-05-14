@@ -41,10 +41,10 @@
         <td>{{ meme.description }}</td>
     </tr>   
     </table>
-{% if request.user|has_group:"Админ" or request.user|has_group:"Модератор" %} 
-            <button>Редактировать</button>
+{% if request.user|has_group:"Админ" or request.user|has_group:"Модератор" %}
+            <button onclick="location.href = '/meme/id{{ meme.id }}/update'">Редактировать</button>
 {% endif %}
-<button>Добавить в избранное</button> 
+<button>Добавить в избранное</button>
 <button onclick="location.href = '/encyclopedia'">Вернуться в энциклопедию</button>
 </body>
 </html>

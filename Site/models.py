@@ -13,6 +13,9 @@ class Meme(models.Model):
     description = models.TextField()
     path_to_img = models.ImageField(upload_to='memes/')
 
+    def get_absolute_url(self):
+        return f'/memes/id{self.id}'
+
 
 class Account(AbstractUser):
     avatar = models.ImageField(upload_to='avatars/')

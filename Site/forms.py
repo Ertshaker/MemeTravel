@@ -66,7 +66,7 @@ class LoginForm(forms.Form):
 class AddMemeForm(forms.ModelForm):
     class Meta:
         model = Meme
-        fields = "__all__"
+        fields = ['name', 'date', 'date_peek', 'popularity', 'path_to_img', 'description']
         labels = {'name': 'Название', 'date': 'Дата появления', 'date_peek': 'Дата самой высокой популярности',
                   'popularity': 'Популярность', 'description': 'Описание', 'path_to_img': 'Изображение мема'}
         widgets = {'date': forms.TextInput(attrs={'type': 'date'}),
