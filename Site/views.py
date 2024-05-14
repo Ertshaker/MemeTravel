@@ -243,27 +243,26 @@ def friends_add(request):
         form = AddFriendForm(request.POST)
         if not form.is_valid():
             messages.error(request, 'Что то пошло не так!')
-            return HttpResponseRedirect('/profile', locals())
+            return HttpResponseRedirect(f'/user/{user.username}', locals())
+
         name = form.cleaned_data.get('friend_name')
         possible_friend = Account.objects.get(username=name)
         all_friends = Friend.objects.all()
         friend_request = Friend(user_id=user, friend_id=possible_friend, accepted=False)
 
-            if friend_request is not None:
-                if not Friend.objects.filter(user_id=user.id, friend_id=possible_friend.id):
-                    friend_request.save()
-                else:
-                    print("Objects already friends or requested!".format(user.username, name))
-                    messages.error(request, 'Кажется эта заявка уже есть или вы уже друзья!')
-                    return HttpResponseRedirect(f'/user/{user.username}/friends', locals())
-            else:
-                print("Invalid friend details: {0}".format(name))
-                messages.error(request, 'Что то пошло не так!')
-                return HttpResponseRedirect('/create/friend', locals())
-            return HttpResponseRedirect(f'/user/{user.username}/friends', locals())
-        else:
+        if friend_request is None:
+            print("Invalid friend details: {0}".format(name))
             messages.error(request, 'Что то пошло не так!')
-            return HttpResponseRedirect(f'/user/{user.username}', locals())
+            return HttpResponseRedirect('/create/friend', locals())
+
+        if Friend.objects.filter(user_id=user.id, friend_id=possible_friend.id):
+            print("Objects already friends or requested!".format(user.username, name))
+            messages.error(request, 'Кажется эта заявка уже есть или вы уже друзья!')
+            return HttpResponseRedirect(f'/user/{user.username}/friends', locals())
+
+        friend_request.save()
+
+        return HttpResponseRedirect(f'/user/{user.username}/friends', locals())
     else:
         form = AddFriendForm()
         return render(request, 'create/friend.html', {'addfriend_form': form})
@@ -273,4 +272,4 @@ def accept_friend(request, user_id: int):
     user = request.user
     friend = Friend.objects.get(user_id=user_id, friend_id=user.id)
     friend.accepted = True
-    return HttpResponseRedirect(f'/user/{user.username}/friends', locals())
+    return HttpResponseRedirect('/friends', locals())
