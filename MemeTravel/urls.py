@@ -32,6 +32,7 @@ urlpatterns = [
     path('logout/', user_logout),
     path('profile/', profile_view),
     path('test/', test_view),
+    path('another_test_subject', auth_views.PasswordChangeView.as_view()),
     path('user/<str:name>/friends/', friends_view),
     re_path(r'create/(\D*)/$', create_route)
 ]

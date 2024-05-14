@@ -3,12 +3,13 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView
-
 from .forms import *
 from django.contrib import messages
 from django.conf import settings
 
 from Site.models import *
+
+
 
 class UserDetailView(DetailView):
     model = Account
@@ -81,20 +82,22 @@ def encyclopedia(request):
 def user_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-            else:
-                print("Invalid login details: {0}, {1}".format(username, password))
-                messages.info(request, 'Неверные логин или пароль!')
-                return HttpResponseRedirect('/login', locals())
-        else:
+        if not form.is_valid():
             messages.error(request, 'Какое то из полей заполнено неверно!')
             messages.error(request, form.errors)
             return HttpResponseRedirect('/login', locals())
+
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+        user = authenticate(username=username, password=password)
+
+        if user is None:
+            print("Invalid login details: {0}, {1}".format(username, password))
+            messages.info(request, 'Неверные логин или пароль!')
+            return HttpResponseRedirect('/login', locals())
+
+        login(request, user)
+
         return HttpResponseRedirect('/', locals())
     else:
         form = LoginForm()
@@ -105,37 +108,38 @@ def user_register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST, request.FILES)
         print(form.errors)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            confirmed_password = form.cleaned_data.get('confirm_password')
-            if password != confirmed_password:
-                print("Invalid password details: {0}, {1}".format(password, confirmed_password))
-                messages.error(request, 'Пароли не совпадают!')
-                return HttpResponseRedirect('/authorization', locals())
-
-            email = form.cleaned_data.get('email')
-            first_name = form.cleaned_data.get('first_name')
-            last_name = form.cleaned_data.get('last_name')
-            avatar = form.cleaned_data.get('avatar')
-            status = form.cleaned_data.get('status')
-            favorites = form.cleaned_data.get('favorite_memes')
-            user = Account.objects.create_user(username, email, password)
-            user.last_name = last_name
-            user.first_name = first_name
-            user.avatar = avatar
-            user.favorites.set(favorites)
-
-            if user is not None:
-                user.save()
-                status.user_set.add(user)
-                login(request, user)
-            else:
-                return HttpResponseRedirect('/login', locals())
-        else:
+        if not form.is_valid():
             messages.error(request, 'Какое то из полей заполнено неверно!')
             messages.error(request, form.errors)
             return HttpResponseRedirect('/authorization', locals())
+
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+        confirmed_password = form.cleaned_data.get('confirm_password')
+        if password != confirmed_password:
+            print("Invalid password details: {0}, {1}".format(password, confirmed_password))
+            messages.error(request, 'Пароли не совпадают!')
+            return HttpResponseRedirect('/authorization', locals())
+
+        email = form.cleaned_data.get('email')
+        first_name = form.cleaned_data.get('first_name')
+        last_name = form.cleaned_data.get('last_name')
+        avatar = form.cleaned_data.get('avatar')
+        status = form.cleaned_data.get('status')
+        favorites = form.cleaned_data.get('favorite_memes')
+        user = Account.objects.create_user(username, email, password)
+        user.last_name = last_name
+        user.first_name = first_name
+        user.avatar = avatar
+        user.favorites.set(favorites)
+
+        if user is None:
+            return HttpResponseRedirect('/login', locals())
+
+        user.save()
+        status.user_set.add(user)
+        login(request, user)
+
         return HttpResponseRedirect('/', locals())
     else:
         form = RegistrationForm()
@@ -151,31 +155,33 @@ def add_meme(request):
     if request.method == 'POST':
         form = AddMemeForm(request.POST, request.FILES)
         print(form.errors)
-        if form.is_valid():
-            instance = form.save(commit=False)
-
-            name = form.cleaned_data.get('name')
-            date = form.cleaned_data.get('date')
-            date_peek = form.cleaned_data.get('date_peek')
-            popularity = form.cleaned_data.get('popularity')
-            path_to_img = form.cleaned_data.get('path_to_img')
-            description = form.cleaned_data.get('description')
-            image = form.cleaned_data.get('path_to_img')
-
-            meme = Meme(name=name, date=date, date_peek=date_peek, popularity=popularity, description=description,
-                        path_to_img=image)
-
-            if meme is not None:
-                meme.save()
-            else:
-                print("Invalid meme details: {0}, {1}, {2}, {3}, {4}, {5}".format(name, date, date_peek, popularity,
-                                                                                  description, image))
-                messages.error(request, 'Что то пошло не так!')
-                return HttpResponseRedirect('/add_meme', locals())
-            return HttpResponseRedirect('/encyclopedia', locals())
-        else:
+        if not form.is_valid():
             messages.error(request, 'Что то пошло не так!')
             return HttpResponseRedirect('/encyclopedia', locals())
+
+        instance = form.save(commit=False)
+
+        name = form.cleaned_data.get('name')
+        date = form.cleaned_data.get('date')
+        date_peek = form.cleaned_data.get('date_peek')
+        popularity = form.cleaned_data.get('popularity')
+        path_to_img = form.cleaned_data.get('path_to_img')
+        description = form.cleaned_data.get('description')
+        image = form.cleaned_data.get('path_to_img')
+
+        meme = Meme(name=name, date=date, date_peek=date_peek, popularity=popularity, description=description,
+                    path_to_img=image)
+
+        if meme is None:
+            print("Invalid meme details: {0}, {1}, {2}, {3}, {4}, {5}".format(name, date, date_peek, popularity,
+                                                                              description, image))
+            messages.error(request, 'Что то пошло не так!')
+            return HttpResponseRedirect('/add_meme', locals())
+
+        meme.save()
+
+        return HttpResponseRedirect('/encyclopedia', locals())
+
     else:
         form = AddMemeForm()
         return render(request, 'create/meme.html', {'addmeme_form': form})
@@ -235,27 +241,27 @@ def friends_add(request):
     if request.method == 'POST':
         user = request.user
         form = AddFriendForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data.get('friend_name')
-            possible_friend = Account.objects.get(username=name)
-            all_friends = Friend.objects.all()
-            friend_request = Friend(user_id=user, friend_id=possible_friend, accepted=False)
-
-            if friend_request is not None:
-                if not Friend.objects.filter(user_id=user.id, friend_id=possible_friend.id):
-                    friend_request.save()
-                else:
-                    print("Objects already friends or requested!".format(user.username, name))
-                    messages.error(request, 'Кажется эта заявка уже есть или вы уже друзья!')
-                    return HttpResponseRedirect('/friends', locals())
-            else:
-                print("Invalid friend details: {0}".format(name))
-                messages.error(request, 'Что то пошло не так!')
-                return HttpResponseRedirect('/create/friend', locals())
-            return HttpResponseRedirect('/friends', locals())
-        else:
+        if not form.is_valid():
             messages.error(request, 'Что то пошло не так!')
             return HttpResponseRedirect('/profile', locals())
+        name = form.cleaned_data.get('friend_name')
+        possible_friend = Account.objects.get(username=name)
+        all_friends = Friend.objects.all()
+        friend_request = Friend(user_id=user, friend_id=possible_friend, accepted=False)
+
+        if friend_request is None:
+            print("Invalid friend details: {0}".format(name))
+            messages.error(request, 'Что то пошло не так!')
+            return HttpResponseRedirect('/create/friend', locals())
+
+        if not Friend.objects.filter(user_id=user.id, friend_id=possible_friend.id):
+            print("Objects already friends or requested!".format(user.username, name))
+            messages.error(request, 'Кажется эта заявка уже есть или вы уже друзья!')
+            return HttpResponseRedirect('/friends', locals())
+
+        friend_request.save()
+
+        return HttpResponseRedirect('/friends', locals())
     else:
         form = AddFriendForm()
         return render(request, 'create/friend.html', {'addfriend_form': form})
