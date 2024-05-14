@@ -5,15 +5,15 @@
     <title>Title</title>
 </head>
 <body>
-<h2>Список друзей</h2>
+<h2>Список друзей пользователся {{ user.username }}</h2>
 <table>
     {% if friends %}
         <tr><th>Имя друга</th></tr>
         {% for friend in friends %}
             {% if user != friend.friend_id %}
-                <tr><td>{{ friend.friend_id }}</td></tr>
+                <tr><td><a class="logo" href="/user/{{ friend.friend_id }}">{{ friend.friend_id }}</a></td></tr>
             {% else %}
-                <tr><td>{{ friend.user_id }}</td></tr>
+                <tr><td><a class="logo" href="/user/{{ friend.user_id }}">{{ friend.user_id }}</a></td></tr>
             {% endif %}
             
         {% endfor %}
@@ -28,7 +28,7 @@
 <table>
         <tr><th>Имя друга</th></tr>
         {% for friend in sended_requests %}
-            <tr><td>{{ friend.friend_id }}</td></tr>
+            <tr><td><a class="logo" href="/user/{{ friend.friend_id }}">{{ friend.friend_id }}</a></td></tr>
         {% endfor %}
     {% endif %}
     
@@ -39,7 +39,7 @@
 <table>
     <tr><th>Имя друга</th><th>Статус</th></tr>
         {% for friend in got_requests %}
-            <tr><td>{{ friend.user_id }}</td><td><button>Добавить</button></td></tr>
+            <tr><td><a class="logo" href="/user/{{ friend.user_id }}">{{ friend.user_id }}</a></td><td><button>Добавить</button></td></tr>
         {% endfor %}
     {% endif %}
     
@@ -52,7 +52,7 @@
     </div>
 {% endfor %}
 {% endif %}
-<button onclick="location.href = '/profile'">В профиль</button>
+<button onclick="location.href = '/user/{{ user.username }}'">Профиль</button>
 <button onclick="location.href = '/'">На главную</button>
 </body>
 </html>

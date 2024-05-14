@@ -20,6 +20,6 @@
         {% endfor %}
     {% endblock content %}
 <button onclick="location.href = '/'">На главную</button>
-<button onclick="location.href = '/profile'">В профиль</button>
+<button onclick="location.href = '/user/{{ user.username }}'">Профиль</button>
 </body>
 </html>

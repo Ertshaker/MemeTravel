@@ -6,13 +6,7 @@
 </head>
 <body>
 <table>
-    {% if messages %}
-    {% for message in messages %}
-            <div class="message {{ message.tags }}">
-                <a style="font-size: 144px">{{ message }}</a>
-            </div>
-    {% endfor %}
-    {% endif %}
+    
     {% if user.avatar %}
         <img src="{{ user.avatar.url }}" width="300" alt="Я даун"/>
     {% else  %}
@@ -46,8 +40,14 @@
         </table>
         <input type="submit" class="change-password" value="Сменить пароль">
     </form>
+        
     {% endif %}
-
+    {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    <button onclick="location.href = '/'">На главную</button>
     <button onclick="location.href = '{{ user.username }}/friends/'">Друзья</button>
     <h2>Избранное</h2>
 
@@ -63,6 +63,6 @@
             </tr>
             {% endfor %}
         </table>
-<button onclick="location.href = '/'">На главную</button>
+
 </body>
 </html>

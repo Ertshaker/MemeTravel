@@ -1,3 +1,4 @@
+{% load get_group %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,5 +41,10 @@
         <td>{{ meme.description }}</td>
     </tr>   
     </table>
+{% if request.user|has_group:"Админ" or request.user|has_group:"Модератор" %} 
+            <button>Редактировать</button>
+{% endif %}
+<button>Добавить в избранное</button> 
+<button onclick="location.href = '/encyclopedia'">Вернуться в энциклопедию</button>
 </body>
 </html>
