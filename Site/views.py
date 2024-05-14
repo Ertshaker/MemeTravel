@@ -26,11 +26,11 @@ class UserDetailView(DetailView):
         user = Account.objects.get(username=kwargs["username"])
         form = ChangePasswordForm(request.POST)
         if not form.is_valid():
-            return HttpResponse(
-                '<img src="/media/svofard_404.png"/> <br>ТВОЙ ПАПАША ГНИДА СЛУЖИЛ ВО ВЬЕТНАМЕ?!!?!??!?!!?!?? <br> СЕР, ДА, СЕР!!!!')
+            messages.error(request, 'Какое то из полей заполнено неверно!')
+            return render(request, 'user.html', {"user": user, 'is_current_user': request.user == user, "ChangePasswordForm": form})
         if not user.check_password(form.cleaned_data['old_password']):
-            messages.error(request, "ТЫ ДОЛБАЁБ")
-            return render(request, 'profile.html', {"user": user, "ChangePasswordForm": form})
+            messages.error(request, 'Старый пароль введен неверно!')
+            return render(request, 'user.html', {"user": user, 'is_current_user': request.user == user, "ChangePasswordForm": form})
 
         # form.full_clean()
         username = user.username
@@ -39,7 +39,7 @@ class UserDetailView(DetailView):
         user.save()
 
         login(request, authenticate(username=username, password=new_password))
-        return render(request, 'user.html', {"user": user, "ChangePasswordForm": form})
+        return render(request, 'user.html', {"user": user, 'is_current_user': request.user == user, "ChangePasswordForm": form})
 
     def get_object(self, queryset=None):
         username = self.kwargs['username']
@@ -247,15 +247,15 @@ def friends_add(request):
                 else:
                     print("Objects already friends or requested!".format(user.username, name))
                     messages.error(request, 'Кажется эта заявка уже есть или вы уже друзья!')
-                    return HttpResponseRedirect('/friends', locals())
+                    return HttpResponseRedirect(f'/user/{user.username}/friends', locals())
             else:
                 print("Invalid friend details: {0}".format(name))
                 messages.error(request, 'Что то пошло не так!')
                 return HttpResponseRedirect('/create/friend', locals())
-            return HttpResponseRedirect('/friends', locals())
+            return HttpResponseRedirect(f'/user/{user.username}/friends', locals())
         else:
             messages.error(request, 'Что то пошло не так!')
-            return HttpResponseRedirect('/profile', locals())
+            return HttpResponseRedirect(f'/user/{user.username}', locals())
     else:
         form = AddFriendForm()
         return render(request, 'create/friend.html', {'addfriend_form': form})
@@ -265,4 +265,4 @@ def accept_friend(request, user_id: int):
     user = request.user
     friend = Friend.objects.get(user_id=user_id, friend_id=user.id)
     friend.accepted = True
-    return HttpResponseRedirect('/friends', locals())
+    return HttpResponseRedirect(f'/user/{user.username}/friends', locals())

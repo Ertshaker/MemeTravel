@@ -6,7 +6,7 @@
 </head>
 <body>
     <h1>Невероятно! {{ user.username }} смог зайти на это говно!!!!!!!!</h1>
-    <button onclick="location.href = '/profile'">Профиль</button>
+    <button onclick="location.href = '/user/{{ user.username }}'">Профиль</button>
     {% if user.is_anonymous %}
         <button onclick="location.href = '/login'">Войти в профиль</button>
     {% else %}
