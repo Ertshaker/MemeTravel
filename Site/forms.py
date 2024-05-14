@@ -1,15 +1,34 @@
 from django import forms
 from PIL import Image
-
+from django.contrib.auth.validators import UnicodeUsernameValidator
+import re
 from Site.models import Meme, Account
 from django.contrib.auth.models import Group
 
 
+def check_username(text):
+    if re.search('[\u0400-\u04FF]', text):
+        raise forms.ValidationError("Username should not have Cyrillic")
+    All_users = Account.objects.all().values_list('username', flat=True)
+    if text in All_users:
+        raise forms.ValidationError("Username is already taken")
+
+
+def check_password(password):
+    if re.search('[\u0400-\u04FF]', password):
+        raise forms.ValidationError("Password should not have Cyrillic")
+    if " " in password.strip():
+        raise forms.ValidationError("Password should not have space")
+    if len(password) < 8:
+        raise forms.ValidationError("Password should have at least 8 characters")
+
+
 class RegistrationForm(forms.Form):
     username = forms.CharField(label='Логин', required=True, max_length=30,
-                               widget=forms.TextInput(attrs={'type': 'text'}))
+                               widget=forms.TextInput(attrs={'type': 'text'}),
+                               validators=[UnicodeUsernameValidator(), check_username])
     password = forms.CharField(label='Пароль', required=True, max_length=30,
-                               widget=forms.PasswordInput(attrs={'type': 'password'}))
+                               widget=forms.PasswordInput(attrs={'type': 'password'}), validators=[check_password])
     confirm_password = forms.CharField(label='Повторите пароль', required=True, max_length=30,
                                        widget=forms.PasswordInput(attrs={'type': 'password'}))
     email = forms.CharField(label='Email', min_length=3, max_length=30)
@@ -26,7 +45,6 @@ class RegistrationForm(forms.Form):
     #
     # confirm_password = forms.CharField(label='Повторите пароль', required=True, max_length=30,
     #                                    widget=forms.PasswordInput(attrs={'type': 'password'}))
-
 
 
 class LoginForm(forms.Form):
@@ -62,4 +80,4 @@ class ChangePasswordForm(forms.Form):
 
 class AddFriendForm(forms.Form):
     friend_name = forms.CharField(label='Имя друга', max_length=30,
-                                         widget=forms.TextInput(attrs={'type': 'text'}))
+                                  widget=forms.TextInput(attrs={'type': 'text'}))

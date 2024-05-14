@@ -7,8 +7,14 @@
 <body>
     <h1>Невероятно! {{ user.username }} смог зайти на это говно!!!!!!!!</h1>
     <button onclick="location.href = '/profile'">Профиль</button>
-    <button onclick="location.href = '/logout'">Выйти из профиля</button>
-    <button onclick="location.href = '/login'">Войти в профиль</button>
+    {% if user.is_anonymous %}
+        <button onclick="location.href = '/login'">Войти в профиль</button>
+    {% else %}
+        <button onclick="location.href = '/logout'">Выйти из профиля</button>
+    {% endif %}
+    
+    
+    <button onclick="location.href = '/encyclopedia'">Энциклопедия</button>
     {% for message in messages %}
         <div class="message {{ message.tags }}">
             {{ message }}

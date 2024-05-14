@@ -1,3 +1,5 @@
+{% load get_group %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +16,12 @@
             <td>{{ meme.popularity }}</td><td> <img src="{{meme.path_to_img.url}}" height="120" /></td></tr>
     {% endfor %}
 </table>
-        <button onclick="location.href = '/create/meme'">Добавить новый мем</button> 
+        {% if request.user|has_group:"Админ" %} 
+            <button onclick="location.href = '/create/meme'">Добавить новый мем</button> 
+{% else %}
+
+{% endif %}
+        <button onclick="location.href = '/'">На главную</button>
 </body>
 </html>
 

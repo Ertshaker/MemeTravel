@@ -51,6 +51,8 @@ def user_login(request):
                 messages.info(request, 'Неверные логин или пароль!')
                 return HttpResponseRedirect('/login', locals())
         else:
+            messages.error(request, 'Какое то из полей заполнено неверно!')
+            messages.error(request, form.errors)
             return HttpResponseRedirect('/login', locals())
         return HttpResponseRedirect('/', locals())
     else:
@@ -77,14 +79,6 @@ def user_register(request):
             avatar = form.cleaned_data.get('avatar')
             status = form.cleaned_data.get('status')
             favorites = form.cleaned_data.get('favorite_memes')
-
-
-            All_users = Account.objects.all().values_list('username', flat=True)
-            if username in All_users:
-                print("This username is already taken! ({0})".format(username))
-                messages.error(request, 'Это имя уже занято!')
-                return HttpResponseRedirect('/authorization', locals())
-
             user = Account.objects.create_user(username, email, password)
             user.last_name = last_name
             user.first_name = first_name
@@ -98,7 +92,9 @@ def user_register(request):
             else:
                 return HttpResponseRedirect('/login', locals())
         else:
-            return HttpResponseRedirect('/login', locals())
+            messages.error(request, 'Какое то из полей заполнено неверно!')
+            messages.error(request, form.errors)
+            return HttpResponseRedirect('/authorization', locals())
         return HttpResponseRedirect('/', locals())
     else:
         form = RegistrationForm()
@@ -179,30 +175,32 @@ def profile_view(request):
     favorites = user.favorites.all()
     return render(request, 'profile.html', {"user": user, "ChangePasswordForm": form, 'favorites': favorites})
 
+
 def test_view(request):
     return render(request, 'test.html')
 
 
+@login_required(redirect_field_name='next', login_url=settings.LOGIN_URL)
 def friends_view(request):
-    user = get_user(request.session)
+    user = request.user
     friends = Friend.objects.filter(user_id=user.id, accepted=True) | Friend.objects.filter(friend_id=user.id,
                                                                                             accepted=True)
     sended_requests = Friend.objects.filter(user_id=user.id, accepted=False)
     got_requests = Friend.objects.filter(friend_id=user.id, accepted=False)
     return render(request, 'friends.html',
-                  {'friends': friends, 'sended_requests': sended_requests, 'got_requests': got_requests, 'user':user})
+                  {'friends': friends, 'sended_requests': sended_requests, 'got_requests': got_requests, 'user': user})
 
 
+@login_required(redirect_field_name='next', login_url=settings.LOGIN_URL)
 def friends_add(request):
     if request.method == 'POST':
-        user = get_user(request.session)
+        user = request.user
         form = AddFriendForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data.get('friend_name')
             possible_friend = Account.objects.get(username=name)
             all_friends = Friend.objects.all()
             friend_request = Friend(user_id=user, friend_id=possible_friend, accepted=False)
-
 
             if friend_request is not None:
                 if not Friend.objects.filter(user_id=user.id, friend_id=possible_friend.id):
@@ -223,8 +221,10 @@ def friends_add(request):
         form = AddFriendForm()
         return render(request, 'create/friend.html', {'addfriend_form': form})
 
+
+@login_required(redirect_field_name='next', login_url=settings.LOGIN_URL)
 def accept_friend(request, user_id):
-    user = get_user(request.session)
+    user = request.user
     friend = Friend.objects.get(user_id=user_id, friend_id=user.id)
     friend.accepted = True
     return HttpResponseRedirect('/friends', locals())
