@@ -92,6 +92,8 @@ def user_login(request):
                 messages.info(request, 'Неверные логин или пароль!')
                 return HttpResponseRedirect('/login', locals())
         else:
+            messages.error(request, 'Какое то из полей заполнено неверно!')
+            messages.error(request, form.errors)
             return HttpResponseRedirect('/login', locals())
         return HttpResponseRedirect('/', locals())
     else:
@@ -118,13 +120,6 @@ def user_register(request):
             avatar = form.cleaned_data.get('avatar')
             status = form.cleaned_data.get('status')
             favorites = form.cleaned_data.get('favorite_memes')
-
-            All_users = Account.objects.all().values_list('username', flat=True)
-            if username in All_users:
-                print("This username is already taken! ({0})".format(username))
-                messages.error(request, 'Это имя уже занято!')
-                return HttpResponseRedirect('/authorization', locals())
-
             user = Account.objects.create_user(username, email, password)
             user.last_name = last_name
             user.first_name = first_name
@@ -138,7 +133,9 @@ def user_register(request):
             else:
                 return HttpResponseRedirect('/login', locals())
         else:
-            return HttpResponseRedirect('/login', locals())
+            messages.error(request, 'Какое то из полей заполнено неверно!')
+            messages.error(request, form.errors)
+            return HttpResponseRedirect('/authorization', locals())
         return HttpResponseRedirect('/', locals())
     else:
         form = RegistrationForm()
