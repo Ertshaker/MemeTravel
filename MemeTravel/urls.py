@@ -22,15 +22,17 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', index),
+    path('meme/id<int:pk>', MemeDetailView.as_view()),
+    path('user/<slug:username>', UserDetailView.as_view()),
+    path('admin/', admin.site.urls),
     path('encyclopedia/', encyclopedia),
     path('authorization/', user_register),
     path('login/', user_login),
     path('logout/', user_logout),
     path('profile/', profile_view),
     path('test/', test_view),
-    path('friends/', friends_view),
+    path('user/<str:name>/friends/', friends_view),
     re_path(r'create/(\D*)/$', create_route)
 ]
 

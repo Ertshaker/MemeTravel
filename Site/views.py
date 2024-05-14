@@ -2,14 +2,55 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.views.generic import DetailView
+
 from .forms import *
 from django.contrib import messages
 from django.conf import settings
 
 from Site.models import *
 
+class UserDetailView(DetailView):
+    model = Account
+    template_name = 'user.html'
+    context_object_name = 'user'
+    extra_context = {}
 
-# Create your views here.
+    def get(self, request, *args, **kwargs):
+        self.extra_context["is_current_user"] = request.user.username == kwargs["username"]
+        self.extra_context["ChangePasswordForm"] = ChangePasswordForm()
+
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        user = Account.objects.get(username=kwargs["username"])
+        form = ChangePasswordForm(request.POST)
+        if not form.is_valid():
+            return HttpResponse(
+                '<img src="/media/svofard_404.png"/> <br>ТВОЙ ПАПАША ГНИДА СЛУЖИЛ ВО ВЬЕТНАМЕ?!!?!??!?!!?!?? <br> СЕР, ДА, СЕР!!!!')
+        if not user.check_password(form.cleaned_data['old_password']):
+            messages.error(request, "ТЫ ДОЛБАЁБ")
+            return render(request, 'profile.html', {"user": user, "ChangePasswordForm": form})
+
+        # form.full_clean()
+        username = user.username
+        new_password = form.cleaned_data['new_password']
+        user.set_password(new_password)
+        user.save()
+
+        login(request, authenticate(username=username, password=new_password))
+        return render(request, 'user.html', {"user": user, "ChangePasswordForm": form})
+
+    def get_object(self, queryset=None):
+        username = self.kwargs['username']
+        return Account.objects.get(username=username)
+
+
+class MemeDetailView(DetailView):
+    model = Meme
+    template_name = 'meme.html'
+    context_object_name = 'meme'
+
 
 def index(request):
     context = {
@@ -77,7 +118,6 @@ def user_register(request):
             avatar = form.cleaned_data.get('avatar')
             status = form.cleaned_data.get('status')
             favorites = form.cleaned_data.get('favorite_memes')
-
 
             All_users = Account.objects.all().values_list('username', flat=True)
             if username in All_users:
@@ -179,30 +219,30 @@ def profile_view(request):
     favorites = user.favorites.all()
     return render(request, 'profile.html', {"user": user, "ChangePasswordForm": form, 'favorites': favorites})
 
+
 def test_view(request):
     return render(request, 'test.html')
 
 
-def friends_view(request):
-    user = get_user(request.session)
+def friends_view(request, name: str):
+    user = Account.objects.get(username=name)
     friends = Friend.objects.filter(user_id=user.id, accepted=True) | Friend.objects.filter(friend_id=user.id,
                                                                                             accepted=True)
     sended_requests = Friend.objects.filter(user_id=user.id, accepted=False)
     got_requests = Friend.objects.filter(friend_id=user.id, accepted=False)
     return render(request, 'friends.html',
-                  {'friends': friends, 'sended_requests': sended_requests, 'got_requests': got_requests, 'user':user})
+                  {'friends': friends, 'is_current_user': request.user == user, 'sended_requests': sended_requests, 'got_requests': got_requests, 'user': user})
 
 
 def friends_add(request):
     if request.method == 'POST':
-        user = get_user(request.session)
+        user = request.user
         form = AddFriendForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data.get('friend_name')
             possible_friend = Account.objects.get(username=name)
             all_friends = Friend.objects.all()
             friend_request = Friend(user_id=user, friend_id=possible_friend, accepted=False)
-
 
             if friend_request is not None:
                 if not Friend.objects.filter(user_id=user.id, friend_id=possible_friend.id):
@@ -223,8 +263,9 @@ def friends_add(request):
         form = AddFriendForm()
         return render(request, 'create/friend.html', {'addfriend_form': form})
 
-def accept_friend(request, user_id):
-    user = get_user(request.session)
+
+def accept_friend(request, user_id: int):
+    user = request.user
     friend = Friend.objects.get(user_id=user_id, friend_id=user.id)
     friend.accepted = True
     return HttpResponseRedirect('/friends', locals())

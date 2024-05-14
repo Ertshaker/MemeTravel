@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Мем</title>
+</head>
+<body>
+    {% if messages %}
+    {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                <a style="font-size: 144px">{{ message }}</a>
+            </div>
+    {% endfor %}
+    {% endif %}
+    {% if user.avatar %}
+        <img src="{{ meme.path_to_img.url }}" width="300" alt="Я даун"/> 
+    {% else  %}
+        <img src="/media/svofard_404.png" width="300"/>
+    {% endif %}
+    
+    <table>
+            <tr>
+        <td>Название</td>
+        <td>{{ meme.name }}</td>
+    </tr>
+    <tr>
+        <td>Популярность</td>
+        <td>{{ meme.popularity }}</td>
+    </tr>
+     <tr>
+        <td>Дата первого появления</td>
+        <td>{{ meme.date }}</td>
+    </tr>
+     <tr>
+        <td>Дата пика популярности</td>
+        <td>{{ meme.date_peek }}</td>
+    </tr>
+     <tr>
+        <td>Описание</td>
+        <td>{{ meme.description }}</td>
+    </tr>   
+    </table>
+</body>
+</html>

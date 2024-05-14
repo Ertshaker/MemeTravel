@@ -22,7 +22,7 @@
     {% endif %}
     
 </table>
-
+{% if is_current_user %}
 {% if sended_requests %}
 <h2>Список отправленных заявок</h2>
 <table>
@@ -51,5 +51,6 @@
         <h3>{{ message }}</h3>
     </div>
 {% endfor %}
+{% endif %}
 </body>
 </html>

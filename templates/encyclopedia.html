@@ -10,8 +10,13 @@
 <table>
     <tr><th>Номер</th><th>Название</th><th>Популярность</th><th>Картиночка</th></tr>
     {% for meme in memes %}
-        <tr><td>{{ meme.id }}</td><td>{{ meme.name }}</td>
-            <td>{{ meme.popularity }}</td><td> <img src="{{meme.path_to_img.url}}" height="120" /></td></tr>
+        <tr>
+            <td>{{ meme.id }}</td>
+            <td>{{ meme.name }}</td>
+            <td>{{ meme.popularity }}</td>
+            <td> <img src="{{meme.path_to_img.url}}" height="120" /> </td>
+            <td> <button onclick="location.href = '/meme/id{{ meme.id }}'">Подробнее</button> </td>
+        </tr>
     {% endfor %}
 </table>
         <button onclick="location.href = '/create/meme'">Добавить новый мем</button> 
