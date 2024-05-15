@@ -6,6 +6,8 @@ from django.views.generic import DetailView, UpdateView
 from .forms import *
 from django.contrib import messages
 from django.conf import settings
+from django.http import JsonResponse
+
 
 from Site.models import *
 
@@ -282,3 +284,53 @@ def accept_friend(request, user_id: int):
     friend = Friend.objects.get(user_id=user_id, friend_id=user.id)
     friend.accepted = True
     return HttpResponseRedirect('/friends', locals())
+
+def add_friend_request(request):
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        friend_id = request.POST.get('friend_id')
+        try:
+            friend = Friend.objects.get(id=friend_id)
+            friend.accepted = True
+            friend.save()
+            return JsonResponse({'success': True})
+        except Friend.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'НЕСУЩЕСТВФУЕТ БЛЯЯ'})
+    return JsonResponse({'success': False, 'error': 'ИНВАЛИД'})
+
+def remove_friend_request(request):
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        friend_id = request.POST.get('friend_id')
+        try:
+            friend = Friend.objects.get(id=friend_id)
+            friend.accepted = False  # тут фолс вместо тру, как кнопка сверху ток наоборот крч
+            friend.save()
+            return JsonResponse({'success': True})
+        except Friend.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'НЕСУЩЕСТВФУЕТ БЛЯЯ'})
+    return JsonResponse({'success': False, 'error': 'ИНВАЛИД'})
+
+
+def add_to_favorites(request):
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        account_id = request.user.id
+        meme_id = request.POST.get('meme_id')
+
+        if not Site_account_favorites.objects.filter(account_id=account_id, meme_id=meme_id).exists():
+            Site_account_favorites.objects.create(account_id=account_id, meme_id=meme_id)
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'error': 'МЕМ УЖЕ ДОБАВЛЕН ДУРА'})
+    return JsonResponse({'success': False, 'error': 'ИНВАЛИД'})
+
+def remove_from_favorites(request):
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        account_id = request.user.id
+        meme_id = request.POST.get('meme_id')
+
+        try:
+            favorite = Site_account_favorites.objects.get(account_id=account_id, meme_id=meme_id)
+            favorite.delete()
+            return JsonResponse({'success': True})
+        except Site_account_favorites.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'МЕМ НЕ НАЙДЕН НАХ'})
+    return JsonResponse({'success': False, 'error': 'IИНВАЛИИД'})

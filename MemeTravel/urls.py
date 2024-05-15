@@ -20,6 +20,8 @@ from Site.views import *
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+from Site import views
+
 
 
 urlpatterns = [
@@ -36,7 +38,12 @@ urlpatterns = [
     path('another_test_subject', auth_views.PasswordChangeView.as_view()),
     path('user/<str:name>/friends/', friends_view),
     re_path(r'create/(\D*)/$', create_route),
-    path('meme/id<int:pk>/update', NewsUpdateView.as_view())
+    path('meme/id<int:pk>/update', NewsUpdateView.as_view()),
+    path('remove_friend_request/', views.remove_friend_request, name='remove_friend_request'),
+    path('add_friend_request/', views.add_friend_request, name='add_friend_request'),
+    path('add_to_favorites/', views.add_to_favorites, name='add_to_favorites'),
+    path('remove_from_favorites/', views.remove_from_favorites, name='remove_from_favorites')
+
 ]
 
 if settings.DEBUG:

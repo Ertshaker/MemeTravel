@@ -49,20 +49,56 @@
         {% endfor %}
     <button onclick="location.href = '/'">На главную</button>
     <button onclick="location.href = '{{ user.username }}/friends/'">Друзья</button>
-    <h2>Избранное</h2>
+  <h2>Избранное</h2>
 
-        <table bgcolor="#00ffff">
-            <tr>
-                <th>Название</th>
-                <th>Фотокарточка</th>
-            </tr>
-            {% for meme in user.favorites.all %}
-            <tr>
-                <td><a class="meme" href="/meme/id{{ meme.id }}">{{ meme.name }}</a></td>
-                <td><img src="{{ meme.path_to_img.url }}" width="300"/></td>
-            </tr>
-            {% endfor %}
-        </table>
+<table bgcolor="#00ffff">
+    <tr>
+        <th>Название</th>
+        <th>Фотокарточка</th>
+        <th>Действия</th>
+    </tr>
+    {% for meme in user.favorites.all %}
+    <tr>
+        <td><a class="meme" href="/meme/{{ meme.id }}">{{ meme.name }}</a></td>
+        <td><img src="{{ meme.path_to_img.url }}" width="300"/></td>
+        <td><button class="remove-from-favorites-button" data-meme-id="{{ meme.id }}">Удалить из избранного</button></td>
+    </tr>
+    {% endfor %}
+</table>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.remove-from-favorites-button').on('click', function() {
+        var memeId = $(this).data('meme-id');
+        removeFromFavorites(memeId);
+    });
+
+    function removeFromFavorites(memeId) {
+        $.ajax({
+            url: '/remove_from_favorites/',
+            type: 'POST',
+            data: {
+                meme_id: memeId,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                if (response.success) {
+                    toastr.success('Мем теперь АНТИЗОМБИТЕЛЕН....');
+                    setTimeout(function() {location.reload();}, 2000);
+                } else {
+                    console.error(response.error);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+});
+</script>
 
 </body>
 </html>
