@@ -42,7 +42,7 @@
     </tr>   
     </table>
 {% if request.user|has_group:"Админ" or request.user|has_group:"Модератор" %}
-            <button onclick="location.href = '/meme/{{ meme.id }}/update'">Редактировать</button>
+            <button onclick="location.href = '/meme/id{{ meme.id }}/update'">Редактировать</button>
 {% endif %}
 <button class="add-to-favorites-button" data-meme-id="{{ meme.id }}">Добавить в избранное!</button>
 

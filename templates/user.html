@@ -59,7 +59,7 @@
     </tr>
     {% for meme in user.favorites.all %}
     <tr>
-        <td><a class="meme" href="/meme/{{ meme.id }}">{{ meme.name }}</a></td>
+        <td><a class="meme" href="/meme/id{{ meme.id }}">{{ meme.name }}</a></td>
         <td><img src="{{ meme.path_to_img.url }}" width="300"/></td>
         <td><button class="remove-from-favorites-button" data-meme-id="{{ meme.id }}">Удалить из избранного</button></td>
     </tr>
