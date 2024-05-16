@@ -89,11 +89,11 @@ $(document).ready(function() {
                     toastr.success('Мем теперь АНТИЗОМБИТЕЛЕН....');
                     setTimeout(function() {location.reload();}, 2000);
                 } else {
-                    console.error(response.error);
+                    toastr.error(response.error);
                 }
             },
             error: function(xhr, status, error) {
-                console.error(error);
+                toastr.error(error);
             }
         });
     }

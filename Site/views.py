@@ -7,7 +7,7 @@ from .forms import *
 from django.contrib import messages
 from django.conf import settings
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
+
 
 from Site.models import *
 
@@ -15,6 +15,7 @@ from Site.models import *
 class MemesUpdateView(UpdateView):
     model = Meme
     template_name = 'create/meme.html'
+
     form_class = AddMemeForm
 
     def get_context_data(self, **kwargs):
@@ -321,11 +322,12 @@ def remove_friend_request(request):
 
 def add_to_favorites(request):
     if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        user = request.user
-        meme_id = request.POST.get('meme_id')
+        current_user = request.user
+        meme = Meme.objects.get(id=request.POST.get('meme_id'))
+        user_memes = current_user.favorites.all()
 
-        if not user.favorites.objects.filter(meme_id=meme_id).exists():
-            Site_account_favorites.objects.create(account_id=account_id, meme_id=meme_id)
+        if not user_memes.filter(id=meme.id):
+            current_user.favorites.add(meme)
             return JsonResponse({'success': True})
         else:
             return JsonResponse({'success': False, 'error': 'МЕМ УЖЕ ДОБАВЛЕН ДУРА'})
@@ -334,11 +336,12 @@ def add_to_favorites(request):
 
 def remove_from_favorites(request):
     if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        account_id = request.user.id
-        meme_id = request.POST.get('meme_id')
+        current_user = request.user
+        meme = Meme.objects.get(id=request.POST.get('meme_id'))
+        user_memes = current_user.favorites.all()
 
         try:
-            favorite = Site_account_favorites.objects.get(account_id=account_id, meme_id=meme_id)
+            favorite = user_memes.get(id=meme.id)
             favorite.delete()
             return JsonResponse({'success': True})
         except Site_account_favorites.DoesNotExist:
