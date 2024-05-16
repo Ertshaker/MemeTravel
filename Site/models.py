@@ -38,11 +38,3 @@ class MemeGallery(models.Model):
         unique_together = (('meme_id', 'image'))
     meme_id = models.ForeignKey(Meme, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='galery/memes/')
-
-class Site_account_favorites(models.Model):
-    account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    meme = models.ForeignKey(Meme, on_delete=models.CASCADE)
-    class Meta:
-        managed = False
-        db_table = 'Site_account_favorites'
-

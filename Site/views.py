@@ -1,3 +1,4 @@
+from django.db.models import QuerySet
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
@@ -312,23 +313,26 @@ def remove_friend_request(request):
 
 def add_to_favorites(request):
     if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        account_id = request.user.id
-        meme_id = request.POST.get('meme_id')
+        current_user = request.user
+        meme = Meme.objects.get(id=request.POST.get('meme_id'))
+        user_memes: QuerySet = current_user.favorites.all()
 
-        if not Site_account_favorites.objects.filter(account_id=account_id, meme_id=meme_id).exists():
-            Site_account_favorites.objects.create(account_id=account_id, meme_id=meme_id)
+        if not user_memes.filter(id=meme.id):
+            current_user.favorites.add(meme)
             return JsonResponse({'success': True})
         else:
             return JsonResponse({'success': False, 'error': 'МЕМ УЖЕ ДОБАВЛЕН ДУРА'})
     return JsonResponse({'success': False, 'error': 'ИНВАЛИД'})
 
+
 def remove_from_favorites(request):
     if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        account_id = request.user.id
-        meme_id = request.POST.get('meme_id')
+        current_user = request.user
+        meme = Meme.objects.get(id=request.POST.get('meme_id'))
+        user_memes: QuerySet = current_user.favorites.all()
 
         try:
-            favorite = Site_account_favorites.objects.get(account_id=account_id, meme_id=meme_id)
+            favorite = user_memes.get(id=meme.id)
             favorite.delete()
             return JsonResponse({'success': True})
         except Site_account_favorites.DoesNotExist:
