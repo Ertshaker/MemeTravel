@@ -5,22 +5,64 @@
     <title>Title</title>
 </head>
 <body>
-<h2>Список друзей пользователся {{ user.username }}</h2>
+<h2>Список друзей пользователя {{ user.username }}</h2>
 <table>
     {% if friends %}
-        <tr><th>Имя друга</th></tr>
+        <tr><th>Имя друга</th><th>Действие</th></tr>
         {% for friend in friends %}
-            {% if user != friend.friend_id %}
-                <tr><td><a class="logo" href="/user/{{ friend.friend_id }}">{{ friend.friend_id }}</a></td></tr>
-            {% else %}
-                <tr><td><a class="logo" href="/user/{{ friend.user_id }}">{{ friend.user_id }}</a></td></tr>
-            {% endif %}
-            
+            <tr>
+                <td>
+                    {% if user != friend.friend_id %}
+                        <a class="logo" href="/user/{{ friend.friend_id }}">{{ friend.friend_id }}</a>
+                    {% else %}
+                        <a class="logo" href="/user/{{ friend.user_id }}">{{ friend.user_id }}</a>
+                    {% endif %}
+                </td>
+                <td>
+                    <button class="remove-friend-button" data-friend-id="{{ friend.id }}">Удалить</button>
+                </td>
+            </tr>
         {% endfor %}
     {% else %}
-        У вас пока еще нет друзей! Вы их обязательно заимеете(в жопу)
+        <tr><td colspan="2">У вас пока еще нет друзей! Вы их обязательно заимеете(в жопу)</td></tr>
     {% endif %}
-    
+</table>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.remove-friend-button').on('click', function() {
+        var friendId = $(this).data('friend-id');
+        removeFriendRequest(friendId);
+    });
+
+    function removeFriendRequest(friendId) {
+        $.ajax({
+            url: '/remove_friend_request/',
+            type: 'POST',
+            data: {
+                friend_id: friendId,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                if (response.success) {
+                    toastr.success('Друг теперь АНТИЗОМБИТЕЛЕН....');
+                    setTimeout(function() {location.reload();}, 2000);
+                } else {
+                    // Обработка ошибки
+                    console.error(response.error);
+                }
+            },
+            error: function(xhr, status, error) {
+                // Обработка ошибки AJAX-запроса
+                console.error(error);
+            }
+        });
+    }
+});
+</script>
 </table>
 {% if is_current_user %}
 {% if sended_requests %}
@@ -38,11 +80,52 @@
 <h2>Список полученных заявок</h2>
 <table>
     <tr><th>Имя друга</th><th>Статус</th></tr>
-        {% for friend in got_requests %}
-            <tr><td><a class="logo" href="/user/{{ friend.user_id }}">{{ friend.user_id }}</a></td><td><button>Добавить</button></td></tr>
-        {% endfor %}
-    {% endif %}
-    
+    {% for friend in got_requests %}
+    <tr>
+        <td><a class="logo" href="/user/{{ friend.user_id }}">{{ friend.user_id }}</a></td>
+        <td>
+            <button class="add-friend-button" data-friend-id="{{ friend.id }}">Добавить</button>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.add-friend-button').on('click', function() {
+        var friendId = $(this).data('friend-id');
+        addFriendRequest(friendId);
+    });
+
+    function addFriendRequest(friendId) {
+        $.ajax({
+            url: '/add_friend_request/',
+            type: 'POST',
+            data: {
+                friend_id: friendId,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                if (response.success) {
+                    toastr.success('Запрос в друзья ЗОМБИТЕЛЕН!');
+                    setTimeout(function() {location.reload();}, 2000);
+                } else {
+                    // Обработка ошибки
+                    console.error(response.error);
+                }
+            },
+            error: function(xhr, status, error) {
+                // Обработка ошибки AJAX-запроса
+                console.error(error);
+            }
+        });
+    }
+});
+</script>
+
+
 </table>
 <button onclick="location.href = '/create/friend'">Добавить друга</button>
 
