@@ -1,3 +1,4 @@
+from django.db.models import QuerySet
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
@@ -338,12 +339,10 @@ def remove_from_favorites(request):
     if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
         current_user = request.user
         meme = Meme.objects.get(id=request.POST.get('meme_id'))
-        user_memes = current_user.favorites.all()
 
         try:
-            favorite = user_memes.get(id=meme.id)
-            favorite.delete()
+            current_user.favorites.remove(meme)
             return JsonResponse({'success': True})
-        except Site_account_favorites.DoesNotExist:
+        except:
             return JsonResponse({'success': False, 'error': 'МЕМ НЕ НАЙДЕН НАХ'})
     return JsonResponse({'success': False, 'error': 'IИНВАЛИИД'})
