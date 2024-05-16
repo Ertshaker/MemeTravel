@@ -2,15 +2,17 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import DetailView, UpdateView, DeleteView
 from .forms import *
 from django.contrib import messages
 from django.conf import settings
+from django.http import JsonResponse
+
 
 from Site.models import *
 
 
-class NewsUpdateView(UpdateView):
+class MemesUpdateView(UpdateView):
     model = Meme
     template_name = 'create/meme.html'
 
@@ -18,7 +20,11 @@ class NewsUpdateView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        meme = self.get_object()  # Получаем объект Meme
+        form = self.form_class(instance=meme)  # Создаем форму, связанную с объектом Meme
+        context['addmeme_form'] = form  # Передаем форму в контекст
         return context
+
 
 class UserDetailView(DetailView):
     model = Account
@@ -37,10 +43,12 @@ class UserDetailView(DetailView):
         form = ChangePasswordForm(request.POST)
         if not form.is_valid():
             messages.error(request, 'Какое то из полей заполнено неверно!')
-            return render(request, 'user.html', {"user": user, 'is_current_user': request.user == user, "ChangePasswordForm": form})
+            return render(request, 'user.html',
+                          {"user": user, 'is_current_user': request.user == user, "ChangePasswordForm": form})
         if not user.check_password(form.cleaned_data['old_password']):
             messages.error(request, 'Старый пароль введен неверно!')
-            return render(request, 'user.html', {"user": user, 'is_current_user': request.user == user, "ChangePasswordForm": form})
+            return render(request, 'user.html',
+                          {"user": user, 'is_current_user': request.user == user, "ChangePasswordForm": form})
 
         # form.full_clean()
         username = user.username
@@ -49,7 +57,8 @@ class UserDetailView(DetailView):
         user.save()
 
         login(request, authenticate(username=username, password=new_password))
-        return render(request, 'user.html', {"user": user, 'is_current_user': request.user == user, "ChangePasswordForm": form})
+        return render(request, 'user.html',
+                      {"user": user, 'is_current_user': request.user == user, "ChangePasswordForm": form})
 
     def get_object(self, queryset=None):
         username = self.kwargs['username']
@@ -243,7 +252,8 @@ def friends_view(request, name: str):
     sended_requests = Friend.objects.filter(user_id=user.id, accepted=False)
     got_requests = Friend.objects.filter(friend_id=user.id, accepted=False)
     return render(request, 'friends.html',
-                  {'friends': friends, 'is_current_user': request.user == user, 'sended_requests': sended_requests, 'got_requests': got_requests, 'user': user})
+                  {'friends': friends, 'is_current_user': request.user == user, 'sended_requests': sended_requests,
+                   'got_requests': got_requests, 'user': user})
 
 
 def friends_add(request):
@@ -282,3 +292,58 @@ def accept_friend(request, user_id: int):
     friend = Friend.objects.get(user_id=user_id, friend_id=user.id)
     friend.accepted = True
     return HttpResponseRedirect('/friends', locals())
+
+
+def add_friend_request(request):
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        friend_id = request.POST.get('friend_id')
+        try:
+            friend = Friend.objects.get(id=friend_id)
+            friend.accepted = True
+            friend.save()
+            return JsonResponse({'success': True})
+        except Friend.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'НЕСУЩЕСТВФУЕТ БЛЯЯ'})
+    return JsonResponse({'success': False, 'error': 'ИНВАЛИД'})
+
+
+def remove_friend_request(request):
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        friend_id = request.POST.get('friend_id')
+        try:
+            friend = Friend.objects.get(id=friend_id)
+            friend.accepted = False  # тут фолс вместо тру, как кнопка сверху ток наоборот крч
+            friend.save()
+            return JsonResponse({'success': True})
+        except Friend.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'НЕСУЩЕСТВФУЕТ БЛЯЯ'})
+    return JsonResponse({'success': False, 'error': 'ИНВАЛИД'})
+
+
+def add_to_favorites(request):
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        current_user = request.user
+        meme = Meme.objects.get(id=request.POST.get('meme_id'))
+        user_memes = current_user.favorites.all()
+
+        if not user_memes.filter(id=meme.id):
+            current_user.favorites.add(meme)
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'error': 'МЕМ УЖЕ ДОБАВЛЕН ДУРА'})
+    return JsonResponse({'success': False, 'error': 'ИНВАЛИД'})
+
+
+def remove_from_favorites(request):
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        current_user = request.user
+        meme = Meme.objects.get(id=request.POST.get('meme_id'))
+        user_memes = current_user.favorites.all()
+
+        try:
+            favorite = user_memes.get(id=meme.id)
+            favorite.delete()
+            return JsonResponse({'success': True})
+        except Site_account_favorites.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'МЕМ НЕ НАЙДЕН НАХ'})
+    return JsonResponse({'success': False, 'error': 'IИНВАЛИИД'})
