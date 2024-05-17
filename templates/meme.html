@@ -1,0 +1,86 @@
+{% load get_group %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Мем</title>
+</head>
+<body>
+    {% if messages %}
+    {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                <a style="font-size: 144px">{{ message }}</a>
+            </div>
+    {% endfor %}
+    {% endif %}
+    {% if meme.path_to_img.url %}
+        <img src="{{ meme.path_to_img.url }}" width="300" alt="ПРИВЕТ)"/> 
+    {% else  %}
+        <img src="/media/svofard_404.png" width="300"/>
+    {% endif %}
+    
+    <table>
+            <tr>
+        <td>Название</td>
+        <td>{{ meme.name }}</td>
+    </tr>
+    <tr>
+        <td>Популярность</td>
+        <td>{{ meme.popularity }}</td>
+    </tr>
+     <tr>
+        <td>Дата первого появления</td>
+        <td>{{ meme.date }}</td>
+    </tr>
+     <tr>
+        <td>Дата пика популярности</td>
+        <td>{{ meme.date_peek }}</td>
+    </tr>
+     <tr>
+        <td>Описание</td>
+        <td>{{ meme.description }}</td>
+    </tr>   
+    </table>
+{% if request.user|has_group:"Админ" or request.user|has_group:"Модератор" %}
+            <button onclick="location.href = '/meme/{{ meme.id }}/update'">Редактировать</button>
+{% endif %}
+<button class="add-to-favorites-button" data-meme-id="{{ meme.id }}">Добавить в избранное!</button>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.add-to-favorites-button').on('click', function() {
+        var memeId = $(this).data('meme-id');
+        addToFavorites(memeId);
+    });
+
+    function addToFavorites(memeId) {
+        $.ajax({
+            url: '/add_to_favorites/',
+            type: 'POST',
+            data: {
+                meme_id: memeId,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                if (response.success) {
+                    toastr.success('Мем теперь ЗОМБИТЕЛЬНО ИЗБРАН....');
+                    setTimeout(function() {location.reload();}, 2000);
+                } 
+                else {
+                    toastr.error(response.error);
+                }
+            },
+            error: function(xhr, status, error) {
+                toastr.error(error);
+            }
+        });
+    }
+});
+</script>
+
+
+<button onclick="location.href = '/encyclopedia'">Вернуться в энциклопедию</button>
+</body>
+</html>
