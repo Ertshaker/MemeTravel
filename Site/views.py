@@ -1,9 +1,8 @@
-from django.db.models import QuerySet
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.views.generic import DetailView, UpdateView, DeleteView
+from django.views.generic import DetailView, UpdateView
 from .forms import *
 from django.contrib import messages
 from django.conf import settings
@@ -226,7 +225,7 @@ def profile_view(request):
             return HttpResponse(
                 '<img src="/media/svofard_404.png"/> <br>ТВОЙ ПАПАША ГНИДА СЛУЖИЛ ВО ВЬЕТНАМЕ?!!?!??!?!!?!?? <br> СЕР, ДА, СЕР!!!!')
         if not user.check_password(form.cleaned_data['old_password']):
-            messages.error(request, "ТЫ ДОЛБАЁБ")
+            messages.error(request, "ТЫ ЧЁ ТВОРИШЬ???")
             return render(request, 'profile.html', {"user": user, "ChangePasswordForm": form})
 
         # form.full_clean()
@@ -304,7 +303,7 @@ def add_friend_request(request):
             friend.save()
             return JsonResponse({'success': True})
         except Friend.DoesNotExist:
-            return JsonResponse({'success': False, 'error': 'НЕСУЩЕСТВФУЕТ БЛЯЯ'})
+            return JsonResponse({'success': False, 'error': 'НЕСУЩЕСТВФУЕТ ААААА'})
     return JsonResponse({'success': False, 'error': 'ИНВАЛИД'})
 
 
@@ -317,7 +316,7 @@ def remove_friend_request(request):
             friend.save()
             return JsonResponse({'success': True})
         except Friend.DoesNotExist:
-            return JsonResponse({'success': False, 'error': 'НЕСУЩЕСТВФУЕТ БЛЯЯ'})
+            return JsonResponse({'success': False, 'error': 'НЕСУЩЕСТВФУЕТ АААААА'})
     return JsonResponse({'success': False, 'error': 'ИНВАЛИД'})
 
 
@@ -343,6 +342,6 @@ def remove_from_favorites(request):
         try:
             current_user.favorites.remove(meme)
             return JsonResponse({'success': True})
-        except:
-            return JsonResponse({'success': False, 'error': 'МЕМ НЕ НАЙДЕН НАХ'})
+        except current_user.favorites.ObjectDoesNotExist:
+            return JsonResponse({'success': False, 'error': 'МЕМ НЕ НАЙДЕН блин'})
     return JsonResponse({'success': False, 'error': 'IИНВАЛИИД'})
