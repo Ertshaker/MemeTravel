@@ -49,9 +49,9 @@ class RegistrationForm(forms.Form):
 
 class LoginForm(forms.Form):
     username = forms.CharField(label='Логин', required=True, max_length=30,
-                               widget=forms.TextInput(attrs={'type': 'text'}))
+                               widget=forms.TextInput(attrs={'type': 'text', 'class': 'form-input', 'placeholder': 'Логин'}))
     password = forms.CharField(label='Пароль', required=True, max_length=30,
-                               widget=forms.PasswordInput(attrs={'type': 'password'}))
+                               widget=forms.PasswordInput(attrs={'type': 'password', 'class': 'form-input', 'placeholder': 'Пароль'}))
 
 
 # class AddMemeForm(forms.Form):

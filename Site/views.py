@@ -119,7 +119,7 @@ def user_login(request):
         return HttpResponseRedirect('/', locals())
     else:
         form = LoginForm()
-        return render(request, 'login.html', {'login_form': form})
+        return render(request, 'login_test.html', {'login_form': form})
 
 
 def user_register(request):
