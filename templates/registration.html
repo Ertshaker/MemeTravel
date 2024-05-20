@@ -1,0 +1,45 @@
+{% load static %}
+
+<! DOCTYPE html>
+<html Lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'Site/css/registration_styles.css' %}">
+    <!--link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'-->
+    <title>Вход</title>
+</head>
+
+<body>
+
+<div class="wrapper">
+    <button onclick="location.href = '{{request.META.HTTP_REFERER}}'" class="button_back"></button>
+    <h2>Регистрация</h2>
+    <form method="post" action="#">
+            {% csrf_token %}
+            {{ registration_form.username }}
+            {{ registration_form.first_name }}
+            {{ registration_form.last_name }}
+            {{ registration_form.password }}
+            {{ registration_form.confirm_password }}
+            {{ registration_form.email }}
+        <button type="submit" class="register">Регистрация</button>
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <p>Уже есть аккаунт?<a href="/login" class="sign-up">Войти</a></p>
+    </form>
+    <div class="errors">
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+
+</html>

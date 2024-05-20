@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+    background: url("../img/Background_registration.png") no-repeat center;
+    background-size: cover;
+    width: 400px;
+    height: 600px;
+}
+
+.wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 560px;
+    height: 800px;
+    text-align: center;
+    border-radius: 12px;
+    padding: 10px 20px;
+    background: rgba(217, 217, 217);
+    backdrop-filter: blur(6px);
+}
+
+.wrapper h2 {
+    position: relative;
+    margin-bottom: 0px;
+    font-size: 48px;
+    font-family: Comfortaa;
+    color: #000000;
+}
+
+.input-field {
+    position: relative;
+}
+
+.input-field input[type="text"]:not(:focus) ::placeholder,
+.input-field input[type="password"]:not(:focus) ::placeholder,
+.input-field input[type="email"]:not(:focus) ::placeholder {
+    transform: translateY(0%);
+    transition: transform 0.2s ease-in-out;
+    font-size: 16px;
+}
+
+
+
+a.sign-up {
+    text-decoration: none;
+    color: rgb(165, 134, 199);
+}
+
+a.sign-up:hover {
+    text-decoration: underline;
+    color: #fffffffd;
+}
+
+.wrapper .register {
+    background: rgba(165, 134, 199, 0.48);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 14px;
+    width: 250px;
+    height: 55px;
+    font-family: Comfortaa;
+    font-size: 29px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+
+border-radius: 17px;
+background: transparent;
+margin: 15px;
+border: 3px solid rgb(0, 0, 0);
+width: 430px;
+height: 70px;
+padding: 20px 40px 20px 20px;
+backdrop-filter: blur(15px);
+font-family: Montserrat;
+font-size: 28px;
+}
+
+
+input ::placeholder {
+    color: rgb(255, 255, 255);
+}
+
+.input-field input[type="email"]:focus ::placeholder,
+.input-field input[type="password"]:focus ::placeholder {
+    transform: translateY(-100%);
+    transition: transform 0.2s ease-in-out;
+    font-size: 14px;
+}
+
+.button_back {
+    background: rgb(217, 217, 217) url('../img/back_button.png') no-repeat center;
+    background-size:70%;
+    position:absolute;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 45px;
+    width: 65px;
+    height: 65px;
+    top: -0px;
+    left: -20px;
+
+}

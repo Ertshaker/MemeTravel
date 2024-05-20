@@ -25,18 +25,18 @@ def check_password(password):
 
 class RegistrationForm(forms.Form):
     username = forms.CharField(label='Логин', required=True, max_length=30,
-                               widget=forms.TextInput(attrs={'type': 'text'}),
+                               widget=forms.TextInput(attrs={'type': 'text', 'class': 'username_field', 'placeholder':'Имя пользователя'}),
                                validators=[UnicodeUsernameValidator(), check_username])
     password = forms.CharField(label='Пароль', required=True, max_length=30,
-                               widget=forms.PasswordInput(attrs={'type': 'password'}), validators=[check_password])
+                               widget=forms.PasswordInput(attrs={'type': 'password', 'class': 'password_field', 'placeholder':'Пароль'}), validators=[check_password])
     confirm_password = forms.CharField(label='Повторите пароль', required=True, max_length=30,
-                                       widget=forms.PasswordInput(attrs={'type': 'password'}))
-    email = forms.CharField(label='Email', min_length=3, max_length=30)
-    first_name = forms.CharField(label='Имя', max_length=30, widget=forms.TextInput(attrs={'type': 'text'}))
-    last_name = forms.CharField(label='Фамилия', max_length=30, widget=forms.TextInput(attrs={'type': 'text'}))
+                                       widget=forms.PasswordInput(attrs={'type': 'password', 'placeholder':'Повторите пароль'}))
+    email = forms.CharField(label='Email', min_length=3, max_length=30, widget=forms.TextInput(attrs={'type': 'email', 'class': 'email_field', 'placeholder':'Email'}))
+    first_name = forms.CharField(label='Имя', max_length=30, widget=forms.TextInput(attrs={'type': 'text', 'placeholder':'Имя'}))
+    last_name = forms.CharField(label='Фамилия', max_length=30, widget=forms.TextInput(attrs={'type': 'text', 'placeholder':'Фамилия'}))
     avatar = forms.ImageField(label='Изображение', required=False)
     favorite_memes = forms.ModelMultipleChoiceField(queryset=Meme.objects.all(), required=False)
-    status = forms.ModelChoiceField(queryset=Group.objects.all())
+    status = forms.ModelChoiceField(queryset=Group.objects.all(), required=False)
     # class Meta:
     #     model = Account
     #     fields = "__all__"
