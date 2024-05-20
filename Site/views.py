@@ -7,10 +7,9 @@ from .forms import *
 from django.contrib import messages
 from django.conf import settings
 from django.http import JsonResponse
-
+from django.contrib.auth.models import Group
 
 from Site.models import *
-
 
 class MemesUpdateView(UpdateView):
     model = Meme
@@ -142,14 +141,15 @@ def user_register(request):
         email = form.cleaned_data.get('email')
         first_name = form.cleaned_data.get('first_name')
         last_name = form.cleaned_data.get('last_name')
-        avatar = form.cleaned_data.get('avatar')
-        status = form.cleaned_data.get('status')
-        favorites = form.cleaned_data.get('favorite_memes')
+        # avatar = form.cleaned_data.get('avatar')
+        status = Group.objects.get(name="Пользователь")
+        # favorites = form.cleaned_data.get('favorite_memes')
         user = Account.objects.create_user(username, email, password)
         user.last_name = last_name
         user.first_name = first_name
-        user.avatar = avatar
-        user.favorites.set(favorites)
+        # user.avatar = avatar
+        # user.favorites.set(favorites)
+
 
         if user is None:
             return HttpResponseRedirect('/login', locals())
@@ -161,7 +161,48 @@ def user_register(request):
         return HttpResponseRedirect('/', locals())
     else:
         form = RegistrationForm()
-        return render(request, 'authorization.html', {'registration_form': form})
+        return render(request, 'registration.html', {'registration_form': form})
+
+    # def user_register(request):
+    #     if request.method == 'POST':
+    #         form = RegistrationForm(request.POST, request.FILES)
+    #         print(form.errors)
+    #         if not form.is_valid():
+    #             messages.error(request, 'Какое то из полей заполнено неверно!')
+    #             messages.error(request, form.errors)
+    #             return HttpResponseRedirect('/authorization', locals())
+    #
+    #         username = form.cleaned_data.get('username')
+    #         password = form.cleaned_data.get('password')
+    #         confirmed_password = form.cleaned_data.get('confirm_password')
+    #         if password != confirmed_password:
+    #             print("Invalid password details: {0}, {1}".format(password, confirmed_password))
+    #             messages.error(request, 'Пароли не совпадают!')
+    #             return HttpResponseRedirect('/authorization', locals())
+    #
+    #         email = form.cleaned_data.get('email')
+    #         first_name = form.cleaned_data.get('first_name')
+    #         last_name = form.cleaned_data.get('last_name')
+    #         avatar = form.cleaned_data.get('avatar')
+    #         status = form.cleaned_data.get('status')
+    #         favorites = form.cleaned_data.get('favorite_memes')
+    #         user = Account.objects.create_user(username, email, password)
+    #         user.last_name = last_name
+    #         user.first_name = first_name
+    #         user.avatar = avatar
+    #         user.favorites.set(favorites)
+    #
+    #         if user is None:
+    #             return HttpResponseRedirect('/login', locals())
+    #
+    #         user.save()
+    #         status.user_set.add(user)
+    #         login(request, user)
+    #
+    #         return HttpResponseRedirect('/', locals())
+    #     else:
+    #         form = RegistrationForm()
+    #         return render(request, 'registration.html', {'registration_form': form})
 
 
 def user_logout(request):

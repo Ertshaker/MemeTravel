@@ -6,7 +6,7 @@
 </head>
 <body>
     {% block content %}
-        <form enctype="multipart/form-data" action="" method="post">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <table>
                 {{ addmeme_form }}
