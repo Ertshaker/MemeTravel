@@ -36,7 +36,7 @@ urlpatterns = [
     path('test/', test_view),
     path('user/<str:name>/friends/', friends_view),
     re_path(r'create/(\D*)/$', create_route),
-    path('meme/<int:pk>/update/', MemesUpdateView.as_view()),
+    path('meme/id<int:pk>/update/', MemesUpdateView.as_view()),
     path('remove_friend_request/', views.remove_friend_request, name='remove_friend_request'),
     path('add_friend_request/', views.add_friend_request, name='add_friend_request'),
     path('add_to_favorites/', views.add_to_favorites, name='add_to_favorites'),

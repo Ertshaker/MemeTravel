@@ -11,6 +11,7 @@ from Site.models import *
 from .forms import *
 
 
+
 class MemesUpdateView(UpdateView):
     model = Meme
     template_name = 'create/meme.html'
@@ -24,6 +25,12 @@ class MemesUpdateView(UpdateView):
         context['addmeme_form'] = form  # Передаем форму в контекст
         return context
 
+    def form_valid(self, form):
+        instance = form.save()
+        addit_im = form.cleaned_data['additional_image']
+        if addit_im:
+            MemeGallery.objects.create(meme=instance, image=addit_im)
+        return super(MemesUpdateView, self).form_valid(form)
 
 class UserDetailView(DetailView):
     model = Account
@@ -90,7 +97,13 @@ class MemeDetailView(DetailView):
     model = Meme
     template_name = 'meme.html'
     context_object_name = 'meme'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        meme = self.get_object()  # Получаем объект Meme
+        meme_gallery = MemeGallery.objects.filter(meme=meme.id)
 
+        context['meme_gallery'] = meme_gallery
+        return context
 
 def index(request):
     context = {
@@ -201,23 +214,19 @@ def add_meme(request):
 
         name = form.cleaned_data.get('name')
         date = form.cleaned_data.get('date')
-        date_peek = form.cleaned_data.get('date_peek')
-        popularity = form.cleaned_data.get('popularity')
-        path_to_img = form.cleaned_data.get('path_to_img')
         description = form.cleaned_data.get('description')
         image = form.cleaned_data.get('path_to_img')
+        additional_image = form.cleaned_data.get('additional_image')
 
-        meme = Meme(name=name, date=date, date_peek=date_peek, popularity=popularity, description=description,
-                    path_to_img=image)
+        meme = Meme(name=name, date=date, description=description, path_to_img=image)
 
         if meme is None:
-            print("Invalid meme details: {0}, {1}, {2}, {3}, {4}, {5}".format(name, date, date_peek, popularity,
-                                                                              description, image))
+            print("Invalid meme details: {0}, {1}, {2}, {3}".format(name, date, description, image))
             messages.error(request, 'Что то пошло не так!')
             return HttpResponseRedirect('/add_meme', locals())
 
         meme.save()
-
+        MemeGallery.objects.create(meme=meme, image=additional_image)
         return HttpResponseRedirect('/encyclopedia', locals())
 
     else:
@@ -233,32 +242,6 @@ def create_route(request, *args, **kwargs):
         return render(request, 'create/account.html')
     elif route == "meme":
         return add_meme(request)
-
-
-@login_required(redirect_field_name='next', login_url=settings.LOGIN_URL)
-def profile_view(request):
-    user = request.user
-
-    if request.method == 'POST':
-        form = ChangePasswordForm(request.POST)
-        if not form.is_valid():
-            return HttpResponse(
-                '<img src="/media/svofard_404.png"/> <br>ТВОЙ ПАПАША ГНИДА СЛУЖИЛ ВО ВЬЕТНАМЕ?!!?!??!?!!?!?? <br> СЕР, ДА, СЕР!!!!')
-        if not user.check_password(form.cleaned_data['old_password']):
-            messages.error(request, "ТЫ ЧЁ ТВОРИШЬ???")
-            return render(request, 'profile.html', {"user": user, "ChangePasswordForm": form})
-
-        # form.full_clean()
-        new_password = form.cleaned_data['new_password']
-        user.set_password(new_password)
-        user.save()
-
-        login(request, authenticate(username=user.username, password=user.password))
-        return render(request, 'profile.html', {"user": user, "ChangePasswordForm": form})
-
-    form = ChangePasswordForm()
-    favorites = user.favorites.all()
-    return render(request, 'profile.html', {"user": user, "ChangePasswordForm": form, 'favorites': favorites})
 
 
 def test_view(request):
@@ -285,9 +268,13 @@ def friends_add(request):
             return HttpResponseRedirect(f'/user/{user.username}', locals())
 
         name = form.cleaned_data.get('friend_name')
+        if not Account.objects.filter(username=name):
+            print("Invalid friend details: {0}".format(name))
+            messages.error(request, 'Похоже такого пользователя нет!')
+            return HttpResponseRedirect('/create/friend', locals())
         possible_friend = Account.objects.get(username=name)
         all_friends = Friend.objects.all()
-        friend_request = Friend(user_id=user, friend_id=possible_friend, accepted=False)
+        friend_request = Friend(user=user, friend=possible_friend, accepted=False)
 
         if friend_request is None:
             print("Invalid friend details: {0}".format(name))
