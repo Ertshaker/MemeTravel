@@ -12,10 +12,10 @@
         {% for friend in friends %}
             <tr>
                 <td>
-                    {% if user != friend.friend_id %}
-                        <a class="logo" href="/user/{{ friend.friend_id }}">{{ friend.friend_id }}</a>
+                    {% if user != friend.friend %}
+                        <a class="logo" href="/user/{{ friend.friend }}">{{ friend.friend }}</a>
                     {% else %}
-                        <a class="logo" href="/user/{{ friend.user_id }}">{{ friend.user_id }}</a>
+                        <a class="logo" href="/user/{{ friend.user }}">{{ friend.user }}</a>
                     {% endif %}
                 </td>
                 <td>
@@ -70,7 +70,7 @@ $(document).ready(function() {
 <table>
         <tr><th>Имя друга</th></tr>
         {% for friend in sended_requests %}
-            <tr><td><a class="logo" href="/user/{{ friend.friend_id }}">{{ friend.friend_id }}</a></td></tr>
+            <tr><td><a class="logo" href="/user/{{ friend.friend }}">{{ friend.friend }}</a></td></tr>
         {% endfor %}
     {% endif %}
     
@@ -82,7 +82,7 @@ $(document).ready(function() {
     <tr><th>Имя друга</th><th>Статус</th></tr>
     {% for friend in got_requests %}
     <tr>
-        <td><a class="logo" href="/user/{{ friend.user_id }}">{{ friend.user_id }}</a></td>
+        <td><a class="logo" href="/user/{{ friend.user }}">{{ friend.user }}</a></td>
         <td>
             <button class="add-friend-button" data-friend-id="{{ friend.id }}">Добавить</button>
         </td>

@@ -25,15 +25,22 @@ def check_password(password):
 
 class RegistrationForm(forms.Form):
     username = forms.CharField(label='Логин', required=True, max_length=30,
-                               widget=forms.TextInput(attrs={'type': 'text', 'class': 'username_field', 'placeholder':'Имя пользователя'}),
+                               widget=forms.TextInput(attrs={'type': 'text', 'class': 'username_field',
+                                                             'placeholder': 'Имя пользователя'}),
                                validators=[UnicodeUsernameValidator(), check_username])
     password = forms.CharField(label='Пароль', required=True, max_length=30,
-                               widget=forms.PasswordInput(attrs={'type': 'password', 'class': 'password_field', 'placeholder':'Пароль'}), validators=[check_password])
+                               widget=forms.PasswordInput(
+                                   attrs={'type': 'password', 'class': 'password_field', 'placeholder': 'Пароль'}),
+                               validators=[check_password])
     confirm_password = forms.CharField(label='Повторите пароль', required=True, max_length=30,
-                                       widget=forms.PasswordInput(attrs={'type': 'password', 'placeholder':'Повторите пароль'}))
-    email = forms.CharField(label='Email', min_length=3, max_length=30, widget=forms.TextInput(attrs={'type': 'email', 'class': 'email_field', 'placeholder':'Email'}))
-    first_name = forms.CharField(label='Имя', max_length=30, widget=forms.TextInput(attrs={'type': 'text', 'placeholder':'Имя'}))
-    last_name = forms.CharField(label='Фамилия', max_length=30, widget=forms.TextInput(attrs={'type': 'text', 'placeholder':'Фамилия'}))
+                                       widget=forms.PasswordInput(
+                                           attrs={'type': 'password', 'placeholder': 'Повторите пароль'}))
+    email = forms.CharField(label='Email', min_length=3, max_length=30, widget=forms.TextInput(
+        attrs={'type': 'email', 'class': 'email_field', 'placeholder': 'Email'}))
+    first_name = forms.CharField(label='Имя', max_length=30,
+                                 widget=forms.TextInput(attrs={'type': 'text', 'placeholder': 'Имя'}))
+    last_name = forms.CharField(label='Фамилия', max_length=30,
+                                widget=forms.TextInput(attrs={'type': 'text', 'placeholder': 'Фамилия'}))
     avatar = forms.ImageField(label='Изображение', required=False)
     favorite_memes = forms.ModelMultipleChoiceField(queryset=Meme.objects.all(), required=False)
     status = forms.ModelChoiceField(queryset=Group.objects.all(), required=False)
@@ -49,9 +56,11 @@ class RegistrationForm(forms.Form):
 
 class LoginForm(forms.Form):
     username = forms.CharField(label='Логин', required=True, max_length=30,
-                               widget=forms.TextInput(attrs={'type': 'text', 'class': 'form-input', 'placeholder': 'Логин'}))
+                               widget=forms.TextInput(
+                                   attrs={'type': 'text', 'class': 'form-input', 'placeholder': 'Логин'}))
     password = forms.CharField(label='Пароль', required=True, max_length=30,
-                               widget=forms.PasswordInput(attrs={'type': 'password', 'class': 'form-input', 'placeholder': 'Пароль'}))
+                               widget=forms.PasswordInput(
+                                   attrs={'type': 'password', 'class': 'form-input', 'placeholder': 'Пароль'}))
 
 
 # class AddMemeForm(forms.Form):
@@ -66,16 +75,16 @@ class LoginForm(forms.Form):
 class AddMemeForm(forms.ModelForm):
     class Meta:
         model = Meme
-        fields = ['name', 'date', 'date_peek', 'popularity', 'path_to_img', 'description']
-        labels = {'name': 'Название', 'date': 'Дата появления', 'date_peek': 'Дата самой высокой популярности',
-                  'popularity': 'Популярность', 'description': 'Описание', 'path_to_img': 'Изображение мема'}
-        widgets = {'date': forms.TextInput(attrs={'type': 'date'}),
-                   'date_peek': forms.TextInput(attrs={'type': 'date'})}
-
-
+        fields = ['name', 'date', 'path_to_img', 'genre', 'description']
+        labels = {'name': 'Название', 'date': 'Дата появления', 'genre': 'Жанр', 'description': 'Описание',
+                  'path_to_img': 'Изображение мема'}
+        widgets = {'date': forms.TextInput(attrs={'type': 'date'})}
+    additional_image = forms.ImageField(label='Дополнительное изображение', required=False)
 class ChangePasswordForm(forms.Form):
-    old_password = forms.CharField(label='Старый пароль', required=True, max_length=255, widget=forms.PasswordInput(attrs={'type': 'password'}))
-    new_password = forms.CharField(label='Новый пароль', required=True, max_length=255, widget=forms.PasswordInput(attrs={'type': 'password'}), validators=[check_password])
+    old_password = forms.CharField(label='Старый пароль', required=True, max_length=255,
+                                   widget=forms.PasswordInput(attrs={'type': 'password'}))
+    new_password = forms.CharField(label='Новый пароль', required=True, max_length=255,
+                                   widget=forms.PasswordInput(attrs={'type': 'password'}), validators=[check_password])
 
 
 class AddFriendForm(forms.Form):

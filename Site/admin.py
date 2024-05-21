@@ -7,11 +7,12 @@ from .models import *
 
 admin.site.register(Friend)
 admin.site.register(Account)
+admin.site.register(Genres)
 
 @admin.register(Meme)
 class MemeAdmin(admin.ModelAdmin):
-    fields = ['name', 'date', 'date_peek', 'popularity', 'path_to_img', 'description']
-    list_display = ('name', 'date', 'date_peek', 'popularity', 'post_photo')
+    fields = ['name', 'date', 'path_to_img', 'description']
+    list_display = ('name', 'date', 'post_photo')
 
     @admin.display(description="Фотокарточка", ordering='content')
     def post_photo(self, meme: Meme):
