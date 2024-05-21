@@ -1,26 +1,28 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Войти в аккаунт</title>
+    <link rel="stylesheet" href="{% static 'Site/css/login_styles.css' %}"/>
+    <title>Войти</title>
 </head>
 <body>
-    {% block content %}
-        <form method="post" action="">
-            {% csrf_token %}
-            <table>
-                {{ login_form }}
-            </table>
-            <input type="submit" class="login" value="Войти">
-        </form>
-        {% for message in messages %}
-            <div class="message {{ message.tags }}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endblock content %}
-<button onclick="location.href = '/'">На главную</button>
-    Еще нет аккаунта?
-<button onclick="location.href = '/authorization'">Зарегистрироваться</button>
+<div class="wrapper">
+    <button onclick="location.href = '/'" class="button_back"></button> 
+    <h2>Вход в аккаунт</h2>
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ login_form.username }}
+        {{ login_form.password }}
+        <input class="login" type="submit" value="Войти">
+    </form>
+    {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <p>Нет аккаунта? <a href="/authorization">Ебать ты лох</a></p>
+</div>
 </body>
 </html>

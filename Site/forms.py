@@ -81,3 +81,7 @@ class ChangePasswordForm(forms.Form):
 class AddFriendForm(forms.Form):
     friend_name = forms.CharField(label='Имя друга', max_length=30,
                                   widget=forms.TextInput(attrs={'type': 'text'}))
+
+
+class ChangeAvatarForm(forms.Form):
+    image = forms.ImageField(label='Новый аватар')

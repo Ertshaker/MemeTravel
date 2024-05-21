@@ -1,15 +1,15 @@
-from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
+from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.views.generic import DetailView, UpdateView
-from .forms import *
-from django.contrib import messages
-from django.conf import settings
+from django.http import HttpResponseRedirect, HttpResponse
 from django.http import JsonResponse
-from django.contrib.auth.models import Group
+from django.shortcuts import render, reverse
+from django.views.generic import DetailView, UpdateView
 
 from Site.models import *
+from .forms import *
+
 
 class MemesUpdateView(UpdateView):
     model = Meme
@@ -32,32 +32,54 @@ class UserDetailView(DetailView):
     extra_context = {}
 
     def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            HttpResponseRedirect('/login', locals())
         self.extra_context["is_current_user"] = request.user.username == kwargs["username"]
         self.extra_context["ChangePasswordForm"] = ChangePasswordForm()
+        self.extra_context["ChangeAvatarForm"] = ChangeAvatarForm()
 
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        user = Account.objects.get(username=kwargs["username"])
-        form = ChangePasswordForm(request.POST)
-        if not form.is_valid():
-            messages.error(request, 'Какое то из полей заполнено неверно!')
-            return render(request, 'user.html',
-                          {"user": user, 'is_current_user': request.user == user, "ChangePasswordForm": form})
-        if not user.check_password(form.cleaned_data['old_password']):
-            messages.error(request, 'Старый пароль введен неверно!')
-            return render(request, 'user.html',
-                          {"user": user, 'is_current_user': request.user == user, "ChangePasswordForm": form})
+        user: Account = request.user
+        if request.POST.get("change_password_input"):
+            change_password_form = ChangePasswordForm(request.POST)
+            if not change_password_form.is_valid():
+                messages.error(request, 'Какое то из полей заполнено неверно!')
+                return HttpResponseRedirect(reverse('user-detail', kwargs={'username': user.username}))
 
-        # form.full_clean()
-        username = user.username
-        new_password = form.cleaned_data['new_password']
-        user.set_password(new_password)
-        user.save()
+            if not user.check_password(change_password_form.cleaned_data['old_password']):
+                messages.error(request, 'Старый пароль введен неверно!')
+                return HttpResponseRedirect(reverse('user-detail', kwargs={'username': user.username}))
 
-        login(request, authenticate(username=username, password=new_password))
+            username = user.username
+            new_password = change_password_form.cleaned_data['new_password']
+            user.set_password(new_password)
+            user.save()
+            change_password_form.clean()
+
+            login(request, authenticate(username=username, password=new_password))
+
+        elif request.POST.get("change_avatar_input"):
+            change_avatar_form = ChangeAvatarForm(request.POST, request.FILES)
+            if not change_avatar_form.is_valid():
+                messages.error(request, "ОТ ТЕБЯ ТРЕБОВАЛОСЬ ЗАПОЛНИТЬ ОДНО ПОЛЕ И ТЫ ДАЖЕ С ЭТИМ НЕ СПРАВИЛСЯ. ВЫЙДИ НЕ ПОЗОРЬСЯ")
+                return HttpResponseRedirect(reverse('user-detail', kwargs={'username': user.username}))
+
+            user.avatar = change_avatar_form.cleaned_data['image']
+            user.save()
+
+            change_avatar_form.clean()
+            return HttpResponseRedirect(reverse('user-detail', kwargs={'username': user.username}))
+
+        change_password_form = ChangePasswordForm()
+        change_avatar_form = ChangeAvatarForm()
+
         return render(request, 'user.html',
-                      {"user": user, 'is_current_user': request.user == user, "ChangePasswordForm": form})
+                      {"user": user,
+                       'is_current_user': request.user == user,
+                       "ChangePasswordForm": change_password_form,
+                       "ChangeAvatarForm": change_avatar_form})
 
     def get_object(self, queryset=None):
         username = self.kwargs['username']
@@ -79,9 +101,8 @@ def index(request):
 
 def encyclopedia(request):
     memes = Meme.objects.all()
-    user = request.user
 
-    galery = MemeGallery.objects.all()
+    gallery = MemeGallery.objects.all()
     try:
         user = Account.objects.get(id=request.session.get("_auth_user_id"))
     except Account.DoesNotExist:
@@ -90,7 +111,7 @@ def encyclopedia(request):
     context = {
         "memes": memes,
         "user": user,
-        "MemeGallery": galery
+        "MemeGallery": gallery
     }
 
     return render(request, 'encyclopedia.html', context=context)
@@ -118,7 +139,7 @@ def user_login(request):
         return HttpResponseRedirect('/', locals())
     else:
         form = LoginForm()
-        return render(request, 'login_test.html', {'login_form': form})
+        return render(request, 'login.html', {'login_form': form})
 
 
 def user_register(request):
@@ -150,7 +171,6 @@ def user_register(request):
         # user.avatar = avatar
         # user.favorites.set(favorites)
 
-
         if user is None:
             return HttpResponseRedirect('/login', locals())
 
@@ -162,47 +182,6 @@ def user_register(request):
     else:
         form = RegistrationForm()
         return render(request, 'registration.html', {'registration_form': form})
-
-    # def user_register(request):
-    #     if request.method == 'POST':
-    #         form = RegistrationForm(request.POST, request.FILES)
-    #         print(form.errors)
-    #         if not form.is_valid():
-    #             messages.error(request, 'Какое то из полей заполнено неверно!')
-    #             messages.error(request, form.errors)
-    #             return HttpResponseRedirect('/authorization', locals())
-    #
-    #         username = form.cleaned_data.get('username')
-    #         password = form.cleaned_data.get('password')
-    #         confirmed_password = form.cleaned_data.get('confirm_password')
-    #         if password != confirmed_password:
-    #             print("Invalid password details: {0}, {1}".format(password, confirmed_password))
-    #             messages.error(request, 'Пароли не совпадают!')
-    #             return HttpResponseRedirect('/authorization', locals())
-    #
-    #         email = form.cleaned_data.get('email')
-    #         first_name = form.cleaned_data.get('first_name')
-    #         last_name = form.cleaned_data.get('last_name')
-    #         avatar = form.cleaned_data.get('avatar')
-    #         status = form.cleaned_data.get('status')
-    #         favorites = form.cleaned_data.get('favorite_memes')
-    #         user = Account.objects.create_user(username, email, password)
-    #         user.last_name = last_name
-    #         user.first_name = first_name
-    #         user.avatar = avatar
-    #         user.favorites.set(favorites)
-    #
-    #         if user is None:
-    #             return HttpResponseRedirect('/login', locals())
-    #
-    #         user.save()
-    #         status.user_set.add(user)
-    #         login(request, user)
-    #
-    #         return HttpResponseRedirect('/', locals())
-    #     else:
-    #         form = RegistrationForm()
-    #         return render(request, 'registration.html', {'registration_form': form})
 
 
 def user_logout(request):

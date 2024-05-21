@@ -27,15 +27,13 @@ from Site import views
 urlpatterns = [
     path('', index),
     path('meme/id<int:pk>', MemeDetailView.as_view()),
-    path('user/<slug:username>', UserDetailView.as_view()),
+    path('user/<slug:username>', UserDetailView.as_view(), name='user-detail'),
     path('admin/', admin.site.urls),
     path('encyclopedia/', encyclopedia),
     path('authorization/', user_register),
     path('login/', user_login),
     path('logout/', user_logout),
-    path('profile/', profile_view),
     path('test/', test_view),
-    path('another_test_subject', auth_views.PasswordChangeView.as_view()),
     path('user/<str:name>/friends/', friends_view),
     re_path(r'create/(\D*)/$', create_route),
     path('meme/<int:pk>/update/', MemesUpdateView.as_view()),
@@ -43,7 +41,6 @@ urlpatterns = [
     path('add_friend_request/', views.add_friend_request, name='add_friend_request'),
     path('add_to_favorites/', views.add_to_favorites, name='add_to_favorites'),
     path('remove_from_favorites/', views.remove_from_favorites, name='remove_from_favorites')
-
 ]
 
 if settings.DEBUG:

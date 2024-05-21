@@ -14,7 +14,7 @@
 <body>
 
 <div class="wrapper">
-    <button onclick="location.href = '{{request.META.HTTP_REFERER}}'" class="button_back"></button>
+    <button onclick="location.href = '/'" class="button_back"></button>
     <h2>Регистрация</h2>
     <form method="post" action="#">
             {% csrf_token %}
