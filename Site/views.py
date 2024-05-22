@@ -250,10 +250,10 @@ def test_view(request):
 
 def friends_view(request, name: str):
     user = Account.objects.get(username=name)
-    friends = Friend.objects.filter(user_id=user.id, accepted=True) | Friend.objects.filter(friend_id=user.id,
+    friends = Friend.objects.filter(user=user.id, accepted=True) | Friend.objects.filter(friend=user.id,
                                                                                             accepted=True)
-    sended_requests = Friend.objects.filter(user_id=user.id, accepted=False)
-    got_requests = Friend.objects.filter(friend_id=user.id, accepted=False)
+    sended_requests = Friend.objects.filter(user=user.id, accepted=False)
+    got_requests = Friend.objects.filter(friend=user.id, accepted=False)
     return render(request, 'friends.html',
                   {'friends': friends, 'is_current_user': request.user == user, 'sended_requests': sended_requests,
                    'got_requests': got_requests, 'user': user})
