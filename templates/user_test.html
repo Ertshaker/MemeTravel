@@ -1,53 +1,55 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'Site/css/profile_styles.css' %}">
     <title>Профиль</title>
 </head>
 <body>
-<table>
 
-    {% if user.avatar %}
-        <img src="{{ user.avatar.url }}" width="300" alt="ПРИВЕТ)"/>
-    {% else %}
-        <img src="/media/svofard_404.png" width="300" alt="Привет)"/>
+<div class="profile_details">
+    <div class="username_title"><p>Профиль - {{ user.username }}</p></div>
+    <div class="avatar_block">
+        {% if user.avatar %}
+            <img src="{{ user.avatar.url }}" width="300" alt="ПРИВЕТ)" class="avatar"/>
+        {% else %}
+            <img src="/media/svofard_404.png" width="300" alt="Привет)" class="avatar"/>
+        {% endif %}
+        <form id="change-avatar-form" method="post" enctype="multipart/form-data" class="Change_avatar">
+            {% csrf_token %}
+            {{ ChangeAvatarForm.image }}
+            <input name="change_avatar_input" type="submit" class="change-avatar" value="Сменить аватар">
+        </form>
+    </div>
+
+    <div class="prof_det">
+
+        <div class="label">Псевдоним</div>
+        <p class="value">{{ user.username }}</p>
+
+        <div class="label">Имя и фамилия</div>
+        <p class="value">{{ user.first_name }} {{ user.last_name }}</p>
+
+        <div class="label">Электронная почта</div>
+        <p class="value">{{ user.email }}</p>
+
+        <div class="label">Дата создания аккаунта - {{ user.date_joined }}</div>
+
+    </div>
+
+
+
+    {% if is_current_user %}
+        <form id="change-password-form" method="post" enctype="multipart/form-data" class="Change_password">
+            {% csrf_token %}
+            {{ ChangePasswordForm.old_password }}
+            {{ ChangePasswordForm.new_password }}
+            <input name="change_password_input" type="submit" class="change-password" value="&nbsp;">
+        </form>
+        </div>
     {% endif %}
-
-
-    <tr>
-        <td>Псевдоним:</td>
-        <td>{{ user.username }}</td>
-    </tr>
-    <tr>
-        <td>Имя:</td>
-        <td>{{ user.first_name }}</td>
-    </tr>
-    <tr>
-        <td>Фамилия:</td>
-        <td>{{ user.last_name }}</td>
-    </tr>
-    <tr>
-        <td>Дата создания аккаунта:</td>
-        <td>{{ user.date_joined }}</td>
-    </tr>
-</table>
-{% if is_current_user %}
-    <h2>Сменить пароль</h2>
-    <form id="change-password-form" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <table>
-            {{ ChangePasswordForm.as_table }}
-        </table>
-        <input name="change_password_input" type="submit" class="change-password" value="Сменить пароль">
-    </form>
-    <form id="change-avatar-form" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <table>
-            {{ ChangeAvatarForm.as_table }}
-        </table>
-        <input name="change_avatar_input" type="submit" class="change-password" value="Сменить аватар">
-    </form>
-{% endif %}
 {% for message in messages %}
     <div class="message {{ message.tags }}">
         {{ message }}
@@ -55,26 +57,92 @@
 {% endfor %}
 <button onclick="location.href = '/'">На главную</button>
 <button onclick="location.href = '{{ user.username }}/friends/'">Друзья</button>
-<h2>Избранное</h2>
+<div class="friend_list">
+    <div class="friends_title"><p>Друзья</p></div>
+    {% if friends %}
+        {% for friend in friends %}
+            {% if user != friend.friend %}
+                <div class="friend">
+                    <img src="{{ friend.friend.avatar.url }}" alt="ПРИВЕТ)" class="friend_avatar"/>
+                    <div class="friend_username"><a class="logo" href="/user/{{ friend.friend }}">{{ friend.friend }}</a></div>
+                </div>
+            {% else %}
+                <div class="friend">
+                    <img src="{{ friend.user.avatar.url }}" alt="ПРИВЕТ)" class="friend_avatar"/>
+                    <div class="friend_username"><a class="logo" href="/user/{{ friend.user }}">{{ friend.user }}</a></div>
+                </div>
+            {% endif %}
+            <div class="delete_friend_button"><button class="remove-friend-button" data-friend-id="{{ friend.id }}">Удалить</button></div>
+        {% endfor %}
+    {% else %}
+        У вас пока еще нет друзей! Вы их обязательно заимеете(в жопу)
+    {% endif %}
+</div>
 
-<table bgcolor="#00ffff">
-    <tr>
-        <th>Название</th>
-        <th>Фотокарточка</th>
-        {% if is_current_user %}
-        <th>Действия</th>
-        {% endif %}
-    </tr>
-    {% for meme in user.favorites.all %}
-    <tr>
-        <td><a class="meme" href="/meme/id{{ meme.id }}">{{ meme.name }}</a></td>
-        <td><img src="{{ meme.path_to_img.url }}" width="300"/></td>
-        {% if is_current_user %}
-            <td><button class="remove-from-favorites-button" data-meme-id="{{ meme.id }}">Удалить из избранного</button></td>
-        {% endif %}
-    </tr>
-    {% endfor %}
-</table>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.remove-friend-button').on('click', function () {
+            var friendId = $(this).data('friend-id');
+            removeFriendRequest(friendId);
+        });
+
+        function removeFriendRequest(friendId) {
+            $.ajax({
+                url: '/remove_friend_request/',
+                type: 'POST',
+                data: {
+                    friend_id: friendId,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (response) {
+                    if (response.success) {
+                        toastr.success('Друг теперь АНТИЗОМБИТЕЛЕН....');
+                        setTimeout(function () {
+                            location.reload();
+                        }, 2000);
+                    } else {
+                        // Обработка ошибки
+                        console.error(response.error);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // Обработка ошибки AJAX-запроса
+                    console.error(error);
+                }
+            });
+        }
+    });
+</script>
+
+<div class="favorites">
+    <h2>Избранное</h2>
+
+    <table>
+        <tr>
+            <th>Название</th>
+            <th>Фотокарточка</th>
+            {% if is_current_user %}
+                <th>Действия</th>
+            {% endif %}
+        </tr>
+        {% for meme in user.favorites.all %}
+            <tr>
+                <td><a class="meme" href="/meme/id{{ meme.id }}">{{ meme.name }}</a></td>
+                <td><img src="{{ meme.path_to_img.url }}" width="300"/></td>
+                {% if is_current_user %}
+                    <td>
+                        <button class="remove-from-favorites-button" data-meme-id="{{ meme.id }}">Удалить из избранного
+                        </button>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
