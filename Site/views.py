@@ -34,17 +34,21 @@ class MemesUpdateView(UpdateView):
 
 class UserDetailView(DetailView):
     model = Account
-    template_name = 'user.html'
+    template_name = 'user_test.html'
     context_object_name = 'user'
     extra_context = {}
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             HttpResponseRedirect('/login', locals())
+        user = self.get_object()
         self.extra_context["is_current_user"] = request.user.username == kwargs["username"]
         self.extra_context["ChangePasswordForm"] = ChangePasswordForm()
         self.extra_context["ChangeAvatarForm"] = ChangeAvatarForm()
-
+        friends = Friend.objects.filter(user=user.id, accepted=True) | Friend.objects.filter(friend=user.id,
+                                                                                             accepted=True)
+        self.extra_context["friends"] = friends
+        self.extra_context["Users"] = Account.objects.all()
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -82,7 +86,7 @@ class UserDetailView(DetailView):
         change_password_form = ChangePasswordForm()
         change_avatar_form = ChangeAvatarForm()
 
-        return render(request, 'user.html',
+        return render(request, 'user_test.html',
                       {"user": user,
                        'is_current_user': request.user == user,
                        "ChangePasswordForm": change_password_form,

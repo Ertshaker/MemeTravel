@@ -71,9 +71,9 @@ class AddMemeForm(forms.ModelForm):
 
 class ChangePasswordForm(forms.Form):
     old_password = forms.CharField(label='Старый пароль', required=True, max_length=255,
-                                   widget=forms.PasswordInput(attrs={'type': 'password'}))
+                                   widget=forms.PasswordInput(attrs={'type': 'password', 'placeholder': 'Старый пароль'}))
     new_password = forms.CharField(label='Новый пароль', required=True, max_length=255,
-                                   widget=forms.PasswordInput(attrs={'type': 'password'}), validators=[check_password])
+                                   widget=forms.PasswordInput(attrs={'type': 'password', 'placeholder': 'Новый пароль'}), validators=[check_password])
 
 
 class AddFriendForm(forms.Form):

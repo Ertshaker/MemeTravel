@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
+
+body {
+    background: url(../img/Profile_background.png) no-repeat transparent;
+    background-size: cover;
+    margin-left: 80px;
+}
+.username_title{
+    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 90px;
+    font-family: Comfortaa;
+}
+.profile_details{
+    color: white;
+
+}
+.avatar{
+    border-radius: 20px;
+    object-fit: cover;
+    width: 426px;
+    height: 567px;
+}
+.prof_det{
+    position: absolute;
+    top: 250px;
+    left: 550px;
+    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: Comfortaa;
+}
+.prof_det .label{
+    font-size: 24px;
+    padding: 0px 0px 0px 20px;
+}
+.prof_det .value{
+    font-size: 28px;
+    border-radius: 40px;
+    border: 3px solid white;
+    padding: 20px 550px 20px 20px
+}
+.Change_password{
+    position: absolute;
+    top: 800px;
+    left: 550px;
+
+}
+
+input[type="password"]::placeholder {
+    padding: 5px 0px 5px 50px;
+}
+input[type="password"] {
+    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: Comfortaa;
+    font-size: 28px;
+    border-radius: 40px;
+    border: 3px solid white;
+    padding: 20px 23px 20px 20px;
+    margin-right: 20px;
+}
+.change-password{
+    background: url('../img/change_password_button.png') no-repeat center transparent;
+    position: absolute;
+    background-size: 60%;
+    border-radius: 40px;
+    border: 3px solid white;
+    cursor: pointer;
+    bottom: 2%;
+    padding: 20px 80px 40px 20px;
+}
+.change-avatar-form{
+    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: Comfortaa;
+}
+
+.friend_list{
+    position: relative;
+    top: 300px;
+    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
+    background-clip: text;
+    font-family: Comfortaa;
+
+}
+
+.friends_title{
+    font-size: 90px;
+    -webkit-text-fill-color: transparent;
+}
+
+.friend_avatar{
+    border-radius: 20px;
+    object-fit: cover;
+    width: 224px;
+    height: 298px;
+}
+
+
+
+
+.friend{
+    display: inline-block;
+}
+
+.delete_friend_button{
+    display: inline-block;
+    position: relative;
+    right: 75px;
+}
+.remove-friend-button{
+    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
+    background-clip: text;
+    font-family: Comfortaa;
+    border-radius: 9px;
+    border: 2px solid white;
+    cursor: pointer;
+    bottom: 2%;
+    padding: 2px;
+    -webkit-text-fill-color: transparent;
+}
+
+.friend_username{
+    -webkit-text-fill-color: transparent;
+}
+
+.favorites{
+    position: absolute;
+    top: 2000px;
+}
