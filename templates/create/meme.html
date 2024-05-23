@@ -9,7 +9,7 @@
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <table>
-                {{ addmeme_form }}
+                {{ addmeme_form.as_table }}
             </table>
             <input type="submit" class="addmeme" value="Добавить">
         </form>

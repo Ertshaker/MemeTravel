@@ -3,16 +3,17 @@ from django.contrib.auth.models import AbstractUser
 
 
 # Create your models here.
-class Genres(models.Model):
-    name = models.CharField(max_length=100)
 
 
 class Meme(models.Model):
     name = models.CharField(max_length=100)
     date = models.DateField()
-    description = models.TextField()
+    description = models.TextField(default='Тогда почему ты мой писарь, а? (404)')
+    history = models.TextField(default='Тогда почему ты мой писарь, а? (404)')
+    meaning = models.TextField(default='Тогда почему ты мой писарь, а? (404)')
+    cultural_influence = models.TextField(default='Тогда почему ты мой писарь, а? (404)')
+    using_examples = models.TextField(default='Тогда почему ты мой писарь, а? (404)')
     path_to_img = models.ImageField(upload_to='memes/')
-    genre = models.ManyToManyField(Genres)
 
     def get_absolute_url(self):
         return f'/meme/id{self.id}'

@@ -245,7 +245,7 @@ def create_route(request, *args, **kwargs):
 
 
 def test_view(request):
-    return render(request, 'test.html')
+    return render(request, 'index.html')
 
 
 def friends_view(request, name: str):
