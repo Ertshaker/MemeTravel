@@ -33,8 +33,11 @@
         <p class="value">{{ user.first_name }} {{ user.last_name }}</p>
 
         <div class="label">Электронная почта</div>
-        <p class="value">{{ user.email }}</p>
-
+        {% if user.email %}
+            <p class="value">{{ user.email }}</p>
+        {% else %}
+            <p class="value">&nbsp;</p>
+        {% endif %}
         <div class="label">Дата создания аккаунта - {{ user.date_joined }}</div>
 
     </div>
@@ -59,24 +62,65 @@
 <button onclick="location.href = '{{ user.username }}/friends/'">Друзья</button>
 <div class="friend_list">
     <div class="friends_title"><p>Друзья</p></div>
-    {% if friends %}
-        {% for friend in friends %}
-            {% if user != friend.friend %}
-                <div class="friend">
-                    <img src="{{ friend.friend.avatar.url }}" alt="ПРИВЕТ)" class="friend_avatar"/>
-                    <div class="friend_username"><a class="logo" href="/user/{{ friend.friend }}">{{ friend.friend }}</a></div>
-                </div>
-            {% else %}
-                <div class="friend">
-                    <img src="{{ friend.user.avatar.url }}" alt="ПРИВЕТ)" class="friend_avatar"/>
-                    <div class="friend_username"><a class="logo" href="/user/{{ friend.user }}">{{ friend.user }}</a></div>
-                </div>
-            {% endif %}
-            <div class="delete_friend_button"><button class="remove-friend-button" data-friend-id="{{ friend.id }}">Удалить</button></div>
-        {% endfor %}
-    {% else %}
-        У вас пока еще нет друзей! Вы их обязательно заимеете(в жопу)
-    {% endif %}
+    <div class="friend_options">
+        <a class="requests" href="{{ user.username }}/friends/">Входящие заявки
+            <div class="counter">{% if got_requests %}{{ got_requests.count }}{% else %}0{% endif %}</div>
+        </a>
+        <a class="requests" href="{{ user.username }}/friends/">Отправленные заявки
+            <div class="counter">{% if send_requests %}{{ send_requests.count }}{% else %}0{% endif %}</div>
+        </a>
+        <a class="requests">Удалить :(</a>
+    </div>
+    <button id="slideLeft" type="button">Slide left</button>
+    <button id="slideRight" type="button">Slide right</button>
+    
+    <div class="friends">
+        {% if friends %}
+            {% for friend in friends %}
+                {% if user != friend.friend %}
+                    <div class="friend">
+                        {% if friend.friend.avatar %}
+                            <img src="{{ friend.friend.avatar.url }}" alt="ПРИВЕТ)" class="friend_avatar"/>
+                        {% else %}
+                            <img src="/media/svofard_404.png" width="300" alt="Привет)" class="friend_avatar"/>
+                        {% endif %}
+                        <div class="friend_username"><a href="/user/{{ friend.friend }}">{{ friend.friend }}</a></div>
+                        {#                        <div class="delete_friend_button">#}
+                        {#                            <button class="remove-friend-button" data-friend-id="{{ friend.id }}">Удалить</button>#}
+                        {#                        </div>#}
+                    </div>
+                {% else %}
+                    <div class="friend">
+
+                        {% if friend.user.avatar %}
+                            <img src="{{ friend.user.avatar.url }}" alt="ПРИВЕТ)" class="friend_avatar"/>
+                        {% else %}
+                            <img src="/media/svofard_404.png" width="300" alt="Привет)" class="friend_avatar"/>
+                        {% endif %}
+                        <div class="friend_username"><a href="/user/{{ friend.user }}">{{ friend.user }}</a></div>
+                        {#                        <div class="delete_friend_button">#}
+                        {#                            <button class="remove-friend-button" data-friend-id="{{ friend.id }}">Удалить</button>#}
+                        {#                        </div>#}
+                    </div>
+
+                {% endif %}
+
+            {% endfor %}
+        {% else %}
+            У вас пока еще нет друзей! Вы их обязательно заимеете(в жопу)
+        {% endif %}
+    </div>
+    <script>
+        const buttonRight = document.getElementById('slideRight');
+        const buttonLeft = document.getElementById('slideLeft');
+
+        buttonRight.onclick = function () {
+            document.getElementById('friends').scrollLeft += 100;
+        };
+        buttonLeft.onclick = function () {
+            document.getElementById('friends').scrollLeft -= 100;
+        };
+    </script>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

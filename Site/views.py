@@ -47,7 +47,11 @@ class UserDetailView(DetailView):
         self.extra_context["ChangeAvatarForm"] = ChangeAvatarForm()
         friends = Friend.objects.filter(user=user.id, accepted=True) | Friend.objects.filter(friend=user.id,
                                                                                              accepted=True)
+        sended_requests = Friend.objects.filter(user=user.id, accepted=False)
+        got_requests = Friend.objects.filter(friend=user.id, accepted=False)
         self.extra_context["friends"] = friends
+        self.extra_context["send_requests"] = sended_requests
+        self.extra_context["got_requests"] = got_requests
         self.extra_context["Users"] = Account.objects.all()
         return super().get(request, *args, **kwargs)
 
