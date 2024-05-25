@@ -5,59 +5,23 @@ body {
     background: url(../img/index/introduction_image.png) no-repeat black;
 }
 
-header {
-    display: flex;
-    border-bottom: 2px solid white;
-    margin-inline: 5%;
-    padding-block: 10px;
-}
-
-header p {
-    margin-bottom: auto;
-    font-size: 28px;
-    font-family: Montserrat;
-    color: white;
-}
-
-header > * {
-    padding-inline: 1em;
-}
-
-.header-logo {
-    width: 138px;
-    position: relative;
-    vertical-align: bottom;
-}
-
-header .nav-button {
-    background: transparent;
-    border: transparent;
-    cursor: pointer;
-    margin-block: auto;
-}
-
-header p {
-    display: inline;
-    font-family: Montserrat;
-    font-size: 28px;
-    padding-inline: 10px;
-    margin-right: auto;
+.text-comfortaa {
+    font-family: Comfortaa, sans-serif;
 }
 
 section {
     position: relative;
-    display: block;
     padding-inline: 8%;
     height: 100vh;
-    overflow: auto;
-    overflow-y: auto;
+    overflow: hidden;
 }
 
 .introduction {
-    font-family: Comfortaa;
+    font-family: Comfortaa, sans-serif;
     position: relative;
     display: block;
-    margin-top: 25%;
+    margin-top: 15%;
+    margin-bottom: 10%;
 }
 
 .introduction h2 {
@@ -87,7 +51,6 @@ section {
 }
 
 .gradient-text {
-    font-family: Comfortaa;
     background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -115,7 +78,9 @@ section {
     width: 50%;
     margin-inline: 1%;
     font-size: 51px;
+    color: white;
     text-wrap: normal;
+    word-break: break-all;
     flex-flow: row wrap;
 }
 
@@ -123,6 +88,7 @@ section {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
+    text-wrap: normal;
 }
 
 .function {
@@ -135,32 +101,39 @@ section {
     width: 20%;
     height: 350px;
     margin-right: 20px;
+    justify-items: center;
+    align-items: center;
+    overflow: hidden;
 }
 
 .function p {
-    text-align: center;
+    text-wrap: normal;
+    word-break: break-all;
     font-size: 24px;
     color: white;
     font-family: Montserrat, sans-serif;
 }
 
-section[id='functionality'] h2 {
+#functionality h2 {
     font-size: 110px;
     font-family: Montserrat, sans-serif;
 }
 
 .function img {
     position: relative;
-    align-self: center;
     margin-inline: auto;
+    object-fit: cover;
+    width: 200px;
+    height: 200px;
 }
 
 section[id='transition'] {
+
 }
 
 .transition-wrapper {
     display: grid;
-    grid-template-rows: 50% 50%;
+    grid-template-rows: 1fr 1fr;
     border-top: 2px solid white;
     justify-items: center;
 }

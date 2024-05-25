@@ -72,22 +72,23 @@
     <button onclick="location.href = '/'" class="button_back"></button>
     <h2>Регистрация</h2>
     <form method="post" action="#">
-            {% csrf_token %}
-            {{ registration_form.username }}
-            {{ registration_form.first_name }}
-            {{ registration_form.last_name }}
-            {{ registration_form.password }}
-            {{ registration_form.confirm_password }}
-            {{ registration_form.email }}
+        {% csrf_token %}
+        {{ registration_form.username }}
+        {{ registration_form.first_name }}
+        {{ registration_form.last_name }}
+        {{ registration_form.password }}
+        {{ registration_form.confirm_password }}
+        {{ registration_form.email }}
         <button type="submit" class="register">Регистрация</button>
-        <p>Уже есть аккаунт?<a href="/login" class="sign-up">Войти</a></p>
+        <p>Есть аккаунт?<br/>
+            <a href="/login">войти</a>
+        </p>
     </form>
 
 </div>
 </body>
 
 </html>
-
 
 
 <div id="errorModal" class="modal">
@@ -106,18 +107,18 @@
 <script>
     var modal = document.getElementById("errorModal");
     var span = document.getElementsByClassName("close")[0];
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         var hasMessages = document.querySelectorAll("#modalMessages .message").length > 0;
         if (hasMessages) {
             modal.style.display = "block";
         }
     });
 
-    span.onclick = function() {
+    span.onclick = function () {
         modal.style.display = "none";
     };
 
-    window.onclick = function(event) {
+    window.onclick = function (event) {
         if (event.target == modal) {
             modal.style.display = "none";
         }
