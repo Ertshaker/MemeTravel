@@ -100,28 +100,36 @@ $(document).ready(function() {
     });
 
     function addFriendRequest(friendId) {
-        $.ajax({
-            url: '/add_friend_request/',
-            type: 'POST',
-            data: {
-                friend_id: friendId,
-                csrfmiddlewaretoken: '{{ csrf_token }}'
-            },
-            success: function(response) {
-                if (response.success) {
-                    toastr.success('Запрос в друзья ЗОМБИТЕЛЕН!');
-                    setTimeout(function() {location.reload();}, 2000);
-                } else {
-                    // Обработка ошибки
-                    console.error(response.error);
-                }
-            },
-            error: function(xhr, status, error) {
-                // Обработка ошибки AJAX-запроса
-                console.error(error);
-            }
-        });
-    }
+    var csrfToken = '{{ csrf_token }}';
+
+    var deferred = $.Deferred();
+
+    $.ajax({
+        url: '/add_friend_request/',
+        type: 'POST',
+        data: {
+            friend_id: friendId,
+            csrfmiddlewaretoken: csrfToken
+        }
+    })
+    .done(function(response) {
+        if (response.success) {
+            deferred.resolve(response);
+            toastr.success('Запрос в друзья ЗОМБИТЕЛЕН!');
+            setTimeout(function() { location.reload(); }, 2000);
+        } else {
+            deferred.reject(response.error);
+            console.error(response.error);
+        }
+    })
+    .fail(function(xhr, status, error) {
+        deferred.reject(error);
+        console.error(error);
+    });
+
+    return deferred.promise();
+}
+
 });
 </script>
 
