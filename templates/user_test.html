@@ -71,8 +71,6 @@
         </a>
         <a class="requests">Удалить :(</a>
     </div>
-    <button id="slideLeft" type="button">Slide left</button>
-    <button id="slideRight" type="button">Slide right</button>
     
     <div class="friends">
         {% if friends %}
@@ -110,17 +108,6 @@
             У вас пока еще нет друзей! Вы их обязательно заимеете(в жопу)
         {% endif %}
     </div>
-    <script>
-        const buttonRight = document.getElementById('slideRight');
-        const buttonLeft = document.getElementById('slideLeft');
-
-        buttonRight.onclick = function () {
-            document.getElementById('friends').scrollLeft += 100;
-        };
-        buttonLeft.onclick = function () {
-            document.getElementById('friends').scrollLeft -= 100;
-        };
-    </script>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
