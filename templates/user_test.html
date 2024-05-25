@@ -58,20 +58,24 @@
         {{ message }}
     </div>
 {% endfor %}
-<button onclick="location.href = '/'">На главную</button>
-<button onclick="location.href = '{{ user.username }}/friends/'">Друзья</button>
 <div class="friend_list">
-    <div class="friends_title"><p>Друзья</p></div>
-    <div class="friend_options">
-        <a class="requests" href="{{ user.username }}/friends/">Входящие заявки
-            <div class="counter">{% if got_requests %}{{ got_requests.count }}{% else %}0{% endif %}</div>
-        </a>
-        <a class="requests" href="{{ user.username }}/friends/">Отправленные заявки
-            <div class="counter">{% if send_requests %}{{ send_requests.count }}{% else %}0{% endif %}</div>
-        </a>
-        <a class="requests">Удалить :(</a>
+    <div class="friends_title">
+        {% if is_current_user %}
+            <div class="friend_options">
+                <a class="requests" href="{{ user.username }}/friends/">Входящие заявки
+                    <div class="counter">{% if got_requests %}{{ got_requests.count }}{% else %}0{% endif %}</div>
+                </a>
+                <a class="requests" href="{{ user.username }}/friends/">Отправленные заявки
+                    <div class="counter">{% if send_requests %}{{ send_requests.count }}{% else %}0{% endif %}</div>
+                </a>
+                <a class="requests">Удалить :(</a>
+            </div>
+        {% endif %}
+    <p>Друзья</p>
     </div>
-    
+
+
+    <button class="friends_slide_left"></button>
     <div class="friends">
         {% if friends %}
             {% for friend in friends %}
@@ -108,6 +112,7 @@
             У вас пока еще нет друзей! Вы их обязательно заимеете(в жопу)
         {% endif %}
     </div>
+    <button class="friends_slide_right"></button>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -147,32 +152,23 @@
         }
     });
 </script>
-
+<div class="favorites_title"><p>Избранное</p></div>
+<button class="favorites_slide_left"></button>
 <div class="favorites">
-    <h2>Избранное</h2>
 
-    <table>
-        <tr>
-            <th>Название</th>
-            <th>Фотокарточка</th>
+    {% for meme in user.favorites.all %}
+        <div class="meme">
+
+            <img src="{{ meme.path_to_img.url }}" width="300" class="meme_picture"/>
+            <a class="meme_name" href="/meme/id{{ meme.id }}">{{ meme.name }}</a>
             {% if is_current_user %}
-                <th>Действия</th>
+                <button class="remove-from-favorites-button" data-meme-id="{{ meme.id }}">Удалить</button>
             {% endif %}
-        </tr>
-        {% for meme in user.favorites.all %}
-            <tr>
-                <td><a class="meme" href="/meme/id{{ meme.id }}">{{ meme.name }}</a></td>
-                <td><img src="{{ meme.path_to_img.url }}" width="300"/></td>
-                {% if is_current_user %}
-                    <td>
-                        <button class="remove-from-favorites-button" data-meme-id="{{ meme.id }}">Удалить из избранного
-                        </button>
-                    </td>
-                {% endif %}
-            </tr>
-        {% endfor %}
-    </table>
+        </div>
+    {% endfor %}
+
 </div>
+<button class="favorites_slide_right"></button>
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

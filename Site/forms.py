@@ -45,6 +45,7 @@ class RegistrationForm(forms.Form):
     favorite_memes = forms.ModelMultipleChoiceField(queryset=Meme.objects.all(), required=False)
     status = forms.ModelChoiceField(queryset=Group.objects.all(), required=False)
 
+
 class LoginForm(forms.Form):
     username = forms.CharField(label='Логин', required=True, max_length=30,
                                widget=forms.TextInput(
@@ -65,15 +66,18 @@ class AddMemeForm(forms.ModelForm):
                   'meaning': 'Значение и символика', 'cultural_influence': 'Культурное влияние',
                   'using_examples': 'Примеры и использование'}
         widgets = {'date': forms.TextInput(attrs={'type': 'date'})}
-    additional_image = forms.ImageField(label='Дополнительное изображение', required=False)
 
+    additional_image = forms.ImageField(label='Дополнительное изображение', required=False)
 
 
 class ChangePasswordForm(forms.Form):
     old_password = forms.CharField(label='Старый пароль', required=True, max_length=255,
-                                   widget=forms.PasswordInput(attrs={'type': 'password', 'placeholder': 'Старый пароль'}))
+                                   widget=forms.PasswordInput(
+                                       attrs={'type': 'password', 'placeholder': 'Старый пароль'}))
     new_password = forms.CharField(label='Новый пароль', required=True, max_length=255,
-                                   widget=forms.PasswordInput(attrs={'type': 'password', 'placeholder': 'Новый пароль'}), validators=[check_password])
+                                   widget=forms.PasswordInput(
+                                       attrs={'type': 'password', 'placeholder': 'Новый пароль'}),
+                                   validators=[check_password])
 
 
 class AddFriendForm(forms.Form):
@@ -82,4 +86,4 @@ class AddFriendForm(forms.Form):
 
 
 class ChangeAvatarForm(forms.Form):
-    image = forms.ImageField(label='Новый аватар')
+    image = forms.ImageField(label='Новый аватар', widget=forms.FileInput(attrs={"id": "image_field"}))

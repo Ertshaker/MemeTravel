@@ -5,24 +5,28 @@ body {
     background-size: cover;
     margin-left: 80px;
 }
-.username_title{
+
+.username_title {
     background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
     background-clip: text;
     -webkit-text-fill-color: transparent;
     font-size: 90px;
     font-family: Comfortaa;
 }
-.profile_details{
+
+.profile_details {
     color: white;
 
 }
-.avatar{
+
+.avatar {
     border-radius: 20px;
     object-fit: cover;
     width: 426px;
     height: 567px;
 }
-.prof_det{
+
+.prof_det {
     position: absolute;
     top: 250px;
     left: 550px;
@@ -31,17 +35,20 @@ body {
     -webkit-text-fill-color: transparent;
     font-family: Comfortaa;
 }
-.prof_det .label{
+
+.prof_det .label {
     font-size: 24px;
     padding: 0px 0px 0px 20px;
 }
-.prof_det .value{
+
+.prof_det .value {
     font-size: 28px;
     border-radius: 40px;
     border: 3px solid white;
     padding: 20px 550px 20px 20px
 }
-.Change_password{
+
+.Change_password {
     position: absolute;
     top: 800px;
     left: 550px;
@@ -51,6 +58,7 @@ body {
 input[type="password"]::placeholder {
     padding: 5px 0px 5px 50px;
 }
+
 input[type="password"] {
     background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
     background-clip: text;
@@ -62,7 +70,8 @@ input[type="password"] {
     padding: 20px 23px 20px 20px;
     margin-right: 20px;
 }
-.change-password{
+
+.change-password {
     background: url('../img/change_password_button.png') no-repeat center transparent;
     position: absolute;
     background-size: 60%;
@@ -72,37 +81,44 @@ input[type="password"] {
     bottom: 2%;
     padding: 20px 80px 40px 20px;
 }
-.change-avatar-form{
+
+.change-avatar-form {
     background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
     background-clip: text;
     -webkit-text-fill-color: transparent;
     font-family: Comfortaa;
 }
 
-.friend_list{
+.friend_list {
     position: relative;
-    top: 300px;
-    width: 1450px;
+    top: 200px;
 }
 
-.friends_title{
+.friends_title {
+    position: relative;
     font-size: 90px;
     background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
     background-clip: text;
     font-family: Comfortaa;
     -webkit-text-fill-color: transparent;
+    left: 65px;
+    width: 1300px;
+
 }
 
-.friends{
-    flex: 0 0 auto;
-    display: flex;
+.friends {
+    display: grid;
+    grid-template-rows: 350px;
+    grid-auto-columns: 270px;
+    grid-auto-flow: column dense;
     align-items: center;
     flex-wrap: nowrap;
     overflow-x: scroll;
     width: 1325px;
+    margin-left: 70px;
 }
 
-.friend_avatar{
+.friend_avatar {
     border-radius: 20px;
     object-fit: cover;
     width: 224px;
@@ -114,20 +130,16 @@ input[type="password"] {
 /*        }*/
 
 
-.friend{
+.friend {
     align-items: center;
     justify-content: center;
     top: 20%;
     padding-bottom: 20px;
-    margin-right: 50px;
+    /*margin-right: 50px;*/
 }
 
-.delete_friend_button{
-    display: inline-block;
-    position: relative;
 
-}
-.remove-friend-button{
+.remove-friend-button {
 
     border-radius: 9px;
     border: 2px solid white;
@@ -140,9 +152,7 @@ input[type="password"] {
     -webkit-text-fill-color: transparent;
 }
 
-.friend_username{
-    position: relative;
-    display: inline-block;
+.friend_username {
     background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
     background-clip: text;
     font-family: Comfortaa;
@@ -151,18 +161,18 @@ input[type="password"] {
     -webkit-text-fill-color: transparent;
 }
 
-.friend_options{
-    position: absolute;
+.friend_options {
+    position: relative;
     background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
     background-clip: text;
     font-family: Comfortaa;
     -webkit-text-fill-color: transparent;
     font-size: 28px;
-    left: 400px;
-    bottom: 485px;
+    left: 370px;
+    top: 175px;
 }
 
-.requests{
+.requests {
     display: inline-block;
     font-size: 28px;
     border-radius: 40px;
@@ -171,12 +181,146 @@ input[type="password"] {
     margin-right: 20px;
 }
 
-.counter{
+.counter {
     display: inline-block;
     margin-left: 25px;
 }
 
-.favorites{
-    position: absolute;
-    top: 2000px;
+.favorites {
+    position: relative;
+    top: 310px;
+    width: 1340px;
+    flex: 0 0 auto;
+    display: grid;
+    grid-template-rows: 385px 385px;
+    grid-auto-columns: 450px;
+    grid-auto-flow: column dense;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    margin-left: 70px;
+}
+
+.favorites_title {
+    font-size: 90px;
+    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
+    background-clip: text;
+    font-family: Comfortaa;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    top: 400px;
+    left: 65px;
+    width: 800px;
+}
+
+.meme {
+    align-items: center;
+    justify-content: center;
+    top: 20%;
+    margin-right: 50px;
+    border-radius: 20px;
+    border: 1px solid;
+    width: 415px;
+    height: 350px;
+    background: rgba(217, 217, 217, 0.95);
+}
+
+.meme_picture {
+    border-radius: 20px;
+    object-fit: cover;
+    width: 415px;
+    height: 312px;
+}
+
+.meme_name {
+    background: linear-gradient(60deg, #000000 0%, #0D1946 11%, #461452 22%, #610F4A 33%, #67165C 44%, #0C0E4A 87%, #01001C  100%);
+    background-clip: text;
+    font-family: Comfortaa;
+    font-size: 22px;
+    margin-left: 5px;
+    -webkit-text-fill-color: transparent;
+}
+
+.remove-from-favorites-button{
+    border-radius: 9px;
+    border: 2px solid black;
+    cursor: pointer;
+    bottom: 2%;
+    padding: 2px 10px 2px 10px;
+    font-size: 18px;
+    background: linear-gradient(60deg, #000000 0%, #0D1946 11%, #461452 22%, #610F4A 33%, #67165C 44%, #0C0E4A 87%, #01001C  100%);
+    background-clip: text;
+    font-family: Comfortaa;
+    -webkit-text-fill-color: transparent;
+    float: right;
+    margin-right: 10px;
+}
+
+.friends_slide_right{
+    background: url('../img/change_password_button.png') no-repeat center transparent;
+    position: relative;
+    background-size: 50%;
+    border-radius: 40px;
+    border: 2px solid white;
+    cursor: pointer;
+    bottom: 250px;
+    left: 1410px;
+    padding: 20px 65px 40px 20px;
+}
+
+.friends_slide_left{
+    background: url('../img/change_password_button.png') no-repeat center transparent;
+    position: relative;
+    transform: rotate(180deg);
+    background-size: 50%;
+    border-radius: 40px;
+    border: 2px solid white;
+    cursor: pointer;
+    top: 181px;
+    right: 50px;
+    padding: 20px 65px 40px 20px;
+}
+
+.favorites_slide_right{
+    background: url('../img/change_password_button.png') no-repeat center transparent;
+    position: relative;
+    background-size: 50%;
+    border-radius: 40px;
+    border: 2px solid white;
+    cursor: pointer;
+    bottom: 124px;
+    left: 1420px;
+    padding: 20px 65px 40px 20px;
+}
+
+.favorites_slide_left{
+    background: url('../img/change_password_button.png') no-repeat center transparent;
+    position: relative;
+    transform: rotate(180deg);
+    background-size: 50%;
+    border-radius: 40px;
+    border: 2px solid white;
+    cursor: pointer;
+    top: 727px;
+    right: 50px;
+    padding: 20px 65px 40px 20px;
+}
+
+.Change_avatar{
+    font-size: 20px;
+    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
+    background-clip: text;
+    font-family: Comfortaa;
+    -webkit-text-fill-color: transparent;
+    width: 426px;
+}
+
+.change-avatar{
+    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
+    background-clip: text;
+    font-family: Comfortaa;
+    font-size: 25px;
+    -webkit-text-fill-color: transparent;
+    border-radius: 40px;
+    border: 0px solid white;
 }
