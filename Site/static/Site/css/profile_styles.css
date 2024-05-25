@@ -82,15 +82,24 @@ input[type="password"] {
 .friend_list{
     position: relative;
     top: 300px;
-    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
-    background-clip: text;
-    font-family: Comfortaa;
-
+    width: 1450px;
 }
 
 .friends_title{
     font-size: 90px;
+    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
+    background-clip: text;
+    font-family: Comfortaa;
     -webkit-text-fill-color: transparent;
+}
+
+.friends{
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    width: 1325px;
 }
 
 .friend_avatar{
@@ -100,32 +109,71 @@ input[type="password"] {
     height: 298px;
 }
 
-
+/*::-webkit-scrollbar {*/
+/*            display: none;*/
+/*        }*/
 
 
 .friend{
-    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    top: 20%;
+    padding-bottom: 20px;
+    margin-right: 50px;
 }
 
 .delete_friend_button{
     display: inline-block;
     position: relative;
-    right: 75px;
+
 }
 .remove-friend-button{
-    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
-    background-clip: text;
-    font-family: Comfortaa;
+
     border-radius: 9px;
     border: 2px solid white;
     cursor: pointer;
     bottom: 2%;
     padding: 2px;
+    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
+    background-clip: text;
+    font-family: Comfortaa;
     -webkit-text-fill-color: transparent;
 }
 
 .friend_username{
+    position: relative;
+    display: inline-block;
+    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
+    background-clip: text;
+    font-family: Comfortaa;
+    font-size: 22px;
+    margin-left: 5px;
     -webkit-text-fill-color: transparent;
+}
+
+.friend_options{
+    position: absolute;
+    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
+    background-clip: text;
+    font-family: Comfortaa;
+    -webkit-text-fill-color: transparent;
+    font-size: 28px;
+    left: 400px;
+    bottom: 485px;
+}
+
+.requests{
+    display: inline-block;
+    font-size: 28px;
+    border-radius: 40px;
+    border: 3px solid white;
+    padding: 15px 15px 15px 15px;
+    margin-right: 20px;
+}
+
+.counter{
+    display: inline-block;
+    margin-left: 25px;
 }
 
 .favorites{
