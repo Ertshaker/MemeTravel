@@ -1,38 +1,96 @@
-{% load get_group %}
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Мемопедия</title>
+    <style>
+        .autocomplete-suggestions {
+            border: 1px solid #ddd;
+            max-height: 150px;
+            overflow-y: auto;
+            position: absolute;
+            background-color: white;
+            z-index: 9999;
+        }
+        .autocomplete-suggestion {
+            padding: 8px;
+            cursor: pointer;
+        }
+        .autocomplete-suggestion:hover {
+            background-color: #eee;
+        }
+    </style>
 </head>
 <body class="container">
 <header>
-  <a class="logo" href="/">На главную</a>
+    <a class="logo" href="/">На главную</a>
 </header>
 <h2>Список мемов</h2>
-<table>
-    <tr><th>Номер</th><th>Название</th><th>Картиночка</th></tr>
-    {% for meme in memes %}
-        <tr>
-            <td>{{ meme.id }}</td>
-            <td>{{ meme.name }}</td>
-            <td> <img src="{{meme.path_to_img.url}}" width="300" /> </td>
-            <td> <button onclick="location.href = '/meme/id{{ meme.id }}'">Подробнее</button> </td>
-        </tr>
-    {% endfor %}
-</table>
-        {% if request.user|has_group:"Админ" %} 
-            <button onclick="location.href = '/create/meme'">Добавить новый мем</button> 
-{% else %}
 
-{% endif %}
-        <button onclick="location.href = '/'">На главную</button>
+<form method="GET" action="">
+    <input type="text" id="search" name="q" placeholder="Поиск мемов по названию" value="{{ query }}" autocomplete="off">
+    <button type="submit">Поиск</button>
+</form>
+<div id="suggestions" class="autocomplete-suggestions"></div>
+    <button type="button" onclick="window.location.href='/encyclopedia/'">Сброс результатов поиска</button>
+</form>
+<div id="suggestions" class="autocomplete-suggestions"></div>
+
+{% for year, memes in filtered_memes.items %}
+    <h3>{{ year }}</h3>
+    <table>
+        <tr><th>Номер</th><th>Название</th><th>Картиночка</th></tr>
+        {% for meme in memes %}
+            <tr>
+                <td>{{ meme.id }}</td>
+                <td>{{ meme.name }}</td>
+                <td><img src="{{ meme.path_to_img.url }}" width="300" /></td>
+                <td><button onclick="location.href = '{{ meme.get_absolute_url }}'">Подробнее</button></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endfor %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search');
+    const suggestionsBox = document.getElementById('suggestions');
+
+    searchInput.addEventListener('input', function() {
+        const query = this.value;
+        if (query.length > 1) {
+            fetch(`/autocomplete/?term=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    suggestionsBox.innerHTML = '';
+                    if (data.length > 0) {
+                        data.forEach(item => {
+                            const suggestion = document.createElement('div');
+                            suggestion.classList.add('autocomplete-suggestion');
+                            suggestion.textContent = item;
+                            suggestion.addEventListener('click', function() {
+                                searchInput.value = item;
+                                suggestionsBox.innerHTML = '';
+                            });
+                            suggestionsBox.appendChild(suggestion);
+                        });
+                    }
+                });
+        } else {
+            suggestionsBox.innerHTML = '';
+        }
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
+            suggestionsBox.innerHTML = '';
+        }
+    });
+});
+</script>
+
 </body>
 </html>
-
-
-
 
 
 <!-- ЭТА КНОПКА НАВЕРХ ПЕРЕМЕСТИТЕСЬ -->
@@ -46,8 +104,8 @@
         #back-to-top {
             display: none;
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 830px;
+            right: 870px;
             z-index: 99;
             font-size: 24px;
             border: none;
