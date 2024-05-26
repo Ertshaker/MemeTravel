@@ -37,7 +37,8 @@ urlpatterns = [
     path('remove_friend_request/', views.remove_friend_request, name='remove_friend_request'),
     path('add_friend_request/', views.add_friend_request, name='add_friend_request'),
     path('add_to_favorites/', views.add_to_favorites, name='add_to_favorites'),
-    path('remove_from_favorites/', views.remove_from_favorites, name='remove_from_favorites')
+    path('remove_from_favorites/', views.remove_from_favorites, name='remove_from_favorites'),
+    path('autocomplete/', views.autocomplete, name='autocomplete'),
 ]
 
 if settings.DEBUG:

@@ -362,6 +362,12 @@ def remove_from_favorites(request):
             return JsonResponse({'success': False, 'error': 'МЕМ НЕ НАЙДЕН блин'})
     return JsonResponse({'success': False, 'error': 'IИНВАЛИИД'})
 def encyclopedia(request):
+    query = request.GET.get('q')
+    memes = Meme.objects.all()
+
+    if query:
+        memes = memes.filter(name__icontains=query)
+
     years = {
         'ДО 2000': (datetime(1900, 1, 1), datetime(2000, 1, 1)),
         '2000-2005': (datetime(2000, 1, 2), datetime(2005, 1, 1)),
@@ -374,6 +380,17 @@ def encyclopedia(request):
     filtered_memes = {}
 
     for key, value in years.items():
-        filtered_memes[key] = Meme.objects.filter(date__range=value)
+        if len(value) == 1:
+            filtered_memes[key] = memes.filter(date__lt=value[0])
+        else:
+            filtered_memes[key] = memes.filter(date__range=value)
 
     return render(request, 'encyclopedia.html', {'filtered_memes': filtered_memes})
+
+def autocomplete(request):
+    if 'term' in request.GET:
+        query = request.GET.get('term')
+        memes = Meme.objects.filter(name__icontains=query)
+        names = list(memes.values_list('name', flat=True))
+        return JsonResponse(names, safe=False)
+    return JsonResponse([], safe=False)
