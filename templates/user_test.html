@@ -1,120 +1,137 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'Site/css/profile_styles.css' %}">
-    <title>Профиль</title>
+    <link rel="stylesheet" href="{% static 'Site/css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'Site/css/global.css' %}">
+    <title>{{ user.username }}</title>
 </head>
 <body>
-
-<div class="profile_details">
-    <div class="username_title"><p>Профиль - {{ user.username }}</p></div>
-    <div class="avatar_block">
-        {% if user.avatar %}
-            <img src="{{ user.avatar.url }}" width="300" alt="ПРИВЕТ)" class="avatar"/>
-        {% else %}
-            <img src="/media/svofard_404.png" width="300" alt="Привет)" class="avatar"/>
-        {% endif %}
-        <form id="change-avatar-form" method="post" enctype="multipart/form-data" class="Change_avatar">
-            {% csrf_token %}
-            {{ ChangeAvatarForm.image }}
-            <input name="change_avatar_input" type="submit" class="change-avatar" value="Сменить аватар">
-        </form>
-    </div>
-
-    <div class="prof_det">
-
-        <div class="label">Псевдоним</div>
-        <p class="value">{{ user.username }}</p>
-
-        <div class="label">Имя и фамилия</div>
-        <p class="value">{{ user.first_name }} {{ user.last_name }}</p>
-
-        <div class="label">Электронная почта</div>
-        {% if user.email %}
-            <p class="value">{{ user.email }}</p>
-        {% else %}
-            <p class="value">&nbsp;</p>
-        {% endif %}
-        <div class="label">Дата создания аккаунта - {{ user.date_joined }}</div>
-
-    </div>
-
-
-
-    {% if is_current_user %}
-        <form id="change-password-form" method="post" enctype="multipart/form-data" class="Change_password">
-            {% csrf_token %}
-            {{ ChangePasswordForm.old_password }}
-            {{ ChangePasswordForm.new_password }}
-            <input name="change_password_input" type="submit" class="change-password" value="&nbsp;">
-        </form>
+{% include 'components/header.html' %}
+<section id="profile">
+    <p class="section-title gradient-white font-Comfortaa">Профиль</p>
+    <div class="user-parameters font-Comfortaa">
+        <div class="avatar-block">
+            {% if user.avatar %}
+                <img src="{{ user.avatar.url }}" width="300" alt="ПРИВЕТ)" class="avatar"/>
+            {% else %}
+                <img src="/media/svofard_404.png" width="300" alt="Привет)" class="avatar"/>
+            {% endif %}
+            <form id="change-avatar-form" method="post" enctype="multipart/form-data"
+                  class="Change_avatar gradient-white">
+                {% csrf_token %}
+                {{ ChangeAvatarForm.image }}
+                <input name="change_avatar_input" type="submit" class="change-avatar" value="Сменить аватар">
+            </form>
         </div>
-    {% endif %}
+        <div class="user-info gradient-white font-Comfortaa">
+            <div class="user-detail">
+                <p class="label">Псевдоним</p>
+                <p class="value"><b>{{ user.username }}</b></p>
+            </div>
+            <div class="user-detail">
+                <p class="label">Имя и фамилия</p>
+                <p class="value">{{ user.first_name }} {{ user.last_name }}</p>
+            </div>
+            <div class="user-detail">
+                <p class="label">Электронная почта</p>
+                {% if user.email %}
+                    <p class="value">{{ user.email }}</p>
+                {% else %}
+                    <p class="value">&nbsp;</p>
+                {% endif %}
+            </div>
+            <p class="label">Дата создания аккаунта - {{ user.date_joined }}
+                {% if is_current_user %}
+                    <form class="change-password" id="change-password-form" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ ChangePasswordForm.old_password }}
+                        {{ ChangePasswordForm.new_password }}
+                        <input name="change_password_input" type="submit" class="change-password-button" value="&nbsp;">
+                    </form>
+                {% endif %}
+        </div>
+    </div>
+</section>
 {% for message in messages %}
     <div class="message {{ message.tags }}">
         {{ message }}
     </div>
 {% endfor %}
-<div class="friend_list">
-    <div class="friends_title">
-        {% if is_current_user %}
-            <div class="friend_options">
-                <a class="requests" href="{{ user.username }}/friends/">Входящие заявки
-                    <div class="counter">{% if got_requests %}{{ got_requests.count }}{% else %}0{% endif %}</div>
-                </a>
-                <a class="requests" href="{{ user.username }}/friends/">Отправленные заявки
-                    <div class="counter">{% if send_requests %}{{ send_requests.count }}{% else %}0{% endif %}</div>
-                </a>
-                <a class="requests">Удалить :(</a>
-            </div>
-        {% endif %}
-    <p>Друзья</p>
+<section id="friends">
+    <div class="friend_list">
+        <p class="section-title gradient-white font-Comfortaa">Друзья</p>
+        <div class="friends_title">
+            {% if is_current_user %}
+                <div class="friend_options gradient-white font-Comfortaa">
+                    <a class="requests" href="{{ user.username }}/friends/">Входящие заявки
+                        <div class="counter">{% if got_requests %}{{ got_requests.count }}{% else %}0{% endif %}</div>
+                    </a>
+                    <a class="requests" href="{{ user.username }}/friends/">Отправленные заявки
+                        <div class="counter">{% if send_requests %}{{ send_requests.count }}{% else %}0{% endif %}</div>
+                    </a>
+                    <a class="requests">Удалить :(</a>
+                </div>
+            {% endif %}
+        </div>
+        <div class="friends">
+            {% if friends %}
+                {% for friend in friends %}
+                    {% if user != friend.friend %}
+                        <div class="friend">
+                            {% if friend.friend.avatar %}
+                                <img src="{{ friend.friend.avatar.url }}" alt="ПРИВЕТ)" class="friend_avatar"/>
+                            {% else %}
+                                <img src="/media/svofard_404.png" width="300" alt="Привет)" class="friend_avatar"/>
+                            {% endif %}
+                            <div class="friend-footer">
+                                <a class="friend_username gradient-dark font-Comfortaa"
+                                   href="/user/{{ friend.friend }}">{{ friend.friend }}</a>
+                                <button class="remove-friend-button gradient-dark font-Comfortaa" data-friend-id="{{ friend.id }}">Удалить</button>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="friend">
+                            {% if friend.user.avatar %}
+                                <img src="{{ friend.user.avatar.url }}" alt="ПРИВЕТ)" class="friend_avatar"/>
+                            {% else %}
+                                <img src="/media/svofard_404.png" width="300" alt="Привет)" class="friend_avatar"/>
+                            {% endif %}
+                            <div class="friend-footer">
+                                <a class="friend_username gradient-dark font-Comfortaa"
+                                   href="/user/{{ friend.user }}">{{ friend.user }}</a>
+                                <button class="remove-friend-button gradient-dark font-Comfortaa" data-friend-id="{{ friend.id }}">Удалить</button>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                У вас пока еще нет друзей! Вы их обязательно заимеете(в жопу)
+            {% endif %}
+        </div>
     </div>
-
-
-    <button class="friends_slide_left"></button>
-    <div class="friends">
-        {% if friends %}
-            {% for friend in friends %}
-                {% if user != friend.friend %}
-                    <div class="friend">
-                        {% if friend.friend.avatar %}
-                            <img src="{{ friend.friend.avatar.url }}" alt="ПРИВЕТ)" class="friend_avatar"/>
-                        {% else %}
-                            <img src="/media/svofard_404.png" width="300" alt="Привет)" class="friend_avatar"/>
-                        {% endif %}
-                        <div class="friend_username"><a href="/user/{{ friend.friend }}">{{ friend.friend }}</a></div>
-                        {#                        <div class="delete_friend_button">#}
-                        {#                            <button class="remove-friend-button" data-friend-id="{{ friend.id }}">Удалить</button>#}
-                        {#                        </div>#}
-                    </div>
-                {% else %}
-                    <div class="friend">
-
-                        {% if friend.user.avatar %}
-                            <img src="{{ friend.user.avatar.url }}" alt="ПРИВЕТ)" class="friend_avatar"/>
-                        {% else %}
-                            <img src="/media/svofard_404.png" width="300" alt="Привет)" class="friend_avatar"/>
-                        {% endif %}
-                        <div class="friend_username"><a href="/user/{{ friend.user }}">{{ friend.user }}</a></div>
-                        {#                        <div class="delete_friend_button">#}
-                        {#                            <button class="remove-friend-button" data-friend-id="{{ friend.id }}">Удалить</button>#}
-                        {#                        </div>#}
-                    </div>
-
+</section>
+<section>
+    <p class="section-title gradient-white font-Comfortaa">Избранное</p>
+    <div class="favorites ">
+        {% for meme in user.favorites.all %}
+            <div class="meme">
+                <img src="{{ meme.path_to_img.url }}" width="300" class="meme_picture"/>
+                <a class="meme_name gradient-dark font-Comfortaa" href="/meme/id{{ meme.id }}">{{ meme.name }}</a>
+                {% if is_current_user %}
+                    <button class="remove-from-favorites-button gradient-dark font-Comfortaa"
+                            data-meme-id="{{ meme.id }}">
+                        Удалить
+                    </button>
                 {% endif %}
-
-            {% endfor %}
-        {% else %}
-            У вас пока еще нет друзей! Вы их обязательно заимеете(в жопу)
-        {% endif %}
+            </div>
+        {% endfor %}
     </div>
-    <button class="friends_slide_right"></button>
-</div>
-
+</section>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
@@ -152,25 +169,6 @@
         }
     });
 </script>
-<div class="favorites_title"><p>Избранное</p></div>
-<button class="favorites_slide_left"></button>
-<div class="favorites">
-
-    {% for meme in user.favorites.all %}
-        <div class="meme">
-
-            <img src="{{ meme.path_to_img.url }}" width="300" class="meme_picture"/>
-            <a class="meme_name" href="/meme/id{{ meme.id }}">{{ meme.name }}</a>
-            {% if is_current_user %}
-                <button class="remove-from-favorites-button" data-meme-id="{{ meme.id }}">Удалить</button>
-            {% endif %}
-        </div>
-    {% endfor %}
-
-</div>
-<button class="favorites_slide_right"></button>
-
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
@@ -207,6 +205,5 @@
         }
     });
 </script>
-
 </body>
 </html>

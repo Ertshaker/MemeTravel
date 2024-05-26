@@ -38,14 +38,14 @@
         <table>
             {{ ChangePasswordForm.as_table }}
         </table>
-        <input name="change_password_input" type="submit" class="change-password" value="Сменить пароль">
+        <input name="change_password_input" type="submit" class="change-password-button" value="Сменить пароль">
     </form>
     <form id="change-avatar-form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
             {{ ChangeAvatarForm.as_table }}
         </table>
-        <input name="change_avatar_input" type="submit" class="change-password" value="Сменить аватар">
+        <input name="change_avatar_input" type="submit" class="change-password-button" value="Сменить аватар">
     </form>
 {% endif %}
 {% for message in messages %}

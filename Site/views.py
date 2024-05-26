@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render, reverse
 from django.views.generic import DetailView, UpdateView
+from django.contrib.auth.decorators import login_required
 
 from Site.models import *
 from .forms import *
@@ -34,6 +35,7 @@ class UserDetailView(DetailView):
     model = Account
     template_name = 'user_test.html'
     context_object_name = 'user'
+    extra_context = {}
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:

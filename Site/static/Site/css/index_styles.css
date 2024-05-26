@@ -1,15 +1,32 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
-
 body {
-    background: url(../img/index/introduction_image.png) no-repeat black;
+    background: url(../img/index/introduction_image.png) no-repeat transparent;
+    overflow: hidden;
 }
 
-.text-comfortaa {
+.sections-box {
+    height: 100vh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
     font-family: Comfortaa, sans-serif;
 }
 
+.sections-box::-webkit-scrollbar {
+    width: 5px;
+}
+
+.sections-box::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sections-box::-webkit-scrollbar-thumb {
+    background: white;
+    border-radius: 100px;
+    border: 1px solid white;
+}
+
 section {
+    scroll-snap-align: end;
     position: relative;
     padding-inline: 8%;
     height: 100vh;
@@ -17,11 +34,11 @@ section {
 }
 
 .introduction {
-    font-family: Comfortaa, sans-serif;
     position: relative;
     display: block;
     margin-top: 15%;
     margin-bottom: 10%;
+    font-family: Comfortaa, sans-serif;
 }
 
 .introduction h2 {
@@ -48,12 +65,6 @@ section {
     display: inline-block;
     margin-right: auto;
     border-bottom: 1px solid white;
-}
-
-.gradient-text {
-    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
 }
 
 .text-section {
@@ -127,10 +138,6 @@ section {
     height: 200px;
 }
 
-section[id='transition'] {
-
-}
-
 .transition-wrapper {
     display: grid;
     grid-template-rows: 1fr 1fr;
@@ -147,15 +154,3 @@ section[id='transition'] {
     border-radius: 75px;
     align-self: center;
 }
-
-/*header .nav-button .search-logo {
-    background-size: auto;
-    position: relative;
-    margin-top: auto;
-}
-
-header .nav-button .profile-logo {
-    background-size: auto;
-    margin-top: auto;
-    position: relative;
-}*/

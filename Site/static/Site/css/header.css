@@ -3,40 +3,54 @@
 
 header {
     display: flex;
+    box-sizing: border-box;
     border-bottom: 2px solid white;
     margin-inline: 5%;
-    padding-block: 10px;
-    justify-content: center;
-}
-
-header p {
-    margin-bottom: auto;
-    font-size: 28px;
-    font-family: Montserrat, sans-serif;
-    color: white;
+    padding-bottom: 10px;
+    height: 100px;
+    align-items: flex-end;
 }
 
 header > * {
-    padding-inline: 1em;
-}
-
-.header-logo {
-    width: 138px;
     position: relative;
-    vertical-align: bottom;
+    padding-inline: 1em;
+    padding-bottom: 10px;
 }
 
-header .nav-button {
+.logo {
+    display: inline-block;
+}
+
+.logo .header-logo {
+    position: relative;
+    background: transparent;
+    width: 138px;
+}
+
+.site-name {
+        margin-right: auto;
+}
+
+.site-name p {
+    display: inline;
+    padding-inline: 10px;
+    font-size: 28px;
+    font-family: Montserrat, sans-serif;
+    color: white;
+    margin-block: 10px;
+}
+
+.nav-bar {
+    position: relative;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.nav-bar .nav-button {
+    padding-inline: 5px;
+    display: inline-block;
     background: transparent;
     border: transparent;
     cursor: pointer;
-    margin-block: auto;
-}
-
-header p {
-    display: inline;
-    font-family: Montserrat, sans-serif;
-    font-size: 28px;
-    padding-inline: 10px;
-    margin-right: auto;
 }

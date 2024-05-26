@@ -2,21 +2,45 @@
 
 body {
     background: url(../img/Profile_background.png) no-repeat transparent;
+    background-position: center;
     background-size: cover;
-    margin-left: 80px;
 }
 
-.username_title {
-    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+.friends::-webkit-scrollbar,
+.favorites::-webkit-scrollbar {
+    height: 10px;
+}
+
+.friends::-webkit-scrollbar-track,
+.favorites::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.friends::-webkit-scrollbar-thumb,
+.favorites::-webkit-scrollbar-thumb {
+    background: white;
+    border-radius: 100px;
+    border: 1px solid white;
+}
+
+section {
+    position: relative;
+    padding-inline: 8%;
+    height: auto;
+    margin-bottom: 10%;
+}
+
+.section-title {
     font-size: 90px;
-    font-family: Comfortaa;
 }
 
-.profile_details {
-    color: white;
+.user-parameters {
+    display: flex;
+    flex-direction: row;
+}
 
+.avatar-block {
+    margin-right: 5%;
 }
 
 .avatar {
@@ -26,150 +50,77 @@ body {
     height: 567px;
 }
 
-.prof_det {
-    position: absolute;
-    top: 250px;
-    left: 550px;
-    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-family: Comfortaa;
+.user-info {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
-.prof_det .label {
+.user-info .label {
     font-size: 24px;
-    padding: 0px 0px 0px 20px;
 }
 
-.prof_det .value {
+.user-info p {
+    margin-block: 20px;
+}
+
+.user-info .value {
+    box-sizing: border-box;
+    height: 62px;
+    width: auto;
     font-size: 28px;
     border-radius: 40px;
     border: 3px solid white;
-    padding: 20px 550px 20px 20px
-}
-
-.Change_password {
-    position: absolute;
-    top: 800px;
-    left: 550px;
-
-}
-
-input[type="password"]::placeholder {
-    padding: 5px 0px 5px 50px;
-}
-
-input[type="password"] {
-    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-family: Comfortaa;
-    font-size: 28px;
-    border-radius: 40px;
-    border: 3px solid white;
-    padding: 20px 23px 20px 20px;
-    margin-right: 20px;
+    padding: 13px 20px;
 }
 
 .change-password {
-    background: url('../img/change_password_button.png') no-repeat center transparent;
-    position: absolute;
-    background-size: 60%;
+    display: flex;
+    flex-direction: row;
+    height: 62px;
+    justify-content: space-between;
+}
+
+.change-password-button {
+    background: url(../img/profile/change-password-icon.svg) no-repeat transparent center;
+    background-size: 42px auto;
     border-radius: 40px;
     border: 3px solid white;
     cursor: pointer;
-    bottom: 2%;
-    padding: 20px 80px 40px 20px;
+    width: 86px;
 }
 
-.change-avatar-form {
+input[type="password"]::placeholder {
+    text-align: center;
+}
+
+input[type="password"] {
+    font-family: Comfortaa, sans-serif;
     background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-family: Comfortaa;
-}
-
-.friend_list {
-    position: relative;
-    top: 200px;
-}
-
-.friends_title {
-    position: relative;
-    font-size: 90px;
-    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
-    background-clip: text;
-    font-family: Comfortaa;
-    -webkit-text-fill-color: transparent;
-    left: 65px;
-    width: 1300px;
-
+    font-size: 28px;
+    border-radius: 40px;
+    border: 3px solid white;
+    margin-right: 20px;
 }
 
 .friends {
     display: grid;
     grid-template-rows: 350px;
-    grid-auto-columns: 270px;
-    grid-auto-flow: column dense;
-    align-items: center;
-    flex-wrap: nowrap;
-    overflow-x: scroll;
-    width: 1325px;
-    margin-left: 70px;
+    grid-auto-columns: 300px;
+    grid-auto-flow: column;
+    grid-column-gap: 30px;
+    overflow-y: auto;
+    width: auto;
 }
 
-.friend_avatar {
-    border-radius: 20px;
-    object-fit: cover;
-    width: 224px;
-    height: 298px;
-}
-
-/*::-webkit-scrollbar {*/
-/*            display: none;*/
-/*        }*/
-
-
-.friend {
-    align-items: center;
-    justify-content: center;
-    top: 20%;
-    padding-bottom: 20px;
-    /*margin-right: 50px;*/
-}
-
-
-.remove-friend-button {
-
-    border-radius: 9px;
-    border: 2px solid white;
-    cursor: pointer;
-    bottom: 2%;
-    padding: 2px;
-    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
-    background-clip: text;
-    font-family: Comfortaa;
-    -webkit-text-fill-color: transparent;
-}
-
-.friend_username {
-    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
-    background-clip: text;
-    font-family: Comfortaa;
-    font-size: 22px;
-    margin-left: 5px;
-    -webkit-text-fill-color: transparent;
-}
-
-.friend_options {
-    position: relative;
-    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
-    background-clip: text;
-    font-family: Comfortaa;
-    -webkit-text-fill-color: transparent;
-    font-size: 28px;
-    left: 370px;
-    top: 175px;
+.friends_title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 30px;
 }
 
 .requests {
@@ -186,59 +137,84 @@ input[type="password"] {
     margin-left: 25px;
 }
 
+.friend_options {
+    position: relative;
+    align-self: center;
+    font-size: 28px;
+}
+
+.friend {
+    padding-bottom: 20px;
+    background-size: auto auto;
+    background: rgba(217, 217, 217, 0.95);
+    border-radius: 20px;
+    width: 300px;
+    height: 317px;
+}
+
+.friend_avatar {
+    border-radius: 19px;
+    object-fit: cover;
+    width: 300px;
+    height: 298px;
+}
+
+.remove-friend-button {
+    border-radius: 9px;
+    border: 2px solid black;
+    cursor: pointer;
+    padding: 2px 10px 2px 10px;
+    font-size: 18px;
+    float: right;
+    margin-right: 10px;
+}
+
+.friend_username {
+    font-size: 22px;
+    padding-left: 5px;
+    padding-top: 2px;
+    text-align: center;
+    float: left;
+}
+
 .favorites {
     position: relative;
-    top: 310px;
-    width: 1340px;
     flex: 0 0 auto;
     display: grid;
     grid-template-rows: 385px 385px;
-    grid-auto-columns: 450px;
+    grid-auto-columns: 415px;
     grid-auto-flow: column dense;
+    grid-column-gap: 30px;
     align-items: center;
     flex-wrap: nowrap;
     overflow-x: scroll;
-    margin-left: 70px;
 }
 
 .favorites_title {
     font-size: 90px;
-    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
-    background-clip: text;
-    font-family: Comfortaa;
-    -webkit-text-fill-color: transparent;
     position: relative;
-    top: 400px;
-    left: 65px;
-    width: 800px;
 }
 
 .meme {
     align-items: center;
     justify-content: center;
-    top: 20%;
     margin-right: 50px;
     border-radius: 20px;
-    border: 1px solid;
     width: 415px;
     height: 350px;
     background: rgba(217, 217, 217, 0.95);
 }
 
 .meme_picture {
-    border-radius: 20px;
+    border-radius: 19px;
     object-fit: cover;
     width: 415px;
     height: 312px;
 }
 
 .meme_name {
-    background: linear-gradient(60deg, #000000 0%, #0D1946 11%, #461452 22%, #610F4A 33%, #67165C 44%, #0C0E4A 87%, #01001C  100%);
-    background-clip: text;
-    font-family: Comfortaa;
     font-size: 22px;
     margin-left: 5px;
-    -webkit-text-fill-color: transparent;
 }
 
 .remove-from-favorites-button{
@@ -248,66 +224,12 @@ input[type="password"] {
     bottom: 2%;
     padding: 2px 10px 2px 10px;
     font-size: 18px;
-    background: linear-gradient(60deg, #000000 0%, #0D1946 11%, #461452 22%, #610F4A 33%, #67165C 44%, #0C0E4A 87%, #01001C  100%);
-    background-clip: text;
-    font-family: Comfortaa;
-    -webkit-text-fill-color: transparent;
     float: right;
     margin-right: 10px;
 }
 
-.friends_slide_right{
-    background: url('../img/change_password_button.png') no-repeat center transparent;
-    position: relative;
-    background-size: 50%;
-    border-radius: 40px;
-    border: 2px solid white;
-    cursor: pointer;
-    bottom: 250px;
-    left: 1410px;
-    padding: 20px 65px 40px 20px;
-}
-
-.friends_slide_left{
-    background: url('../img/change_password_button.png') no-repeat center transparent;
-    position: relative;
-    transform: rotate(180deg);
-    background-size: 50%;
-    border-radius: 40px;
-    border: 2px solid white;
-    cursor: pointer;
-    top: 181px;
-    right: 50px;
-    padding: 20px 65px 40px 20px;
-}
-
-.favorites_slide_right{
-    background: url('../img/change_password_button.png') no-repeat center transparent;
-    position: relative;
-    background-size: 50%;
-    border-radius: 40px;
-    border: 2px solid white;
-    cursor: pointer;
-    bottom: 124px;
-    left: 1420px;
-    padding: 20px 65px 40px 20px;
-}
-
-.favorites_slide_left{
-    background: url('../img/change_password_button.png') no-repeat center transparent;
-    position: relative;
-    transform: rotate(180deg);
-    background-size: 50%;
-    border-radius: 40px;
-    border: 2px solid white;
-    cursor: pointer;
-    top: 727px;
-    right: 50px;
-    padding: 20px 65px 40px 20px;
-}
-
 .Change_avatar{
-    font-size: 20px;
+    font-size: 24px;
     background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
     background-clip: text;
     font-family: Comfortaa;

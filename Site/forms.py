@@ -86,4 +86,9 @@ class AddFriendForm(forms.Form):
 
 
 class ChangeAvatarForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(ChangeAvatarForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'Change_avatar'
+
     image = forms.ImageField(label='Новый аватар', widget=forms.FileInput(attrs={"id": "image_field"}))
