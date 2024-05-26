@@ -44,14 +44,6 @@ class RegistrationForm(forms.Form):
     avatar = forms.ImageField(label='Изображение', required=False)
     favorite_memes = forms.ModelMultipleChoiceField(queryset=Meme.objects.all(), required=False)
     status = forms.ModelChoiceField(queryset=Group.objects.all(), required=False)
-    # class Meta:
-    #     model = Account
-    #     fields = "__all__"
-    #     labels = {'username':'Имя пользователя', 'password':'Пароль', 'email':'Email', 'first_name':'Имя', 'last_name':'Фамилия', 'avatar':'Изображение профиля'}
-    #     widgets = {'password': forms.PasswordInput(attrs={'type': 'password'})}
-    #
-    # confirm_password = forms.CharField(label='Повторите пароль', required=True, max_length=30,
-    #                                    widget=forms.PasswordInput(attrs={'type': 'password'}))
 
 
 class LoginForm(forms.Form):
@@ -63,28 +55,29 @@ class LoginForm(forms.Form):
                                    attrs={'type': 'password', 'class': 'form-input', 'placeholder': 'Пароль'}))
 
 
-# class AddMemeForm(forms.Form):
-#     name = forms.CharField(label='Название', required=True, max_length=30,
-#                                widget=forms.TextInput(attrs={'type': 'text'}))
-#     date = forms.DateField(label='Дата появления', widget=forms.TextInput(attrs={'type': 'date'}))
-#     date_peek = forms.DateField(label='Дата самой высокой популярности', widget=forms.TextInput(attrs={'type': 'date'}))
-#     popularity = forms.IntegerField(label='Популярность', widget=forms.NumberInput(attrs={'type': 'number'}))
-#     path_to_img = forms.ImageField(label='Изображение')
-#     description = forms.CharField(label='Описание', required=True, widget=forms.Textarea(attrs={'type': 'text'}))
-
 class AddMemeForm(forms.ModelForm):
     class Meta:
         model = Meme
-        fields = ['name', 'date', 'path_to_img', 'genre', 'description']
-        labels = {'name': 'Название', 'date': 'Дата появления', 'genre': 'Жанр', 'description': 'Описание',
-                  'path_to_img': 'Изображение мема'}
+        fields = ['name', 'date', 'description',
+                  'history', 'meaning', 'cultural_influence',
+                  'using_examples', 'path_to_img']
+        labels = {'name': 'Название', 'date': 'Дата появления', 'description': 'Описание',
+                  'history': 'История происхождения', 'path_to_img': 'Изображение мема',
+                  'meaning': 'Значение и символика', 'cultural_influence': 'Культурное влияние',
+                  'using_examples': 'Примеры и использование'}
         widgets = {'date': forms.TextInput(attrs={'type': 'date'})}
+
     additional_image = forms.ImageField(label='Дополнительное изображение', required=False)
+
+
 class ChangePasswordForm(forms.Form):
     old_password = forms.CharField(label='Старый пароль', required=True, max_length=255,
-                                   widget=forms.PasswordInput(attrs={'type': 'password'}))
+                                   widget=forms.PasswordInput(
+                                       attrs={'type': 'password', 'placeholder': 'Старый пароль'}))
     new_password = forms.CharField(label='Новый пароль', required=True, max_length=255,
-                                   widget=forms.PasswordInput(attrs={'type': 'password'}), validators=[check_password])
+                                   widget=forms.PasswordInput(
+                                       attrs={'type': 'password', 'placeholder': 'Новый пароль'}),
+                                   validators=[check_password])
 
 
 class AddFriendForm(forms.Form):
@@ -93,4 +86,4 @@ class AddFriendForm(forms.Form):
 
 
 class ChangeAvatarForm(forms.Form):
-    image = forms.ImageField(label='Новый аватар')
+    image = forms.ImageField(label='Новый аватар', widget=forms.FileInput(attrs={"id": "image_field"}))

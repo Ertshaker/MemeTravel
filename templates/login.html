@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="wrapper">
-    <button onclick="location.href = '/'" class="button_back"></button> 
+    <button onclick="location.href = '/'" class="button_back"></button>
     <h2>Вход в аккаунт</h2>
     <form method="post" action="">
         {% csrf_token %}
@@ -22,7 +22,9 @@
             {{ message }}
         </div>
     {% endfor %}
-    <p>Нет аккаунта? <a href="/authorization">Ебать ты лох</a></p>
+    <p>Нет аккаунта?<br/>
+        <a href="/authorization">зарегистрироваться</a>
+    </p>
 </div>
 </body>
 </html>

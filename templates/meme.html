@@ -32,16 +32,24 @@
         <td>{{ meme.date }}</td>
     </tr>
     <tr>
-        <td>Жанры</td>
-        <td>
-            {% for genre in meme.genre.all %}
-                {{ genre.name }}
-            {% endfor %}
-        </td>
-    </tr>
-    <tr>
         <td>Описание</td>
         <td>{{ meme.description }}</td>
+    </tr>
+    <tr>
+        <td>История</td>
+        <td>{{ meme.history }}</td>
+    </tr>
+    <tr>
+        <td>Значение и символика</td>
+        <td>{{ meme.meaning }}</td>
+    </tr>
+    <tr>
+        <td>Культурное влияние</td>
+        <td>{{ meme.cultural_influence }}</td>
+    </tr>
+    <tr>
+        <td>Примеры и использование</td>
+        <td>{{ meme.using_examples }}</td>
     </tr>
 </table>
 {% if request.user|has_group:"Админ" or request.user|has_group:"Модератор" %}

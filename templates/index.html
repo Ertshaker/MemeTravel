@@ -1,0 +1,77 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'Site/css/index_styles.css' %}"/>
+    <link rel="stylesheet" href="{% static 'Site/css/header.css' %}"/>
+    <title>MemeTravel</title>
+</head>
+<body>
+{% include 'components/header.html' %}
+<section id="introduction">
+    <div class="introduction gradient-text">
+        <h2>Страница с мемами<br/>Сайт курсовой</h2>
+        <p>Страница с мемами, сайт курсовой<br/>Страница с мемамиииииииииииии, сайт курсовой<br/>Страница с мемамb сайт
+            курсовой</p>
+    </div>
+    <div class="made-by">
+        <div class="person">
+            <p class="gradient-text text-comfortaa">Даниил Юдин</p>
+        </div>
+        <div class="person">
+            <p class="gradient-text text-comfortaa">Максим Кононов</p>
+        </div>
+        <div class="person">
+            <p class="gradient-text text-comfortaa">Ирина Киевская</p>
+        </div>
+        <div class="person">
+            <p class="gradient-text text-comfortaa">Владимир Калюжный</p>
+        </div>
+    </div>
+
+</section>
+<section id="description">
+    <div class="description-wrapper text-comfortaa">
+        <div class="text-section">
+            <p class="description-header gradient-text">бля</p>
+            <p class="description-text">В траве сидел кузнечик дрочил себе дрочочил бля бля бля бля бл ябл
+            </p>
+        </div>
+        <div class="text-section">
+            <p class="description-text">Однажды он упал, соснул и зомбифицировался</p>
+            <p class="description-header gradient-text">бля</p>
+        </div>
+    </div>
+</section>
+<section id="functionality">
+    <h2 class="gradient-text">ВОЗМОЖНОСТИ САЙТА</h2>
+    <div class="functionality-wrapper">
+        <div class="function">
+            <p>Система аккаунтов</p>
+            <img src="{% static 'Site/img/DAUN.jpg' %}"/>
+        </div>
+        <div class="function">
+            <p>Добавление мемов в избранное</p>
+            <img src="{% static 'Site/img/DAUN.jpg' %}"/>
+        </div>
+        <div class="function">
+            <p>Поиск и фильтрация мемов</p>
+            <img src="{% static 'Site/img/DAUN.jpg' %}"/>
+        </div>
+        <div class="function">
+            <p>ДРУЗЬЯЯЯЯ</p>
+            <img src="{% static 'Site/img/DAUN.jpg' %}"/>
+        </div>
+    </div>
+</section>
+<section id="transition">
+    <div class="transition-wrapper">
+        <a href="/admin" class="gradient-text text-comfortaa">Путешествие</a>
+        <a href="/encyclopedia/" class="gradient-text text-comfortaa">Энциклопедия</a>
+    </div>
+</section>
+</body>
+</html>

@@ -1,15 +1,12 @@
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render, reverse
 from django.views.generic import DetailView, UpdateView
 
 from Site.models import *
 from .forms import *
-
 
 
 class MemesUpdateView(UpdateView):
@@ -32,19 +29,27 @@ class MemesUpdateView(UpdateView):
             MemeGallery.objects.create(meme=instance, image=addit_im)
         return super(MemesUpdateView, self).form_valid(form)
 
+
 class UserDetailView(DetailView):
     model = Account
-    template_name = 'user.html'
+    template_name = 'user_test.html'
     context_object_name = 'user'
-    extra_context = {}
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             HttpResponseRedirect('/login', locals())
+        user = self.get_object()
         self.extra_context["is_current_user"] = request.user.username == kwargs["username"]
         self.extra_context["ChangePasswordForm"] = ChangePasswordForm()
         self.extra_context["ChangeAvatarForm"] = ChangeAvatarForm()
-
+        friends = Friend.objects.filter(user=user.id, accepted=True) | Friend.objects.filter(friend=user.id,
+                                                                                             accepted=True)
+        sended_requests = Friend.objects.filter(user=user.id, accepted=False)
+        got_requests = Friend.objects.filter(friend=user.id, accepted=False)
+        self.extra_context["friends"] = friends
+        self.extra_context["send_requests"] = sended_requests
+        self.extra_context["got_requests"] = got_requests
+        self.extra_context["Users"] = Account.objects.all()
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -70,7 +75,8 @@ class UserDetailView(DetailView):
         elif request.POST.get("change_avatar_input"):
             change_avatar_form = ChangeAvatarForm(request.POST, request.FILES)
             if not change_avatar_form.is_valid():
-                messages.error(request, "ОТ ТЕБЯ ТРЕБОВАЛОСЬ ЗАПОЛНИТЬ ОДНО ПОЛЕ И ТЫ ДАЖЕ С ЭТИМ НЕ СПРАВИЛСЯ. ВЫЙДИ НЕ ПОЗОРЬСЯ")
+                messages.error(request,
+                               "ОТ ТЕБЯ ТРЕБОВАЛОСЬ ЗАПОЛНИТЬ ОДНО ПОЛЕ И ТЫ ДАЖЕ С ЭТИМ НЕ СПРАВИЛСЯ. ВЫЙДИ НЕ ПОЗОРЬСЯ")
                 return HttpResponseRedirect(reverse('user-detail', kwargs={'username': user.username}))
 
             user.avatar = change_avatar_form.cleaned_data['image']
@@ -82,7 +88,7 @@ class UserDetailView(DetailView):
         change_password_form = ChangePasswordForm()
         change_avatar_form = ChangeAvatarForm()
 
-        return render(request, 'user.html',
+        return render(request, 'user_test.html',
                       {"user": user,
                        'is_current_user': request.user == user,
                        "ChangePasswordForm": change_password_form,
@@ -97,6 +103,7 @@ class MemeDetailView(DetailView):
     model = Meme
     template_name = 'meme.html'
     context_object_name = 'meme'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         meme = self.get_object()  # Получаем объект Meme
@@ -105,11 +112,12 @@ class MemeDetailView(DetailView):
         context['meme_gallery'] = meme_gallery
         return context
 
+
 def index(request):
     context = {
         "user": request.user
     }
-    return render(request, 'inxex.html', context=context)
+    return render(request, 'index.html', context=context)
 
 
 def encyclopedia(request):
@@ -245,13 +253,13 @@ def create_route(request, *args, **kwargs):
 
 
 def test_view(request):
-    return render(request, 'test.html')
+    return render(request, 'index.html')
 
 
 def friends_view(request, name: str):
     user = Account.objects.get(username=name)
     friends = Friend.objects.filter(user=user.id, accepted=True) | Friend.objects.filter(friend=user.id,
-                                                                                            accepted=True)
+                                                                                         accepted=True)
     sended_requests = Friend.objects.filter(user=user.id, accepted=False)
     got_requests = Friend.objects.filter(friend=user.id, accepted=False)
     return render(request, 'friends.html',

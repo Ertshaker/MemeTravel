@@ -7,7 +7,7 @@ from .models import *
 
 admin.site.register(Friend)
 admin.site.register(Account)
-admin.site.register(Genres)
+
 
 @admin.register(Meme)
 class MemeAdmin(admin.ModelAdmin):
