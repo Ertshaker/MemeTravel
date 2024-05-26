@@ -4,9 +4,10 @@ from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render, reverse
 from django.views.generic import DetailView, UpdateView
-
+from datetime import datetime
 from Site.models import *
 from .forms import *
+from .models import Meme
 
 
 class MemesUpdateView(UpdateView):
@@ -34,7 +35,7 @@ class UserDetailView(DetailView):
     model = Account
     template_name = 'user_test.html'
     context_object_name = 'user'
-
+    extra_context = {}
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             HttpResponseRedirect('/login', locals())
@@ -360,3 +361,19 @@ def remove_from_favorites(request):
         except current_user.favorites.ObjectDoesNotExist:
             return JsonResponse({'success': False, 'error': 'МЕМ НЕ НАЙДЕН блин'})
     return JsonResponse({'success': False, 'error': 'IИНВАЛИИД'})
+def encyclopedia(request):
+    years = {
+        'ДО 2000': (datetime(1900, 1, 1), datetime(2000, 1, 1)),
+        '2000-2005': (datetime(2000, 1, 2), datetime(2005, 1, 1)),
+        '2005-2010': (datetime(2005, 1, 2), datetime(2010, 1, 1)),
+        '2010-2015': (datetime(2010, 1, 2), datetime(2015, 1, 1)),
+        '2015-2020': (datetime(2015, 1, 2), datetime(2020, 1, 1)),
+        'ПОСЛЕ 2020': (datetime(2020, 1, 2), datetime.max),
+    }
+
+    filtered_memes = {}
+
+    for key, value in years.items():
+        filtered_memes[key] = Meme.objects.filter(date__range=value)
+
+    return render(request, 'encyclopedia.html', {'filtered_memes': filtered_memes})

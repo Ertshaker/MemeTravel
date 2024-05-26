@@ -1,39 +1,29 @@
-{% load get_group %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Мемопедия</title>
+    <title>Энциклопедия</title>
 </head>
 <body class="container">
 <header>
   <a class="logo" href="/">На главную</a>
 </header>
 <h2>Список мемов</h2>
-<table>
-    <tr><th>Номер</th><th>Название</th><th>Картиночка</th></tr>
-    {% for meme in memes %}
-        <tr>
-            <td>{{ meme.id }}</td>
-            <td>{{ meme.name }}</td>
-            <td> <img src="{{meme.path_to_img.url}}" width="300" /> </td>
-            <td> <button onclick="location.href = '/meme/id{{ meme.id }}'">Подробнее</button> </td>
-        </tr>
-    {% endfor %}
-</table>
-        {% if request.user|has_group:"Админ" %} 
-            <button onclick="location.href = '/create/meme'">Добавить новый мем</button> 
-{% else %}
 
-{% endif %}
-        <button onclick="location.href = '/'">На главную</button>
-</body>
-</html>
-
-
-
-
+{% for year, memes in filtered_memes.items %}
+    <h3>{{ year }}</h3>
+    <table>
+        <tr><th>Номер</th><th>Название</th><th>Картиночка</th></tr>
+        {% for meme in memes %}
+            <tr>
+                <td>{{ meme.id }}</td>
+                <td>{{ meme.name }}</td>
+                <td><img src="{{ meme.path_to_img.url }}" width="300" /></td>
+                <td><button onclick="location.href = '{{ meme.get_absolute_url }}'">Подробнее</button></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endfor %}
 
 <!-- ЭТА КНОПКА НАВЕРХ ПЕРЕМЕСТИТЕСЬ -->
 <!DOCTYPE html>
@@ -46,8 +36,8 @@
         #back-to-top {
             display: none;
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 830px;
+            right: 870px;
             z-index: 99;
             font-size: 24px;
             border: none;
