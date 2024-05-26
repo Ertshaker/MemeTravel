@@ -186,7 +186,7 @@
 <ul>
   <li>Дизайн профиля готов на 99%</li>
   <li>Страница index готова на 99%</li>
-  <li>В проект добавлен django-cleanup для удаления ненужных .png(теперь для работы надо еще <i>pip install django-cleanup</i> делать)</li>
+  <li>В проект добавлен django-cleanup для удаления ненужных .png(теперь для работы надо еще <i><br/><code>pip install django-cleanup</code></i> делать)</li>
 </ul>
 Известные ошибки для Вовы яваджагаджагера
 <ul>
