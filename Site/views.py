@@ -1,12 +1,12 @@
+import datetime
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render, reverse
 from django.views.generic import DetailView, UpdateView
-from django.contrib.auth.decorators import login_required
 
-from datetime import datetime
 from Site.models import *
 from .forms import *
 from .models import Meme
@@ -35,9 +35,10 @@ class MemesUpdateView(UpdateView):
 
 class UserDetailView(DetailView):
     model = Account
-    template_name = 'user_test.html'
+    template_name = 'user.html'
     context_object_name = 'user'
     extra_context = {}
+
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             HttpResponseRedirect('/login', locals())
@@ -45,14 +46,16 @@ class UserDetailView(DetailView):
         self.extra_context["is_current_user"] = request.user.username == kwargs["username"]
         self.extra_context["ChangePasswordForm"] = ChangePasswordForm()
         self.extra_context["ChangeAvatarForm"] = ChangeAvatarForm()
-        friends = Friend.objects.filter(user=user.id, accepted=True) | Friend.objects.filter(friend=user.id,
-                                                                                             accepted=True)
-        sended_requests = Friend.objects.filter(user=user.id, accepted=False)
+        # friends = (Friend.objects.filter(user=user.id, accepted=True).values_list('user', flat=True) |
+        #            Friend.objects.filter(friend=user.id, accepted=True))
+        friends = Friend.objects.filter(user=user.id, accepted=True).values_list('user', flat=True)
+        sent_requests = Friend.objects.filter(user=user.id, accepted=False)
         got_requests = Friend.objects.filter(friend=user.id, accepted=False)
         self.extra_context["friends"] = friends
-        self.extra_context["send_requests"] = sended_requests
+        self.extra_context["send_requests"] = sent_requests
         self.extra_context["got_requests"] = got_requests
         self.extra_context["Users"] = Account.objects.all()
+        self.extra_context['page_name'] = user.username
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -91,7 +94,7 @@ class UserDetailView(DetailView):
         change_password_form = ChangePasswordForm()
         change_avatar_form = ChangeAvatarForm()
 
-        return render(request, 'user_test.html',
+        return render(request, 'user.html',
                       {"user": user,
                        'is_current_user': request.user == user,
                        "ChangePasswordForm": change_password_form,
@@ -111,14 +114,14 @@ class MemeDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         meme = self.get_object()  # Получаем объект Meme
         meme_gallery = MemeGallery.objects.filter(meme=meme.id)
-
+        context['page_name'] = meme.name
         context['meme_gallery'] = meme_gallery
         return context
 
 
 def index(request):
     context = {
-        "user": request.user
+        'page_name': 'Meme Travel'
     }
     return render(request, 'index.html', context=context)
 
@@ -127,15 +130,12 @@ def encyclopedia(request):
     memes = Meme.objects.all()
 
     gallery = MemeGallery.objects.all()
-    try:
-        user = Account.objects.get(id=request.session.get("_auth_user_id"))
-    except Account.DoesNotExist:
-        user = Account(username="Обыватель бездны")
 
     context = {
         "memes": memes,
-        "user": user,
-        "MemeGallery": gallery
+        "user": request.user,
+        "MemeGallery": gallery,
+        'page_name': 'ЭНЦИКЛОПЕДИЯ'
     }
 
     return render(request, 'encyclopedia.html', context=context)
@@ -363,6 +363,8 @@ def remove_from_favorites(request):
         except current_user.favorites.ObjectDoesNotExist:
             return JsonResponse({'success': False, 'error': 'МЕМ НЕ НАЙДЕН блин'})
     return JsonResponse({'success': False, 'error': 'IИНВАЛИИД'})
+
+
 def encyclopedia(request):
     query = request.GET.get('q')
     memes = Meme.objects.all()
@@ -371,27 +373,28 @@ def encyclopedia(request):
         memes = memes.filter(name__icontains=query)
 
     years = {
-        'ДО 2000': (datetime(1900, 1, 1), datetime(2000, 1, 1)),
-        '2000-2005': (datetime(2000, 1, 2), datetime(2005, 1, 1)),
-        '2005-2010': (datetime(2005, 1, 2), datetime(2010, 1, 1)),
-        '2010-2015': (datetime(2010, 1, 2), datetime(2015, 1, 1)),
-        '2015-2020': (datetime(2015, 1, 2), datetime(2020, 1, 1)),
-        'ПОСЛЕ 2020': (datetime(2020, 1, 2), datetime.max),
+        'ДО 2000': (datetime.date.min, datetime.date(2000, 1, 1)),
+        '2000-2005': (datetime.date(2000, 1, 2), datetime.date(2005, 1, 1)),
+        '2005-2010': (datetime.date(2005, 1, 2), datetime.date(2010, 1, 1)),
+        '2010-2015': (datetime.date(2010, 1, 2), datetime.date(2015, 1, 1)),
+        '2015-2020': (datetime.date(2015, 1, 2), datetime.date(2020, 1, 1)),
+        'ПОСЛЕ 2020': (datetime.date(2020, 1, 2), datetime.date.max),
     }
 
     filtered_memes = {}
 
-    for key, value in years.items():
-        if len(value) == 1:
-            filtered_memes[key] = memes.filter(date__lt=value[0])
-        else:
-            filtered_memes[key] = memes.filter(date__range=value)
+    for key, date in years.items():
+        memes = Meme.objects.filter(date__range=date)
+        if memes:
+            filtered_memes[key] = memes
 
-    return render(request, 'encyclopedia.html', {'filtered_memes': filtered_memes})
+    return render(request, 'encyclopedia_test.html',
+                  {'filtered_memes': filtered_memes, 'page_name': 'ЭНЦИКЛОПЕДИЯ'})
+
 
 def autocomplete(request):
     if 'term' in request.GET:
-        query = request.GET.get('term')
+        query: str = request.GET.get('term')
         memes = Meme.objects.filter(name__icontains=query)
         names = list(memes.values_list('name', flat=True))
         return JsonResponse(names, safe=False)

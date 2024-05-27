@@ -7,7 +7,8 @@ header {
     border-bottom: 2px solid white;
     margin-inline: 5%;
     padding-bottom: 10px;
-    height: 100px;
+    height: auto;
+    justify-content: space-between;
     align-items: flex-end;
 }
 
@@ -17,18 +18,36 @@ header > * {
     padding-bottom: 10px;
 }
 
-.logo {
-    display: inline-block;
+.logo > * {
+    display: inline;
+}
+
+.site-name {
+    padding-left: 20px;
+    font-size: 24px;
+    color: white;
+    font-family: Montserrat, sans-serif;
+}
+
+.page-name {
+    padding-bottom: 0;
+}
+
+.page-name > p {
+    align-self: flex-end;
+    font-size: 70px;
+    font-weight: bold;
+    margin-block: 0;
+    font-family: Comfortaa, sans-serif;
+    background: linear-gradient(90deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .logo .header-logo {
     position: relative;
     background: transparent;
     width: 138px;
-}
-
-.site-name {
-        margin-right: auto;
 }
 
 .site-name p {
@@ -43,6 +62,7 @@ header > * {
 .nav-bar {
     position: relative;
     flex-direction: row;
+    flex-wrap: nowrap;
     justify-content: space-between;
     align-items: flex-end;
 }

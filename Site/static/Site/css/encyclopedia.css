@@ -1,0 +1,87 @@
+body {
+    background: transparent url(../img/encyclopedia/background.png) no-repeat center;
+}
+
+.memes-box {
+    position: relative;
+    height: 75vh;
+    overflow-y: auto;
+    font-family: Comfortaa, sans-serif;
+    padding-inline: 8%;
+    justify-items: center;
+    padding-top: 5%;
+}
+
+.memes-box::-webkit-scrollbar {
+    width: 5px;
+}
+
+.memes-box::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.memes-box::-webkit-scrollbar-thumb {
+    background: white;
+    border-radius: 100px;
+    border: 1px solid white;
+}
+
+.memes-group {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-auto-flow: row dense;
+    grid-gap: 5%;
+    justify-items: start;
+}
+
+.memes-group-title {
+    font-size: 64px;
+    writing-mode: vertical-lr;
+    margin: 0 30px 30px;
+    align-self: start;
+}
+.memes-group-title > p {
+    transform: rotate(180deg);
+    text-align: end;
+    margin-block: 0;
+}
+
+.memes {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+}
+
+.meme-info {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 67px;
+}
+
+.meme-info > img {
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 40px;
+}
+
+.meme-info .meme-name {
+    margin-left: 70px;
+}
+
+.meme-info .meme-name > p {
+    font-size: 64px;
+    letter-spacing: -3px;
+}
+
+.meme-info .meme-name  > button {
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 30px;
+    font-size: 30px;
+    width: 380px;
+}
