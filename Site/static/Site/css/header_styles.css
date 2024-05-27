@@ -50,6 +50,34 @@ header > * {
     width: 138px;
 }
 
+.search {
+    display: grid;
+    grid-template-columns: 45px 235px;
+    box-sizing: border-box;
+    width: 320px;
+    height: 47px;
+    border: 2px solid white;
+    border-radius: 30px;
+    padding-inline: 20px;
+}
+
+.search .search-field {
+    height: auto;
+    font-size: 24px;
+    border: none;
+    margin-block: auto;
+    width: 230px;
+}
+.search .search-form {
+    position: relative;
+    box-sizing: border-box;
+    padding-top: 8px;
+}
+
+.search .search-field:focus {
+    outline: none;
+}
+
 .site-name p {
     display: inline;
     padding-inline: 10px;
@@ -61,6 +89,7 @@ header > * {
 
 .nav-bar {
     position: relative;
+    display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
@@ -76,19 +105,30 @@ header > * {
 }
 
 .autocomplete-suggestions {
-    border: 1px solid #ccc;
+    box-sizing: border-box;
+    top: 45px;
     max-height: 200px;
     overflow-y: auto;
     position: absolute;
-    background: white;
+    background: whitesmoke;
     z-index: 1000;
+    border-radius: 10px;
 }
 
 .autocomplete-suggestion {
     padding: 5px;
     cursor: pointer;
     display: flex;
+    justify-content: center;
     align-items: center;
+}
+
+.autocomplete-suggestion > a {
+    font-family: Comfortaa, sans-serif;
+    background: linear-gradient(60deg, #000000 0%, #0D1946 11%, #461452 22%, #610F4A 33%, #67165C 44%, #0C0E4A 87%, #01001C  100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 20px;
 }
 
 .autocomplete-suggestion:hover {
@@ -98,6 +138,7 @@ header > * {
 .autocomplete-image {
     width: 80px;
     height: 80px;
-    margin-right: 10px;
+    margin-right: 5px;
     object-fit: cover;
+    border-radius: 10px;
 }

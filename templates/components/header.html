@@ -10,18 +10,15 @@
     <div class="page-name">
         <p>{{ page_name }}</p>
     </div>
-    <div>
-        <form method="GET" action="">
-            <input type="text" id="search" name="q" placeholder="Поиск мемов по названию" value="{{ query }}"
-                   autocomplete="off">
-        </form>
-        <div id="suggestions" class="autocomplete-suggestions"></div>
-    </div>
-
     <div class="nav-bar">
-        <a class="nav-button">
+        <div class="search">
             <img class="search-icon" src="{% static 'Site/img/header/search_icon.svg' %}" alt="СОСИ)">
-        </a>
+            <form class="search-form" method="GET" action="#">
+                <input class="search-field gradient-white font-Comfortaa" type="text" id="search" name="q" placeholder="Поиск мемов" value="{{ query }}"
+                       autocomplete="off">
+            </form>
+            <div id="suggestions" class="autocomplete-suggestions"></div>
+        </div>
         {% if request.user.is_authenticated %}
             <a class="nav-button" href="/user/{{ request.user.username }}">
         {% else %}

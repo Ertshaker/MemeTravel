@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background: transparent url(../img/encyclopedia/background.png) no-repeat center;
 }
@@ -11,6 +15,7 @@ body {
     display: flex;
     flex-direction: row;
     padding-inline: 8%;
+    padding-top: 3%;
     gap: 100px;
 }
 
@@ -22,9 +27,9 @@ body {
     box-sizing: border-box;
     padding: 20px;
     border: 2px solid white;
-    border-radius: 26px;
+    border-radius: 30px;
     width: 620px;
-    height: 400px;
+    height: 440px;
     font-size: 36px;
 }
 
@@ -72,15 +77,14 @@ body {
 
 .description {
     font-size: 24px;
-    word-break: break-all;
+    word-break: break-word;
     margin-block: 0;
 }
 
 .meme-gallery {
     display: flex;
     flex-direction: column;
-    gap: 130px;
-    align-self: center;
+    gap: 50px;
 }
 
 .meme-gallery .main-image {

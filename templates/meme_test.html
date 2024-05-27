@@ -17,6 +17,7 @@
         <nav class="meme-content font-Comfortaa gradient-white">
             <h3 class="content-title">содержание</h3>
             <ol class="content-list">
+                <li><a href="#Description">Описание</a></li>
                 <li><a href="#History">История происхождения</a></li>
                 <li><a href="#Meaning">Значение и символика</a></li>
                 <li><a href="#Cultural_influence">Культурное влияние</a></li>
@@ -24,32 +25,39 @@
             </ol>
         </nav>
         <div class="description-sections font-Comfortaa">
+            <section id="Description">
+                <p class="section-title gradient-white">Описание</p>
+                <div class="description-box gradient-white">
+                    <h2 class="content-number gradient-white">1</h2>
+                    <div class="description">{{ meme.description|linebreaks }}</div>
+                </div>
+            </section>
             <section id="History">
                 <p class="section-title gradient-white">История происхождения</p>
                 <div class="description-box gradient-white">
-                    <h2 class="content-number">1</h2>
-                    <p class="description">{{ meme.history }}</p>
+                    <h2 class="content-number gradient-white">2</h2>
+                    <div class="description">{{ meme.history|linebreaks }}</div>
                 </div>
             </section>
             <section id="Meaning">
                 <p class="section-title gradient-white">Значение и символика</p>
                 <div class="description-box gradient-white">
-                    <h2 class="content-number">2</h2>
-                    <p class="description">{{ meme.meaning }}</p>
+                    <h2 class="content-number gradient-white">3</h2>
+                    <div class="description">{{ meme.meaning|linebreaks }}</div>
                 </div>
             </section>
             <section id="Cultural_influence">
                 <p class="section-title gradient-white">Культурное влияние</p>
                 <div class="description-box gradient-white">
-                    <h2 class="content-number">3</h2>
-                    <p class="description">{{ meme.cultural_influence }}</p>
+                    <h2 class="content-number gradient-white">4</h2>
+                    <div class="description">{{ meme.cultural_influence|linebreaks }}</div>
                 </div>
             </section>
             <section id="Using_examples">
                 <p class="section-title gradient-white font-Comfortaa">Примеры и использование</p>
                 <div class="description-box gradient-white">
-                    <h2 class="content-number">4</h2>
-                    <p class="description">{{ meme.using_examples }}</p>
+                    <h2 class="content-number gradient-white">5</h2>
+                    <div class="description">{{ meme.using_examples|linebreaks }}</div>
                 </div>
             </section>
         </div>
