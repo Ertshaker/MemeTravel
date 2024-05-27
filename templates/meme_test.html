@@ -11,7 +11,7 @@
 </head>
 <body>
 {% include 'components/header.html' %}
-<p class="description-title font-Comfortaa gradient-white">описание</p>
+{#<p class="description-title font-Comfortaa gradient-white">описание</p>#}
 <div class="meme-description-wrapper">
     <div class="meme-description">
         <nav class="meme-content font-Comfortaa gradient-white">
@@ -55,7 +55,7 @@
         </div>
     </div>
     <div class="meme-gallery">
-        <span></span>
+        <img class="main-image" src="{{ meme.path_to_img.url }}"/>
         {% for meme_image in meme_gallery %}
             <img src="{{ meme_image.image.url }}" alt="">
         {% endfor %}
