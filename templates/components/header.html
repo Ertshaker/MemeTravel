@@ -39,8 +39,9 @@
                 {% else %}
                     <li><a href="/login" class="font-Comfortaa">Войти</a></li>
                 {% endif %}
-
+                {% if request.user.is_authenticated %}
                 <li><a href="/logout" class="font-Comfortaa">Выйти</a></li>
+                {% endif %}
             </ul>
 
         </div>
