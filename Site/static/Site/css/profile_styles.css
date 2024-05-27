@@ -112,8 +112,9 @@ input[type="password"] {
     grid-auto-columns: 300px;
     grid-auto-flow: column;
     grid-column-gap: 30px;
+    scroll-snap-type: x mandatory;
     overflow-y: auto;
-    width: auto;
+    width: 1320px;
 }
 
 .friends_title {
@@ -150,6 +151,7 @@ input[type="password"] {
     border-radius: 20px;
     width: 300px;
     height: 317px;
+    scroll-snap-align: end;
 }
 
 .friend_avatar {

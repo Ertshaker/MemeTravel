@@ -46,9 +46,8 @@ class UserDetailView(DetailView):
         self.extra_context["is_current_user"] = request.user.username == kwargs["username"]
         self.extra_context["ChangePasswordForm"] = ChangePasswordForm()
         self.extra_context["ChangeAvatarForm"] = ChangeAvatarForm()
-        # friends = (Friend.objects.filter(user=user.id, accepted=True).values_list('user', flat=True) |
-        #            Friend.objects.filter(friend=user.id, accepted=True))
-        friends = Friend.objects.filter(user=user.id, accepted=True).values_list('user', flat=True)
+        friends = (Friend.objects.filter(user=user.id, accepted=True) |
+                   Friend.objects.filter(friend=user.id, accepted=True))
         sent_requests = Friend.objects.filter(user=user.id, accepted=False)
         got_requests = Friend.objects.filter(friend=user.id, accepted=False)
         self.extra_context["friends"] = friends

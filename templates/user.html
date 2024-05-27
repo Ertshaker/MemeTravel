@@ -81,6 +81,7 @@
         <div class="friends">
             {% if friends %}
                 {% for friend in friends %}
+                    {% if user != friend.friend %}
                         <div class="friend">
                             {% if friend.friend.avatar %}
                                 <img src="{{ friend.friend.avatar.url }}" alt="ПРИВЕТ)" class="friend_avatar"/>
@@ -93,6 +94,20 @@
                                 <button class="remove-friend-button gradient-dark font-Comfortaa" data-friend-id="{{ friend.id }}">Удалить</button>
                             </div>
                         </div>
+                    {% else %}
+                        <div class="friend">
+                            {% if friend.user.avatar %}
+                                <img src="{{ friend.user.avatar.url }}" alt="ПРИВЕТ)" class="friend_avatar"/>
+                            {% else %}
+                                <img src="/media/svofard_404.png" width="300" alt="Привет)" class="friend_avatar"/>
+                            {% endif %}
+                            <div class="friend-footer">
+                                <a class="friend_username gradient-dark font-Comfortaa"
+                                   href="/user/{{ friend.user }}">{{ friend.user }}</a>
+                                <button class="remove-friend-button gradient-dark font-Comfortaa" data-friend-id="{{ friend.id }}">Удалить</button>
+                            </div>
+                        </div>
+                    {% endif %}
                 {% endfor %}
             {% else %}
                 У вас пока еще нет друзей! Вы их обязательно заимеете(в жопу)
