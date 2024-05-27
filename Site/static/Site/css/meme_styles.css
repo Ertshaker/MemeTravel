@@ -7,6 +7,16 @@ body {
     background-size: cover;
 }
 
+body::-webkit-scrollbar{
+    width: 10px;
+    background: linear-gradient(60deg, #000000 0%, #0D1946 11%, #461452 22%, #610F4A 33%, #67165C 44%, #0C0E4A 87%, #01001C  100%);
+}
+
+body::-webkit-scrollbar-thumb{
+    background: #F4AAEA;
+    border-radius: 100px;
+}
+
 .description-title {
     font-size: 32px;
     text-align: center;

@@ -10,6 +10,7 @@ body {
     padding-inline: 8%;
     justify-items: center;
     padding-top: 5%;
+
 }
 
 .memes-box::-webkit-scrollbar {
@@ -112,4 +113,14 @@ body {
     background-color: #555;
     transition: 0.2s ease;
 }
+
+.meme_option {
+    font-size: 32px;
+    border-radius: 40px;
+    border: 2px solid white;
+    padding: 15px 15px 15px 15px;
+    cursor: pointer;
+    margin-bottom: 90px;
+}
+
 
