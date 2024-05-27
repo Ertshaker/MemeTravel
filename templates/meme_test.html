@@ -1,0 +1,27 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ meme.name }}</title>
+    <link rel="stylesheet" href="{% static 'Site/css/header_styles.css' %}"/>
+    <link rel="stylesheet" href="{% static 'Site/css/global.css' %}"/>
+    <link rel="stylesheet" href="{% static 'Site/css/meme_styles.css' %}"/>
+</head>
+<body>
+{% include 'components/header.html' %}
+<p class="description-title font-Comfortaa gradient-white">описание</p>
+<div class="meme-description-wrapper">
+    <nav class="meme-content font-Comfortaa gradient-white">
+        <h3 class="content-title">содержание</h3>
+        <ol class="content-list">
+            <li>История происхождения</li>
+            <li>Значение и символика</li>
+            <li>Кльтурное влияние</li>
+            <li>Примеры и использование</li>
+        </ol>
+    </nav>
+</div>
+</body>
+</html>

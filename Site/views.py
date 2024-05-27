@@ -107,7 +107,7 @@ class UserDetailView(DetailView):
 
 class MemeDetailView(DetailView):
     model = Meme
-    template_name = 'meme.html'
+    template_name = 'meme_test.html'
     context_object_name = 'meme'
 
     def get_context_data(self, **kwargs):

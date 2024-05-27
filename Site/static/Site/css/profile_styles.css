@@ -188,6 +188,8 @@ input[type="password"] {
     align-items: center;
     flex-wrap: nowrap;
     overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    width: 1335px;
 }
 
 .favorites_title {
@@ -196,6 +198,7 @@ input[type="password"] {
 }
 
 .meme {
+    scroll-snap-align: end;
     align-items: center;
     justify-content: center;
     margin-right: 50px;
