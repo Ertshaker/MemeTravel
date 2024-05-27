@@ -30,10 +30,6 @@
         </div>
         <div class="user-info gradient-white font-Comfortaa">
             <div class="user-detail">
-                <p class="label">Псевдоним</p>
-                <p class="value"><b>{{ user.username }}</b></p>
-            </div>
-            <div class="user-detail">
                 <p class="label">Имя и фамилия</p>
                 <p class="value">{{ user.first_name }} {{ user.last_name }}</p>
             </div>
@@ -74,7 +70,6 @@
                     <a class="requests" href="{{ user.username }}/friends/">Отправленные заявки
                         <div class="counter">{% if send_requests %}{{ send_requests.count }}{% else %}0{% endif %}</div>
                     </a>
-                    <a class="requests">Удалить :(</a>
                 </div>
             {% endif %}
         </div>
