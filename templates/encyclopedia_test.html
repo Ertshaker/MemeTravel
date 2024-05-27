@@ -11,7 +11,7 @@
 </head>
 <body class="container">
 {% include 'components/header.html' %}
-<div class="memes-box">
+<div class="memes-box" id="memes-box">
     {% for year, memes in filtered_memes.items %}
         <div class="memes-group">
             <div class="memes-group-title">
@@ -36,105 +36,48 @@
     {% endfor %}
 </div>
 
+
+<button class="back-to-top" id="back-to-top" title="Go to top"></button>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const searchInput = document.getElementById('search');
-        const suggestionsBox = document.getElementById('suggestions');
+    var element = document.querySelector('#memes-box');
+    element.onscroll = function () {
+        scrollFunction();
+    };
 
-        searchInput.addEventListener('input', function () {
-            const query = this.value;
-            if (query.length > 1) {
-                fetch(`/autocomplete/?term=${encodeURIComponent(query)}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        suggestionsBox.innerHTML = '';
-                        if (data.length > 0) {
-                            data.forEach(item => {
-                                const suggestion = document.createElement('div');
-                                suggestion.classList.add('autocomplete-suggestion');
-                                suggestion.textContent = item;
-                                suggestion.addEventListener('click', function () {
-                                    searchInput.value = item;
-                                    suggestionsBox.innerHTML = '';
-                                });
-                                suggestionsBox.appendChild(suggestion);
-                            });
-                        }
-                    });
-            } else {
-                suggestionsBox.innerHTML = '';
-            }
-        });
+    function scrollFunction() {
+        if (element.scrollTop > 20) {
+            document.getElementById("back-to-top").style.display = "block";
+            show("back-to-top", 300);
 
-        document.addEventListener('click', function (e) {
-            if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
-                suggestionsBox.innerHTML = '';
+        } else {
+            document.getElementById("back-to-top").style.display = "none";
+            document.getElementById("back-to-top").style.opacity = 0;
+        }
+    }
+
+    function show(id, speed) {
+        let vars;
+        var ID = setInterval(function () {
+            (vars = Number(document.getElementById(id).style.opacity));
+            if (vars > 1) {
+                clearInterval(ID);
             }
-        });
-    });
+            vars += 0.1;
+            document.getElementById(id).style.opacity = vars;
+        }, speed);
+    }
+
+    document.getElementById("back-to-top").onclick = function () {
+        scrollToTop();
+    };
+
+    function scrollToTop() {
+        element.scroll({top: 0, behavior: 'smooth'});
+    }
 </script>
-
 </body>
 </html>
 
-
-{#<!-- ЭТА КНОПКА НАВЕРХ ПЕРЕМЕСТИТЕСЬ -->#}
-{#<!DOCTYPE html>#}
-{#<html lang="en">#}
-{#<head>#}
-{#    <meta charset="UTF-8">#}
-{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
-{#    <title>Example Page</title>#}
-{#    <style>#}
-{#        #back-to-top {#}
-{#            display: none;#}
-{#            position: fixed;#}
-{#            bottom: 830px;#}
-{#            right: 870px;#}
-{#            z-index: 99;#}
-{#            font-size: 24px;#}
-{#            border: none;#}
-{#            outline: none;#}
-{#            background-color: #423562;#}
-{#            color: white;#}
-{#            cursor: pointer;#}
-{#            padding: 15px;#}
-{#            border-radius: 10px;#}
-{#        }#}
-{##}
-{#        #back-to-top:hover {#}
-{#            background-color: #555;#}
-{#        }#}
-{#    </style>#}
-{#</head>#}
-{#<body>#}
-{##}
-{#<button id="back-to-top" title="Go to top">⬆️</button>#}
-{##}
-{#<script>#}
-{#    window.onscroll = function () {#}
-{#        scrollFunction();#}
-{#    };#}
-{##}
-{#    function scrollFunction() {#}
-{#        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {#}
-{#            document.getElementById("back-to-top").style.display = "block";#}
-{#        } else {#}
-{#            document.getElementById("back-to-top").style.display = "none";#}
-{#        }#}
-{#    }#}
-{##}
-{#    document.getElementById("back-to-top").onclick = function () {#}
-{#        scrollToTop();#}
-{#    };#}
-{##}
-{#    function scrollToTop() {#}
-{#        document.body.scrollTop = 0;#}
-{#        document.documentElement.scrollTop = 0;#}
-{#    }#}
-{#</script>#}
-{#</body>#}
-{#</html>#}
 
 {#<form method="GET" action="">#}
 {#    <input type="text" id="search" name="q" placeholder="Поиск мемов по названию" value="{{ query }}"#}
@@ -142,5 +85,8 @@
 {#    <button type="submit">Поиск</button>#}
 {#</form>#}
 {#<div id="suggestions" class="autocomplete-suggestions">#}
-{#<button type="button" onclick="window.location.href='/encyclopedia/'">Сброс результатов поиска</button>#}
+{#    <button type="button" onclick="window.location.href='/encyclopedia/'">Сброс результатов поиска</button>#}
 {#</div>#}
+
+
+{#<button type="button" onclick="window.location.href='/encyclopedia/'">Сброс результатов поиска</button>#}

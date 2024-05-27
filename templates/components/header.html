@@ -4,9 +4,20 @@
     <div class="logo">
         <img class="header-logo" src="{% static 'Site/img/header/header_logo.png' %}" alt="СОСИ)">
     </div>
+    {#    <div class="transition-wrapper font-Comfortaa">#}
+    {#        <a href="/encyclopedia/" class="gradient-white">Энциклопедия</a>#}
+    {#    </div>#}
     <div class="page-name">
         <p>{{ page_name }}</p>
     </div>
+    <div>
+        <form method="GET" action="">
+            <input type="text" id="search" name="q" placeholder="Поиск мемов по названию" value="{{ query }}"
+                   autocomplete="off">
+        </form>
+        <div id="suggestions" class="autocomplete-suggestions"></div>
+    </div>
+
     <div class="nav-bar">
         <a class="nav-button">
             <img class="search-icon" src="{% static 'Site/img/header/search_icon.svg' %}" alt="СОСИ)">
@@ -19,4 +30,91 @@
         <img class="profile-icon" src="{% static 'Site/img/header/profile_icon.svg' %}" alt="СОСИ)">
         </a>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('search');
+            const suggestionsBox = document.getElementById('suggestions');
+
+            searchInput.addEventListener('input', function () {
+                const query = this.value;
+                if (query.length > 1) {
+                    fetch(`/autocomplete/?term=${encodeURIComponent(query)}`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            suggestionsBox.innerHTML = '';
+                            if (data.length > 0) {
+                                data.forEach(item => {
+                                    const suggestion = document.createElement('div');
+                                    suggestion.classList.add('autocomplete-suggestion');
+
+                                    const link = document.createElement('a');
+                                    link.href = item.url;
+                                    link.textContent = item.name;
+
+                                    const img = document.createElement('img');
+                                    img.src = item.img;
+                                    img.alt = item.name;
+                                    img.classList.add('autocomplete-image');  // Добавьте класс для стилизации изображений
+
+                                    suggestion.appendChild(img);
+                                    suggestion.appendChild(link);
+                                    suggestionsBox.appendChild(suggestion);
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error fetching autocomplete suggestions:', error);
+                        });
+                } else {
+                    suggestionsBox.innerHTML = '';
+                }
+            });
+
+            document.addEventListener('click', function (e) {
+                if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
+                    suggestionsBox.innerHTML = '';
+                }
+            });
+        });
+        {#document.addEventListener('DOMContentLoaded', function () {#}
+        {#    const searchInput = document.getElementById('search');#}
+        {#    const suggestionsBox = document.getElementById('suggestions');#}
+        {##}
+        {#    searchInput.addEventListener('input', function () {#}
+        {#        const query = this.value;#}
+        {#        if (query.length > 1) {#}
+        {#            fetch(`/autocomplete/?term=${encodeURIComponent(query)}`)#}
+        {#                .then(response => response.json())#}
+        {#                .then(data => {#}
+        {#                    suggestionsBox.innerHTML = '';#}
+        {#                    if (data.length > 0) {#}
+        {#                        data.forEach(item => {#}
+        {#                            const suggestion = document.createElement('div');#}
+        {#                            suggestion.classList.add('autocomplete-suggestion');#}
+        {#                            suggestion.textContent = item;#}
+        {#                            suggestion.addEventListener('click', function () {#}
+        {#                                searchInput.value = item;#}
+        {#                                suggestionsBox.innerHTML = '';#}
+        {#                            });#}
+        {#                            suggestionsBox.appendChild(suggestion);#}
+        {#                        });#}
+        {#                    }#}
+        {#                });#}
+        {#        } else {#}
+        {#            suggestionsBox.innerHTML = '';#}
+        {#        }#}
+        {#    });#}
+        {##}
+        {#    document.addEventListener('click', function (e) {#}
+        {#        if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {#}
+        {#            suggestionsBox.innerHTML = '';#}
+        {#        }#}
+        {#    });#}
+        {# });#}
+    </script>
 </header>

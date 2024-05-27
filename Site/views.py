@@ -393,6 +393,24 @@ def encyclopedia(request):
 
 def autocomplete(request):
     if 'term' in request.GET:
+        query = request.GET.get('term')
+        memes = Meme.objects.filter(name__icontains=query)
+        results = []
+        for meme in memes:
+            item = {
+                'name': meme.name,
+                'url': meme.get_absolute_url(),
+                # Замените 'meme_detail' на имя вашего URL шаблона для деталей объекта
+                'img': meme.path_to_img.url  # Предполагая, что 'path_to_img' - это ImageField или FileField
+            }
+            results.append(item)
+        print(results)  # Добавьте это для отладки
+        return JsonResponse(results, safe=False)
+    return JsonResponse([], safe=False)
+
+
+def autocomplete1(request):
+    if 'term' in request.GET:
         query: str = request.GET.get('term')
         memes = Meme.objects.filter(name__icontains=query)
         names = list(memes.values_list('name', flat=True))
