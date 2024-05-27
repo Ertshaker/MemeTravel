@@ -5,20 +5,20 @@
     <title>Добавление мема</title>
 </head>
 <body>
-    {% block content %}
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <table>
-                {{ addmeme_form.as_table }}
-            </table>
-            <input type="submit" class="addmeme" value="Добавить">
-        </form>
-        {% for message in messages %}
-            <div class="message {{ message.tags }}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endblock content %}
+{% block content %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            {{ addmeme_form.as_table }}
+        </table>
+        <input type="submit" class="addmeme" value="Добавить">
+    </form>
+    {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endblock content %}
 <button onclick="location.href = '/encyclopedia'">Вернуться в энциклопедию</button>
 </body>
 </html>

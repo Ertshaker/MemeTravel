@@ -1,0 +1,78 @@
+body {
+    background: url(../img/Background_registration.png) fixed center;
+    background-size: cover;
+
+}
+
+.wrapper {
+    margin:30px auto;
+    width: 560px;
+    height: 750px;
+    text-align: center;
+    border-radius: 12px;
+    padding: 10px 20px;
+    background: rgba(217, 217, 217);
+    backdrop-filter: blur(6px);
+    overflow-y: auto;
+}
+
+.input-field input[type="text"]:not(:focus) ::placeholder,
+.input-field input[type="password"]:not(:focus) ::placeholder,
+.input-field input[type="email"]:not(:focus) ::placeholder {
+    transform: translateY(0%);
+    transition: transform 0.2s ease-in-out;
+    font-size: 16px;
+}
+
+.wrapper .addmeme {
+    border: 2px solid black;
+    outline: none;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 14px;
+    padding: 5px;
+    font-size: 20px;
+    margin: 10px;
+}
+
+#form input[type="text"],
+#form input[type="date"]{
+    border-radius: 17px;
+    background: transparent;
+    margin: 15px;
+    border: 3px solid rgb(0, 0, 0);
+    width: 430px;
+    height: 70px;
+    padding: 20px 40px 20px 20px;
+    backdrop-filter: blur(15px);
+    font-family: Montserrat;
+    font-size: 28px;
+}
+
+.fileinput{
+    background: linear-gradient(60deg, #000000 0%, #0D1946 11%, #461452 22%, #610F4A 33%, #67165C 44%, #0C0E4A 87%, #01001C  100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: Comfortaa;
+    padding: 5px;
+    font-size: 15px;
+    margin-top: 15px;
+}
+
+.wrapper .a{
+
+}
+
+.wrapper::-webkit-scrollbar {
+    height: 10px;
+}
+
+.wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.wrapper::-webkit-scrollbar-thumb {
+    background: black;
+    border-radius: 100px;
+    border: 1px solid black;
+}

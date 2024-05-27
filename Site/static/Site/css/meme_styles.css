@@ -99,3 +99,21 @@ body {
     border-radius: 30px;
     align-self: flex-end;
 }
+
+.meme-description .meme_control{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    position: relative;
+    align-self: center;
+
+}
+.meme_option{
+    font-size: 28px;
+    border-radius: 40px;
+    border: 2px solid white;
+    padding: 15px 15px 15px 15px;
+    margin-top: 50px;
+    cursor: pointer;
+}
