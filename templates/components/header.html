@@ -14,18 +14,25 @@
         <div class="search">
             <img class="search-icon" src="{% static 'Site/img/header/search_icon.svg' %}" alt="СОСИ)">
             <form class="search-form" method="GET" action="#">
-                <input class="search-field gradient-white font-Comfortaa" type="text" id="search" name="q" placeholder="Поиск мемов" value="{{ query }}"
+                <input class="search-field gradient-white font-Comfortaa" type="text" id="search" name="q"
+                       placeholder="Поиск мемов" value="{{ query }}"
                        autocomplete="off">
             </form>
             <div id="suggestions" class="autocomplete-suggestions"></div>
         </div>
-        {% if request.user.is_authenticated %}
-            <a class="nav-button" href="/user/{{ request.user.username }}">
-        {% else %}
-            <a class="nav-button" href="/login">
-        {% endif %}
-        <img class="profile-icon" src="{% static 'Site/img/header/profile_icon.svg' %}" alt="СОСИ)">
-        </a>
+        <div class="profile-icon">
+            {% if request.user.is_authenticated %}
+                <a class="nav-button" href="/user/{{ request.user.username }}">
+            {% else %}
+                <a class="nav-button" href="/login">
+            {% endif %}
+            <img class="profile-icon" src="{% static 'Site/img/header/profile_icon.svg' %}" alt="СОСИ)">
+            <ul>
+                <li><a href="/login">{{ request.user.username }}</a></li>
+                <li><a href="/logout">Выйти</a></li>
+            </ul>
+            </a>
+        </div>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {

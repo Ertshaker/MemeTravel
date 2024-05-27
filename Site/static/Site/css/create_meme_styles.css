@@ -36,7 +36,7 @@ body {
 }
 
 #form input[type="text"],
-#form input[type="date"]{
+#form input[type="date"] {
     border-radius: 17px;
     background: transparent;
     margin: 15px;
@@ -47,6 +47,8 @@ body {
     backdrop-filter: blur(15px);
     font-family: Montserrat;
     font-size: 28px;
+    text-wrap: normal;
+    word-break: break-word;
 }
 
 .fileinput{

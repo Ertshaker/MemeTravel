@@ -1,0 +1,67 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Путешествие</title>
+    <link rel="stylesheet" href="{% static 'Site/css/global.css' %}"/>
+    <link rel="stylesheet" href="{% static 'Site/css/header_styles.css' %}"/>
+    <link rel="stylesheet" href="{% static 'Site/css/travel_styles.css' %}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+{% include 'components/header.html' %}
+<div class="sections-box font-Comfortaa">
+    <section id="Introduction">
+        <h1 class="introduction-title gradient-white">
+            Мем - вещь глубокая. Глубочайшая. Фольклор от постмодерна, способ сформулировать и донести свои мысли.
+            Стимул общения, средство коммуникации, вестник негатива и позитива. Разумеется, такая важная сфера
+            человеского бытия развивалась эпохально.<br>Но как???
+        </h1>
+    </section>
+    <section id="Prehistoric">
+        <h2 class="section-title gradient-white">Доисторические мемы</h2>
+        <div class="prehistoric-block">
+            <img src="{% static 'Site/img/travel/kilroy.png' %}" alt="">
+            <p class="kilroy-description">
+                Происхождение - неизвестно, а рисовалось это графити в 40х-50х годах, как раз в период военных действий.
+                Зародился где то на западном фронте, среди англосаксов. Смысл - у каждого свой. Но просто увидеть такого
+                чувачка на бетоне своих фортификаций было явно забавно обычному западному солдату.
+            </p>
+            <p style="grid-column: span 2" class="kilroy-description">
+                Ходит байка, что уже после войны, "Килроя" увидел в своей ванной опешивший Сталин. А Гитлер на
+                захваченных позициях думал, что это шифр или обозначение какого то крутого агентства.
+            </p>
+        </div>
+    </section>
+    <section class="start-2000" id="start-2000">
+        <h2 class="section-title gradient-white">Начало двухтысячных</h2>
+        <div class="memes-2000-container">
+            <div class="olbansky_language-description">
+                <h3>ОЛБАНСКИЙ или ЯЗЫК ПАДОНКАФФ</h3>
+                <img src="{% static 'Site/img/travel/olbansky_language.png' %}" alt="">
+                <p style="padding-right: 20px">
+                    Пытаясь подражать евреям, а также прикидываясь пациентами больницы, некие товарищи начали коверкать
+                    русские слова, будто их пишет неадекватный, неграмотный школьник. "АФФТАР ЖЖОТ", "РЖУНИМАГУ" -
+                    именно
+                    отсюда. Летящие споры этого языка проникли далеко и надолго, проникнув в "Фочан", "LiveJournal" и в
+                    десятые года.
+                </p>
+            </div>
+            <div class="masyanya-description">
+                <h3 style="grid-column: span 2">Масяня</h3>
+                <img src="{% static 'Site/img/travel/masyanya.png' %}" alt="">
+                <p>
+                    Сатирический русский анимационный сериал, высмеивающий серые будни, глупость народа, стереотипы и
+                    всё
+                    что можно, быстро разобрался на цитаты, типа "Пойдём-ка, покурим-ка" и "Ало, директор? Пошёл ты в
+                    жопу,
+                    директор"
+                </p>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

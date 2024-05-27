@@ -420,3 +420,7 @@ def autocomplete1(request):
         names = list(memes.values_list('name', flat=True))
         return JsonResponse(names, safe=False)
     return JsonResponse([], safe=False)
+
+
+def travel_view(request):
+    return render(request, 'travel.html', context={'page_name': 'ПУТЕШЕСТВИЕ'})

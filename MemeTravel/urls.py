@@ -39,6 +39,7 @@ urlpatterns = [
     path('add_to_favorites/', views.add_to_favorites, name='add_to_favorites'),
     path('remove_from_favorites/', views.remove_from_favorites, name='remove_from_favorites'),
     path('autocomplete/', views.autocomplete, name='autocomplete'),
+    path('travel/', travel_view)
 ]
 
 if settings.DEBUG:

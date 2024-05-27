@@ -142,3 +142,6 @@ header > * {
     object-fit: cover;
     border-radius: 10px;
 }
+
+.nav-bar ul { display: none; }
+.nav-bar .profile-icon:hover ul { display: block; }

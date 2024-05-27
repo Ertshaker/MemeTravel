@@ -1,0 +1,89 @@
+body {
+    background: url(../img/travel/background_image.png) no-repeat transparent;
+    background-size: cover;
+}
+
+.sections-box {
+    overflow-y: auto;
+    padding-inline: 8%;
+}
+
+.sections-box::-webkit-scrollbar {
+    width: 5px;
+}
+
+.sections-box::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sections-box::-webkit-scrollbar-thumb {
+    background: white;
+    border-radius: 100px;
+    border: 1px solid white;
+}
+
+section {
+    height: auto;
+    position: relative;
+}
+
+.section-title {
+    font-size: 90px;
+    text-align: center;
+}
+
+.introduction-title {
+    font-size: 58px;
+    text-align: center;
+    align-self: center;
+    margin-top: 10%;
+}
+
+.prehistoric-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: auto;
+    gap: 50px;
+}
+
+.kilroy-description {
+    color: white;
+    font-size: 30px;
+}
+
+#start-2000 h3 {
+    display: inline;
+    font-size: 40px;
+    text-align: center;
+}
+
+#start-2000 {
+    display: inline;
+    font-size: 24px;
+}
+
+.memes-2000-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    justify-items: flex-start;
+    gap: 50px;
+}
+
+.olbansky_language-description {
+    display: grid;
+    color: white;
+    grid-auto-rows: auto;
+    justify-content: left;
+    gap: 20px
+}
+
+.masyanya-description {
+    display: grid;
+    color: white;
+    grid-auto-rows: auto;
+    grid-template-columns: auto auto;
+    justify-content: start;
+    justify-items: center;
+    gap: 30px;
+}

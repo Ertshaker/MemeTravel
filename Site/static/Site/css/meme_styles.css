@@ -4,6 +4,7 @@ html {
 
 body {
     background: transparent url(../img/encyclopedia/background.png) no-repeat center;
+    background-size: cover;
 }
 
 .description-title {
