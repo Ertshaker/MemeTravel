@@ -2,7 +2,7 @@
 
 <header>
     <div class="logo">
-        <img class="header-logo" src="{% static 'Site/img/header/header_logo.png' %}" alt="СОСИ)">
+        <a href="/"><img class="header-logo" src="{% static 'Site/img/header/header_logo.png' %}" alt="СОСИ)"></a>>
     </div>
     <div class="gradient-white font-Comfortaa">
         <a href="/encyclopedia/" class="gradient-white">Энциклопедия</a>
@@ -14,18 +14,36 @@
         <div class="search">
             <img class="search-icon" src="{% static 'Site/img/header/search_icon.svg' %}" alt="СОСИ)">
             <form class="search-form" method="GET" action="#">
-                <input class="search-field gradient-white font-Comfortaa" type="text" id="search" name="q" placeholder="Поиск мемов" value="{{ query }}"
+                <input class="search-field gradient-white font-Comfortaa" type="text" id="search" name="q"
+                       placeholder="Поиск мемов" value="{{ query }}"
                        autocomplete="off">
             </form>
             <div id="suggestions" class="autocomplete-suggestions"></div>
         </div>
-        {% if request.user.is_authenticated %}
-            <a class="nav-button" href="/user/{{ request.user.username }}">
-        {% else %}
-            <a class="nav-button" href="/login">
-        {% endif %}
-        <img class="profile-icon" src="{% static 'Site/img/header/profile_icon.svg' %}" alt="СОСИ)">
-        </a>
+        <div class="profile-button">
+
+            {% if request.user.is_authenticated %}
+                <a class="nav-button" href="/user/{{ request.user.username }}"><img class="profile-icon"
+                                                                                    src="{% static 'Site/img/header/profile_icon.svg' %}"
+                                                                                    alt="СОСИ)"></a>
+            {% else %}
+                <a class="nav-button" href="/login"><img class="profile-icon"
+                                                         src="{% static 'Site/img/header/profile_icon.svg' %}"
+                                                         alt="СОСИ)"></a>
+            {% endif %}
+            </a>
+            <ul class="dropdown">
+                {% if request.user.is_authenticated %}
+                    <li><a href="/user/{{ request.user.username }}"
+                           class="font-Comfortaa">{{ request.user.username }}</a></li>
+                {% else %}
+                    <li><a href="/login" class="font-Comfortaa">Войти</a></li>
+                {% endif %}
+
+                <li><a href="/logout" class="font-Comfortaa">Выйти</a></li>
+            </ul>
+
+        </div>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {

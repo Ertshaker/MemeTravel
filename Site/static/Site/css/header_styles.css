@@ -68,6 +68,7 @@ header > * {
     margin-block: auto;
     width: 230px;
 }
+
 .search .search-form {
     position: relative;
     box-sizing: border-box;
@@ -125,7 +126,7 @@ header > * {
 
 .autocomplete-suggestion > a {
     font-family: Comfortaa, sans-serif;
-    background: linear-gradient(60deg, #000000 0%, #0D1946 11%, #461452 22%, #610F4A 33%, #67165C 44%, #0C0E4A 87%, #01001C  100%);
+    background: linear-gradient(60deg, #000000 0%, #0D1946 11%, #461452 22%, #610F4A 33%, #67165C 44%, #0C0E4A 87%, #01001C 100%);
     background-clip: text;
     -webkit-text-fill-color: transparent;
     font-size: 20px;
@@ -141,4 +142,59 @@ header > * {
     margin-right: 5px;
     object-fit: cover;
     border-radius: 10px;
+}
+
+.profile-button {
+    position: relative;
+    display: inline-block;
+}
+
+/* Скрытие выпадающего меню по умолчанию */
+.dropdown {
+    background: rgba(217, 217, 217);
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding: 0;
+    margin: 0;
+    border-radius: 12px;
+    list-style: none;
+    z-index: 1000; /* Убедитесь, что меню отображается поверх других элементов */
+}
+
+/* Показ выпадающего меню при наведении */
+.profile-button:hover .dropdown,
+.dropdown:hover {
+    display: block;
+    background: rgba(217, 217, 217);
+    border-radius: 12px;
+}
+
+/* Стили для элементов выпадающего меню */
+.dropdown li {
+    width: 140px;
+    background-color: rgba(217, 217, 217);
+    font-size: 15px;
+}
+
+.dropdown li a {
+
+    background: linear-gradient(60deg, #000000 0%, #0D1946 11%, #461452 22%, #610F4A 33%, #67165C 44%, #0C0E4A 87%, #01001C  100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block;
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+}
+
+.dropdown li:hover {
+    background-color: #474747;
+}
+
+.dropdown li:hover a{
+    background: linear-gradient(90deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
