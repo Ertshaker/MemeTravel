@@ -13,15 +13,53 @@
 {% include 'components/header.html' %}
 <p class="description-title font-Comfortaa gradient-white">описание</p>
 <div class="meme-description-wrapper">
-    <nav class="meme-content font-Comfortaa gradient-white">
-        <h3 class="content-title">содержание</h3>
-        <ol class="content-list">
-            <li>История происхождения</li>
-            <li>Значение и символика</li>
-            <li>Кльтурное влияние</li>
-            <li>Примеры и использование</li>
-        </ol>
-    </nav>
+    <div class="meme-description">
+        <nav class="meme-content font-Comfortaa gradient-white">
+            <h3 class="content-title">содержание</h3>
+            <ol class="content-list">
+                <li><a href="#History">История происхождения</a></li>
+                <li><a href="#Meaning">Значение и символика</a></li>
+                <li><a href="#Cultural_influence">Культурное влияние</a></li>
+                <li><a href="#Using_examples">Примеры и использование</a></li>
+            </ol>
+        </nav>
+        <div class="description-sections font-Comfortaa">
+            <section id="History">
+                <p class="section-title gradient-white">История происхождения</p>
+                <div class="description-box gradient-white">
+                    <h2 class="content-number">1</h2>
+                    <p class="description">{{ meme.history }}</p>
+                </div>
+            </section>
+            <section id="Meaning">
+                <p class="section-title gradient-white">Значение и символика</p>
+                <div class="description-box gradient-white">
+                    <h2 class="content-number">2</h2>
+                    <p class="description">{{ meme.meaning }}</p>
+                </div>
+            </section>
+            <section id="Cultural_influence">
+                <p class="section-title gradient-white">Культурное влияние</p>
+                <div class="description-box gradient-white">
+                    <h2 class="content-number">3</h2>
+                    <p class="description">{{ meme.cultural_influence }}</p>
+                </div>
+            </section>
+            <section id="Using_examples">
+                <p class="section-title gradient-white font-Comfortaa">Примеры и использование</p>
+                <div class="description-box gradient-white">
+                    <h2 class="content-number">4</h2>
+                    <p class="description">{{ meme.using_examples }}</p>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="meme-gallery">
+        <span></span>
+        {% for meme_image in meme_gallery %}
+            <img src="{{ meme_image.image.url }}" alt="">
+        {% endfor %}
+    </div>
 </div>
 </body>
 </html>

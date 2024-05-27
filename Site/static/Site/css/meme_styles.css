@@ -8,11 +8,86 @@ body {
 }
 
 .meme-description-wrapper {
+    display: flex;
+    flex-direction: row;
+    padding-inline: 8%;
+    padding-top: 10%;
+    gap: 100px;
+}
+
+.meme-description {
+    flex: 1;
+}
+
+.meme-content {
+    box-sizing: border-box;
     padding: 20px;
     border: 2px solid white;
     border-radius: 26px;
+    width: 620px;
+    height: 400px;
+    font-size: 36px;
 }
 
 .content-title {
+    text-align: center;
+    font-size: 40px;
+}
 
+.content-list {
+    text-align: start;
+}
+
+.content-list > li {
+    margin-bottom: 15px;
+}
+
+.description-sections {
+    display: flex;
+    flex-direction: column;
+    margin-top: 80px;
+    width: auto;
+}
+
+.section-title {
+    font-size: 36px;
+}
+
+.description-box {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-column-gap: 20px;
+    border: 2px solid white;
+    border-radius: 38px;
+    height: auto;
+    width: auto;
+    padding: 2% 4%;
+}
+
+.content-number {
+    display: inline;
+    font-size: 166px;
+    align-self: center;
+    margin-block: 0;
+}
+
+.description {
+    font-size: 24px;
+    word-break: break-all;
+    margin-block: 0;
+}
+
+.meme-gallery {
+    display: flex;
+    flex-direction: column;
+    margin-top: 150px;
+    gap: 130px;
+    align-self: center;
+}
+
+.meme-gallery > img {
+    width: 350px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 30px;
 }
