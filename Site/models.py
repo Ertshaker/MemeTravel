@@ -8,11 +8,11 @@ from django.contrib.auth.models import AbstractUser
 class Meme(models.Model):
     name = models.CharField(max_length=100)
     date = models.DateField()
-    description = models.TextField(default='Тогда почему ты мой писарь, а? (404)')
-    history = models.TextField(default='Тогда почему ты мой писарь, а? (404)')
-    meaning = models.TextField(default='Тогда почему ты мой писарь, а? (404)')
-    cultural_influence = models.TextField(default='Тогда почему ты мой писарь, а? (404)')
-    using_examples = models.TextField(default='Тогда почему ты мой писарь, а? (404)')
+    description = models.TextField()
+    history = models.TextField()
+    meaning = models.TextField()
+    cultural_influence = models.TextField()
+    using_examples = models.TextField()
     path_to_img = models.ImageField(upload_to='memes/')
 
     def get_absolute_url(self):

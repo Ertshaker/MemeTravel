@@ -14,7 +14,7 @@ from .models import Meme
 
 class MemesUpdateView(UpdateView):
     model = Meme
-    template_name = 'create/meme.html'
+    template_name = 'create/meme_test.html'
 
     form_class = AddMemeForm
 
@@ -225,10 +225,14 @@ def add_meme(request):
         name = form.cleaned_data.get('name')
         date = form.cleaned_data.get('date')
         description = form.cleaned_data.get('description')
+        history = form.cleaned_data.get('history')
+        meaning = form.cleaned_data.get('meaning')
+        cultural_influence = form.cleaned_data.get('cultural_influence')
+        using_examples = form.cleaned_data.get('using_examples')
         image = form.cleaned_data.get('path_to_img')
         additional_image = form.cleaned_data.get('additional_image')
 
-        meme = Meme(name=name, date=date, description=description, path_to_img=image)
+        meme = Meme(name=name, date=date, description=description, path_to_img=image, meaning=meaning, cultural_influence=cultural_influence, using_examples=using_examples, history=history)
 
         if meme is None:
             print("Invalid meme details: {0}, {1}, {2}, {3}".format(name, date, description, image))
@@ -241,7 +245,7 @@ def add_meme(request):
 
     else:
         form = AddMemeForm()
-        return render(request, 'create/meme.html', {'addmeme_form': form})
+        return render(request, 'create/meme_test.html', {'addmeme_form': form, 'page_name': 'ДОБАВЛЕНИЕ МЕМА'})
 
 
 def create_route(request, *args, **kwargs):

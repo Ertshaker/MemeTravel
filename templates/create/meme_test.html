@@ -1,0 +1,41 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'Site/css/create_meme_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'Site/css/header_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'Site/css/global.css' %}">
+    <title>Добавление мема</title>
+</head>
+<body>
+{% include 'components/header.html' %}
+<div class="wrapper">
+    <form method="post" enctype="multipart/form-data" id="form">
+        {% csrf_token %}
+        {{ addmeme_form.name }}
+        {{ addmeme_form.date }}
+        {{ addmeme_form.description }}
+        {{ addmeme_form.history }}
+        {{ addmeme_form.meaning }}
+        {{ addmeme_form.cultural_influence }}
+        {{ addmeme_form.using_examples }}
+        <div class="images gradient-dark font-Comfortaa">
+            <a class="gradient-dark font-Comfortaa">Основное изображение: {{ addmeme_form.path_to_img }}</a>
+
+            <a class="gradient-dark font-Comfortaa">Доп. изображение: {{ addmeme_form.additional_image }}</a>
+
+        </div>
+        <input type="submit" class="addmeme gradient-dark font-Comfortaa" value="Добавить">
+    </form>
+</div>
+
+{% for message in messages %}
+    <div class="message {{ message.tags }}">
+        {{ message }}
+    </div>
+{% endfor %}
+</body>
+</html>

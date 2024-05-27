@@ -1,9 +1,10 @@
-from django import forms
-from PIL import Image
-from django.contrib.auth.validators import UnicodeUsernameValidator
 import re
-from Site.models import Meme, Account
+
+from django import forms
 from django.contrib.auth.models import Group
+from django.contrib.auth.validators import UnicodeUsernameValidator
+
+from Site.models import Meme, Account
 
 
 def check_username(text):
@@ -65,9 +66,16 @@ class AddMemeForm(forms.ModelForm):
                   'history': 'История происхождения', 'path_to_img': 'Изображение мема',
                   'meaning': 'Значение и символика', 'cultural_influence': 'Культурное влияние',
                   'using_examples': 'Примеры и использование'}
-        widgets = {'date': forms.TextInput(attrs={'type': 'date'})}
+        widgets = {'name': forms.TextInput(attrs={'placeholder': 'Имя мема'}),
+                   'date': forms.TextInput(attrs={'type': 'date', 'placeholder': 'Дата появления'}),
+                   'description': forms.TextInput(attrs={'placeholder': 'Описание'}),
+                   'history': forms.TextInput(attrs={'placeholder': 'История происхождения'}),
+                   'meaning': forms.TextInput(attrs={'placeholder': 'Значение и символика'}),
+                   'cultural_influence': forms.TextInput(attrs={'placeholder': 'Культурное влияние'}),
+                   'using_examples': forms.TextInput(attrs={'placeholder': 'Примеры и использование'}),
+                   'path_to_img': forms.ClearableFileInput(attrs={'class': 'fileinput'})}
 
-    additional_image = forms.ImageField(label='Дополнительное изображение', required=False)
+    additional_image = forms.ImageField(label='Дополнительное изображение', required=False, widget=forms.ClearableFileInput(attrs={'class': 'fileinput'}))
 
 
 class ChangePasswordForm(forms.Form):
