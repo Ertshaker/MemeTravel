@@ -1,4 +1,5 @@
 {% load static %}
+{% load get_group %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +13,13 @@
 <body class="container">
 {% include 'components/header.html' %}
 <div class="memes-box" id="memes-box">
+    <div class="meme_control">
+        {% if request.user|has_group:"Админ" %}
+            <button onclick="location.href = '/create/meme/'"
+                    class="meme_option gradient-white font-Comfortaa">Добавить новый мем
+            </button>
+        {% endif %}
+    </div>
     {% for year, memes in filtered_memes.items %}
         <div class="memes-group">
             <div class="memes-group-title">
