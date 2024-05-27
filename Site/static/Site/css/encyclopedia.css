@@ -84,4 +84,5 @@ body {
     border-radius: 30px;
     font-size: 30px;
     width: 380px;
+    cursor: pointer;
 }
