@@ -241,7 +241,8 @@ def add_meme(request):
             return HttpResponseRedirect('/add_meme', locals())
 
         meme.save()
-        MemeGallery.objects.create(meme=meme, image=additional_image)
+        if additional_image:
+            MemeGallery.objects.create(meme=meme, image=additional_image)
         return HttpResponseRedirect('/encyclopedia', locals())
 
     else:
