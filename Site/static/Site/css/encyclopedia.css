@@ -78,15 +78,36 @@ body {
     letter-spacing: -3px;
 }
 
-.meme-info .meme-name > button {
+.meme-info .meme-name > .button {
     border: 2px solid white;
     background: transparent;
     color: white;
-    padding: 15px 20px;
     border-radius: 30px;
     font-size: 30px;
     width: 380px;
     cursor: pointer;
+    text-align: center;
+}
+
+.meme-info .meme-name > .button:hover {
+    background: rgba(217, 217, 217, 0.75);
+    transition: 0.2s ease;
+}
+
+.meme-info .meme-name > .button > a {
+    background: linear-gradient(90deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block;
+    padding: 15px 0px 15px 0px;
+
+}
+
+.meme-info .meme-name > .button > a:hover {
+    background: linear-gradient(60deg, #000000 0%, #0D1946 11%, #461452 22%, #610F4A 33%, #67165C 44%, #0C0E4A 87%, #01001C  100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: 0.2s ease;
 }
 
 .back-to-top {
@@ -114,13 +135,32 @@ body {
     transition: 0.2s ease;
 }
 
+.meme_control {
+    display: flex;
+}
+
 .meme_option {
     font-size: 32px;
     border-radius: 40px;
     border: 2px solid white;
     padding: 15px 15px 15px 15px;
     cursor: pointer;
-    margin-bottom: 90px;
+
 }
 
+.meme_option:hover {
+    background: linear-gradient(60deg, #000000 0%, #0D1946 11%, #461452 22%, #610F4A 33%, #67165C 44%, #0C0E4A 87%, #01001C  100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.meme_control .button {
+    margin-bottom: 90px;
+    border-radius: 40px;
+}
+
+.meme_control .button:hover {
+    background: rgba(217, 217, 217, 0.75);
+    transition: 0.2s ease;
+}
 

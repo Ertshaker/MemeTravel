@@ -2,22 +2,28 @@
 
 <header>
     <div class="logo">
-        <a href="/"><img src="{% static 'Site/img/header/header_logo.png' %}" alt="СОСИ)" title="На главную"></a>
+        <a href="/"><img src="{% static 'Site/img/header/header_logo.png' %}" alt="СОСИ)"></a>
     </div>
     <div class="page-name">
         <span class="gradient-white">{{ page_name }}</span>
     </div>
     <div class="nav-bar">
         {% if page_name != "ЭНЦИКЛОПЕДИЯ" and page_name != 'MemeTravel' %}
-            <a href="/encyclopedia/">
-                <img height="62" width="62" src="{% static 'Site/img/header/encyclopedia-icon.svg' %}" alt="" title="Энциклопедия">
-            </a>
+            <div class="button_encyclopedia">
+                <a href="/encyclopedia/">
+                    <img height="62" width="62" src="{% static 'Site/img/header/encyclopedia-icon.svg' %}" alt=""
+                         title="Энциклопедия">
+                </a>
+            </div>
         {% endif %}
-    
+
         {% if page_name != "ПУТЕШЕСТВИЕ" and page_name != 'MemeTravel' %}
-            <a href="/travel/">
-                <img height="62" width="62" style="stroke: white" src="{% static 'Site/img/header/travel-icon.svg' %}" alt="" title="Путешествие">
-            </a>
+            <div class="button_travel">
+                <a href="/travel/">
+                    <img height="62" width="62" src="{% static 'Site/img/header/travel-icon.svg' %}"
+                         alt="" title="Путешествие">
+                </a>
+            </div>
         {% endif %}
         <div class="search">
             <img class="search-icon" src="{% static 'Site/img/header/search_icon.svg' %}" alt="СОСИ)">

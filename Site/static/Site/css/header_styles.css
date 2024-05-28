@@ -251,3 +251,22 @@ header {
         margin-bottom: 10px; /* Отступ между элементами */
     }
 }
+
+.nav-bar .button_travel img:hover {
+    content: url(../img/header/travel-icon-selected.svg);
+    animation: modal-fade-in 0.2s ease-out;
+}
+
+.nav-bar .button_encyclopedia img:hover {
+    content: url(../img/header/encyclopedia-icon-selcted.svg);
+    animation: modal-fade-in 0.2s ease-out;
+}
+
+@keyframes modal-fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
