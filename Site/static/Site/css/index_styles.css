@@ -1,18 +1,22 @@
 body {
-    background: url(../img/index/introduction_image.png) no-repeat transparent;
+    background: url(../img/index/introduction_image.png) no-repeat center center transparent ;
+    background-size: cover;
     overflow: hidden;
 }
 
 .sections-box {
-    height: 100vh;
-    overflow-y: auto;
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    padding-inline: 8%;
     font-family: Comfortaa, sans-serif;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 .sections-box::-webkit-scrollbar {
-    width: 5px;
+    width: 0;
 }
 
 .sections-box::-webkit-scrollbar-track {
@@ -28,17 +32,15 @@ body {
 section {
     scroll-snap-align: start;
     position: relative;
-    padding-inline: 8%;
-    height: 100vh;
-    overflow: hidden;
+    margin-bottom: 10%;
+    padding-block: 5%;
 }
 
 .introduction {
     position: relative;
     display: block;
-    margin-top: 15%;
-    margin-bottom: 10%;
     font-family: Comfortaa, sans-serif;
+    margin-bottom: 10%;
 }
 
 .introduction h2 {
@@ -141,7 +143,6 @@ section {
 .transition-wrapper {
     display: grid;
     grid-template-rows: 1fr 1fr;
-    border-top: 2px solid white;
     justify-items: center;
 }
 
@@ -153,4 +154,23 @@ section {
     border: 2px solid white;
     border-radius: 75px;
     align-self: center;
+}
+
+.show {
+    animation: eblan 1s ease-in-out;
+}
+
+.sections-box.no-scroll {
+    overflow: hidden; /* Отключаем прокрутку */
+}
+
+@keyframes eblan {
+    from {
+        filter: blur(10px);
+        opacity: 0;
+    }
+    to {
+        filter: blur(0px);
+        opacity: 1;
+    }
 }

@@ -8,72 +8,72 @@
     <link rel="stylesheet" href="{% static 'Site/css/index_styles.css' %}"/>
     <link rel="stylesheet" href="{% static 'Site/css/header_styles.css' %}"/>
     <link rel="stylesheet" href="{% static 'Site/css/global.css' %}"/>
+    <script defer src="{% static 'Site/js/index_script.js' %}"></script>
     <title>MemeTravel</title>
 </head>
 <body>
 {% include 'components/header.html' %}
-<div class="sections-box">
+<div id="sections-box" class="sections-box">
     <section id="introduction">
-    <div class="introduction gradient-white font-Comfortaa">
-        <h2>Сайт для изучения мем-культуры<br/>Курсовая работа</h2>
-        <p>MemeTravel - многофункциональная площадка<br/>для сохранения и изучения<br/>истории мемов</p>
-    </div>
-    <div class="made-by gradient-white font-Comfortaa">
-        <div class="person">
-            <p>Даниил Юдин</p>
+        <div class="introduction gradient-white font-Comfortaa">
+            <h2>Сайт для изучения мем-культуры<br/>Курсовая работа</h2>
+            <p>MemeTravel - многофункциональная площадка<br/>для сохранения и изучения<br/>истории мемов</p>
         </div>
-        <div class="person">
-            <p>Максим Кононов</p>
+        <div class="made-by gradient-white font-Comfortaa">
+            <div class="person">
+                <p>Даниил Юдин</p>
+            </div>
+            <div class="person">
+                <p>Максим Кононов</p>
+            </div>
+            <div class="person">
+                <p>Ирина Киевская</p>
+            </div>
+            <div class="person">
+                <p>Владимир Калюжный</p>
+            </div>
         </div>
-        <div class="person">
-            <p>Ирина Киевская</p>
+    </section>
+    <section class="hidden" id="description">
+        <div class="description-wrapper text-Comfortaa">
+            <div class="text-section">
+                <p class="description-header gradient-white">MEME</p>
+                <p class="description-text">Вводное <br/> путешествие <br/> в историю мемов
+                </p>
+            </div>
+            <div class="text-section">
+                <p class="description-text">Динамическая<br/> энциклопедия <br/> с множеством мемов
+                <p class="description-header gradient-white">MEME</p>
+            </div>
         </div>
-        <div class="person">
-            <p>Владимир Калюжный</p>
+    </section>
+    <section class="hidden" id="functionality">
+        <h2 class="gradient-white">ВОЗМОЖНОСТИ САЙТА</h2>
+        <div class="functionality-wrapper">
+            <div class="function">
+                <p>Система аккаунтов</p>
+                <img src="{% static 'Site/img/DAUN.jpg' %}"/>
+            </div>
+            <div class="function">
+                <p>Избранное</p>
+                <img src="{% static 'Site/img/DAUN.jpg' %}"/>
+            </div>
+            <div class="function">
+                <p>Поиск <br/> Фильтрация</p>
+                <img src="{% static 'Site/img/DAUN.jpg' %}"/>
+            </div>
+            <div class="function">
+                <p>ДРУЗЬЯЯЯЯЯЯ</p>
+                <img src="{% static 'Site/img/DAUN.jpg' %}"/>
+            </div>
         </div>
-    </div>
-
-</section>
-<section id="description">
-    <div class="description-wrapper text-Comfortaa">
-        <div class="text-section">
-            <p class="description-header gradient-white">MEME</p>
-            <p class="description-text">Вводное <br/> путешествие <br/> в историю мемов
-            </p>
+    </section>
+    <section class="hidden" id="transition">
+        <div class="transition-wrapper font-Comfortaa">
+            <a href="/travel" class="gradient-white">Путешествие</a>
+            <a href="/encyclopedia/" class="gradient-white">Энциклопедия</a>
         </div>
-        <div class="text-section">
-            <p class="description-text">Динамическая<br/> энциклопедия <br/> с множеством мемов
-            <p class="description-header gradient-white">MEME</p>
-        </div>
-    </div>
-</section>
-<section id="functionality">
-    <h2 class="gradient-white">ВОЗМОЖНОСТИ САЙТА</h2>
-    <div class="functionality-wrapper">
-        <div class="function">
-            <p>Система аккаунтов</p>
-            <img src="{% static 'Site/img/DAUN.jpg' %}"/>
-        </div>
-        <div class="function">
-            <p>Избранное</p>
-            <img src="{% static 'Site/img/DAUN.jpg' %}"/>
-        </div>
-        <div class="function">
-            <p>Поиск <br/> Фильтрация</p>
-            <img src="{% static 'Site/img/DAUN.jpg' %}"/>
-        </div>
-        <div class="function">
-            <p>ДРУЗЬЯЯЯЯЯЯ</p>
-            <img src="{% static 'Site/img/DAUN.jpg' %}"/>
-        </div>
-    </div>
-</section>
-<section id="transition">
-    <div class="transition-wrapper font-Comfortaa">
-        <a href="/travel" class="gradient-white">Путешествие</a>
-        <a href="/encyclopedia/" class="gradient-white">Энциклопедия</a>
-    </div>
-</section>
+    </section>
 </div>
 </body>
 </html>

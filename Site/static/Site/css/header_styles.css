@@ -5,12 +5,13 @@ header {
     box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
+    z-index: 100;
     border-bottom: 2px solid white;
     margin-top: 20px;
     margin-inline: 5%;
     padding-inline: 20px;
-    padding-bottom: 10px;
-    height: 110px;
+    padding-bottom: 30px;
+    height: 10vh;
     justify-content: space-between;
     align-content: center;
     align-items: flex-end;

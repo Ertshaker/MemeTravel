@@ -121,7 +121,7 @@ class MemeDetailView(DetailView):
 
 def index(request):
     context = {
-        'page_name': 'Meme Travel'
+        'page_name': 'MemeTravel'
     }
     return render(request, 'index.html', context=context)
 
