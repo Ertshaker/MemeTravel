@@ -2,110 +2,101 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
 
 header {
-    display: flex;
     box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
     border-bottom: 2px solid white;
+    margin-top: 20px;
     margin-inline: 5%;
+    padding-inline: 20px;
     padding-bottom: 10px;
-    height: auto;
+    height: 110px;
     justify-content: space-between;
+    align-content: center;
     align-items: flex-end;
 }
 
-header > * {
-    position: relative;
-    padding-inline: 1em;
-    padding-bottom: 10px;
-}
-
-.logo > * {
-    display: inline;
-}
-
-.site-name {
-    padding-left: 20px;
-    font-size: 24px;
-    color: white;
-    font-family: Montserrat, sans-serif;
-}
-
 .page-name {
-    padding-bottom: 0;
-}
-
-.page-name > p {
+    display: inline;
     align-self: flex-end;
     font-size: 70px;
     font-weight: bold;
-    margin-block: 0;
     font-family: Comfortaa, sans-serif;
-    background: linear-gradient(90deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    text-align: center;
 }
 
-.logo .header-logo {
-    position: relative;
-    background: transparent;
-    width: 138px;
+.nav-bar {
+    display: flex;
+    flex-direction: row;
+    gap: 34px;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.nav-bar .page-navigation-button {
+    box-sizing: border-box;
+    border: 2px solid white;
+    border-radius: 38px;
+    cursor: pointer;
+    height: 62px;
+    padding-inline: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.nav-bar .page-navigation-button a {
+    font-size: 28px;
+    color: white;
+    text-decoration: none;
+    flex: 1 1 auto;
 }
 
 .search {
-    display: grid;
-    grid-template-columns: 45px 235px;
-    box-sizing: border-box;
-    width: 320px;
-    height: 47px;
+    display: flex;
+    align-items: center;
+    height: 62px;
     border: 2px solid white;
-    border-radius: 30px;
-    padding-inline: 20px;
+    border-radius: 38px;
+    padding-inline: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+    flex: 1 1 auto;
+    max-width: 100%;
 }
+
 .search-icon{
-    margin: 3px auto;
-    width: 80%;
+    flex-shrink: 0;
+    margin-right: 10px;
 }
+
 .search .search-field {
-    height: auto;
     font-size: 24px;
-    border: none;
-    margin-block: auto;
-    width: 230px;
 }
 
 .search .search-form {
-    position: relative;
+    display: flex;
+    flex: 1;
     box-sizing: border-box;
-    padding-top: 8px;
+}
+
+.search .search-field {
+    width: 100%;
+    font-size: 24px;
+    color: white;
+    box-sizing: border-box;
+    border: none;
+    background: transparent;
+}
+
+.search .search-field::placeholder {
+    color: white;
 }
 
 .search .search-field:focus {
     outline: none;
-}
-
-.site-name p {
-    display: inline;
-    padding-inline: 10px;
-    font-size: 28px;
-    font-family: Montserrat, sans-serif;
-    color: white;
-    margin-block: 10px;
-}
-
-.nav-bar {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: flex-end;
-}
-
-.nav-bar .nav-button {
-    padding-inline: 5px;
-    display: inline-block;
-    background: transparent;
-    border: transparent;
-    cursor: pointer;
 }
 
 .autocomplete-suggestions {
@@ -150,6 +141,11 @@ header > * {
 .profile-button {
     position: relative;
     display: inline-block;
+    align-self: flex-end;
+}
+
+.profile-icon {
+    height: 56px;
 }
 
 /* Скрытие выпадающего меню по умолчанию */
@@ -210,4 +206,47 @@ header > * {
 @keyframes ani {
   0% {opacity: 0;}
   100% {opacity: 1;}
+}
+
+@media (max-width: 768px) {
+    .page-name {
+        font-size: 50px; /* Уменьшение размера текста на малых экранах */
+    }
+
+    .nav-bar {
+        gap: 20px; /* Уменьшение расстояния между элементами на малых экранах */
+    }
+
+    .nav-bar .page-navigation-button {
+        font-size: 24px; /* Уменьшение размера текста кнопок на малых экранах */
+    }
+
+    .search {
+        padding-inline: 5px; /* Уменьшение отступов на малых экранах */
+    }
+
+    .search-field {
+        font-size: 20px; /* Уменьшение размера текста поля ввода на малых экранах */
+    }
+}
+
+@media (max-width: 480px) {
+    .page-name {
+        font-size: 40px; /* Еще большее уменьшение размера текста на очень малых экранах */
+    }
+
+    .nav-bar {
+        flex-direction: column; /* Перевод элементов в колонку на очень малых экранах */
+        align-items: center; /* Центрирование элементов */
+    }
+
+    .nav-bar .page-navigation-button {
+        width: 100%; /* Полная ширина кнопок на очень малых экранах */
+        margin-bottom: 10px; /* Отступ между кнопками */
+    }
+
+    .search {
+        width: 100%; /* Полная ширина поиска на очень малых экранах */
+        margin-bottom: 10px; /* Отступ между элементами */
+    }
 }
