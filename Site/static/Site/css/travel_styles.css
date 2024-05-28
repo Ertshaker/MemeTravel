@@ -1,17 +1,19 @@
 body {
     background: url(../img/travel/background_image.png) no-repeat transparent;
     background-size: cover;
+    overflow: hidden;
 }
 
 .sections-box {
-    overflow-y: auto;
     padding-inline: 8%;
-    scroll-snap-type: y mandatory;
     height: 87vh;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 .sections-box::-webkit-scrollbar {
-    width: 5px;
+    width: 0px;
 }
 
 .sections-box::-webkit-scrollbar-track {
@@ -181,4 +183,23 @@ section {
 #back-to-top:hover {
     background-color: #555;
     transition: 0.2s ease;
+}
+
+.show {
+    animation: eblan 1s ease-in-out;
+}
+
+.sections-box.no-scroll {
+    overflow: hidden; /* Отключаем прокрутку */
+}
+
+@keyframes eblan {
+    from {
+        filter: blur(10px);
+        opacity: 0;
+    }
+    to {
+        filter: blur(0px);
+        opacity: 1;
+    }
 }
