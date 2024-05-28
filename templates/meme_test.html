@@ -63,10 +63,18 @@
         </div>
         <div class="meme_control">
             {% if request.user|has_group:"Админ" or request.user|has_group:"Модератор" %}
-                <button onclick="location.href = '/meme/id{{ meme.id }}/update'" class="meme_option gradient-white font-Comfortaa">Редактировать</button>
+                <div class="button">
+                    <button onclick="location.href = '/meme/id{{ meme.id }}/update'" class="meme_option gradient-white font-Comfortaa">
+                        Редактировать
+                    </button>
+                </div>
             {% endif %}
             {% if request.user.is_authenticated %}
-            <button class="add-to-favorites-button meme_option gradient-white font-Comfortaa" data-meme-id="{{ meme.id }}">Добавить в избранное!</button>
+                <div class="button">
+                    <button class="add-to-favorites-button meme_option gradient-white font-Comfortaa" data-meme-id="{{ meme.id }}">
+                        Добавить в избранное!
+                    </button>
+                </div>
             {% endif %}
         </div>
     </div>

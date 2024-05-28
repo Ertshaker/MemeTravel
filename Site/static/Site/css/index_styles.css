@@ -145,12 +145,32 @@ section {
     justify-items: center;
 }
 
-.transition-wrapper a {
+.transition-wrapper div {
     margin-block: 50px;
     font-weight: bold;
     font-size: 65px;
-    padding: 30px 50px;
-    border: 2px solid white;
+    padding: 30px 0px;
     border-radius: 75px;
     align-self: center;
+}
+
+.transition-wrapper .button:hover {
+    background: rgba(217, 217, 217, 0.75);
+    transition: 0.2s ease;
+}
+
+.transition-wrapper .button > a {
+    background: linear-gradient(90deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border: 2px solid white;
+    border-radius: 75px;
+    padding: 30px 50px;
+}
+
+.transition-wrapper .button > a:hover {
+    background: linear-gradient(60deg, #000000 0%, #0D1946 11%, #461452 22%, #610F4A 33%, #67165C 44%, #0C0E4A 87%, #01001C 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: 0.2s ease;
 }

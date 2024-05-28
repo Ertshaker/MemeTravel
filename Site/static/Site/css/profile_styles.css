@@ -101,6 +101,11 @@ section {
     width: 86px;
 }
 
+.change-password-button:hover {
+    background: white url(../img/profile/change-password-icon-selected.svg) no-repeat center;
+    transition: 0.2s ease;
+}
+
 input[type="password"]::placeholder {
     text-align: center;
 }
@@ -143,7 +148,21 @@ input[type="password"] {
     border-radius: 40px;
     border: 3px solid white;
     padding: 15px 15px 15px 15px;
-    margin-right: 20px;
+    background: linear-gradient(90deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.requests:hover {
+    background: linear-gradient(60deg, #000000 0%, #0D1946 11%, #461452 22%, #610F4A 33%, #67165C 44%, #0C0E4A 87%, #01001C 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: 0.2s ease;
+}
+
+.friend_options .button:hover {
+    background: rgba(217, 217, 217, 0.75);
+    transition: 0.2s ease;
 }
 
 .counter {
@@ -155,6 +174,12 @@ input[type="password"] {
     position: relative;
     align-self: center;
     font-size: 28px;
+}
+
+.friend_options .button {
+    display: inline-block;
+    border-radius: 40px;
+    margin-right: 20px;
 }
 
 .friend {
@@ -174,15 +199,6 @@ input[type="password"] {
     height: 298px;
 }
 
-.remove-friend-button {
-    border-radius: 9px;
-    border: 2px solid black;
-    cursor: pointer;
-    padding: 2px 10px 2px 10px;
-    font-size: 18px;
-    float: right;
-    margin-right: 10px;
-}
 
 .friend_username {
     font-size: 22px;
@@ -235,16 +251,7 @@ input[type="password"] {
     margin-left: 5px;
 }
 
-.remove-from-favorites-button {
-    border-radius: 9px;
-    border: 2px solid black;
-    cursor: pointer;
-    bottom: 2%;
-    padding: 2px 10px 2px 10px;
-    font-size: 18px;
-    float: right;
-    margin-right: 10px;
-}
+
 
 .Change_avatar {
     font-size: 24px;
@@ -268,4 +275,65 @@ input[type="password"] {
 .no-friends {
     font-size: 32px;
     width: 1000px;
+}
+
+
+
+.friend .button_delete {
+    float: right;
+    margin-right: 10px;
+    border-radius: 9px;
+}
+
+.friend .button_delete:hover {
+    background: rgba(0, 0, 0, 0.75);
+    transition: 0.2s ease;
+}
+
+.remove-friend-button:hover {
+    background: linear-gradient(90deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.remove-friend-button {
+    border-radius: 9px;
+    background: linear-gradient(60deg, #000000 0%, #0D1946 11%, #461452 22%, #610F4A 33%, #67165C 44%, #0C0E4A 87%, #01001C 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor: pointer;
+    padding: 2px 10px 2px 10px;
+    font-size: 18px;
+    float: right;
+    border: 2px solid black;
+}
+
+.remove-from-favorites-button {
+    background: linear-gradient(60deg, #000000 0%, #0D1946 11%, #461452 22%, #610F4A 33%, #67165C 44%, #0C0E4A 87%, #01001C 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border-radius: 9px;
+    border: 2px solid black;
+    cursor: pointer;
+    bottom: 2%;
+    padding: 2px 10px 2px 10px;
+    font-size: 18px;
+    float: right;
+}
+
+.remove-from-favorites-button:hover {
+    background: linear-gradient(90deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.meme .button_delete {
+    float: right;
+    margin-right: 10px;
+    border-radius: 9px;
+}
+
+.meme .button_delete:hover {
+    background: rgba(0, 0, 0, 0.75);
+    transition: 0.2s ease;
 }

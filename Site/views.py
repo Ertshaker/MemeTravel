@@ -160,7 +160,7 @@ def user_login(request):
 
         login(request, user)
 
-        return HttpResponseRedirect('/', locals())
+        return HttpResponseRedirect(f'/user/{request.user.username}', locals())
     else:
         form = LoginForm()
         return render(request, 'login.html', {'login_form': form})
@@ -279,34 +279,22 @@ def friends_add(request):
         user = request.user
         form = AddFriendForm(request.POST)
         if not form.is_valid():
-            messages.error(request, 'Что то пошло не так!')
-            return HttpResponseRedirect(f'/user/{user.username}', locals())
+            return JsonResponse({'error': 'Форма заполнена неверно.'}, status=400)
 
         name = form.cleaned_data.get('friend_name')
-        if not Account.objects.filter(username=name):
-            print("Invalid friend details: {0}".format(name))
-            messages.error(request, 'Похоже такого пользователя нет!')
-            return HttpResponseRedirect('/create/friend', locals())
+        if not Account.objects.filter(username=name).exists():
+            return JsonResponse({'error': 'Пользователь не найден.'}, status=404)
+
         possible_friend = Account.objects.get(username=name)
-        all_friends = Friend.objects.all()
+        if Friend.objects.filter(user_id=user.id, friend_id=possible_friend.id).exists() or Friend.objects.filter(user_id=possible_friend.id, friend_id=user.id).exists():
+            return JsonResponse({'error': 'Заявка уже существует или вы уже друзья.'}, status=409)
+
         friend_request = Friend(user=user, friend=possible_friend, accepted=False)
-
-        if friend_request is None:
-            print("Invalid friend details: {0}".format(name))
-            messages.error(request, 'Что то пошло не так!')
-            return HttpResponseRedirect('/create/friend', locals())
-
-        if Friend.objects.filter(user_id=user.id, friend_id=possible_friend.id):
-            print("Objects already friends or requested!".format(user.username, name))
-            messages.error(request, 'Кажется эта заявка уже есть или вы уже друзья!')
-            return HttpResponseRedirect(f'/user/{user.username}/friends', locals())
-
         friend_request.save()
 
-        return HttpResponseRedirect(f'/user/{user.username}/friends', locals())
+        return JsonResponse({'message': 'Запрос в друзья отправлен!'}, status=201)
     else:
-        form = AddFriendForm()
-        return render(request, 'create/friend.html', {'addfriend_form': form})
+        return JsonResponse({'error': 'Неверный метод запроса.'}, status=405)
 
 
 def accept_friend(request, user_id: int):
@@ -351,7 +339,7 @@ def add_to_favorites(request):
             current_user.favorites.add(meme)
             return JsonResponse({'success': True})
         else:
-            return JsonResponse({'success': False, 'error': 'МЕМ УЖЕ ДОБАВЛЕН ДУРА'})
+            return JsonResponse({'success': False, 'error': 'Мем уже в избранном!'})
     return JsonResponse({'success': False, 'error': 'ИНВАЛИД'})
 
 
@@ -364,7 +352,7 @@ def remove_from_favorites(request):
             current_user.favorites.remove(meme)
             return JsonResponse({'success': True})
         except current_user.favorites.ObjectDoesNotExist:
-            return JsonResponse({'success': False, 'error': 'МЕМ НЕ НАЙДЕН блин'})
+            return JsonResponse({'success': False, 'error': 'Мем не найден?'})
     return JsonResponse({'success': False, 'error': 'IИНВАЛИИД'})
 
 

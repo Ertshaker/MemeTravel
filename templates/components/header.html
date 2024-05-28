@@ -8,16 +8,23 @@
         <span class="gradient-white">{{ page_name }}</span>
     </div>
     <div class="nav-bar">
-    {% if page_name != "ПУТЕШЕСТВИЕ" %}
-        <div class="page-navigation-button font-Montserrat">
-            <a href="/encyclopedia/">путешествие</a>
-        </div>
-    {% endif %}
-    {% if page_name != "ЭНЦИКЛОПЕДИЯ" %}
-        <div class="page-navigation-button font-Montserrat">
-            <a href="/encyclopedia/">энциклопедия</a>
-        </div>
-    {% endif %}
+        {% if page_name != "ЭНЦИКЛОПЕДИЯ" and page_name != 'MemeTravel' %}
+            <div class="button_encyclopedia">
+                <a href="/encyclopedia/">
+                    <img height="62" width="62" src="{% static 'Site/img/header/encyclopedia-icon.svg' %}" alt=""
+                         title="Энциклопедия">
+                </a>
+            </div>
+        {% endif %}
+
+        {% if page_name != "ПУТЕШЕСТВИЕ" and page_name != 'MemeTravel' %}
+            <div class="button_travel">
+                <a href="/travel/">
+                    <img height="62" width="62" src="{% static 'Site/img/header/travel-icon.svg' %}"
+                         alt="" title="Путешествие">
+                </a>
+            </div>
+        {% endif %}
         <div class="search">
             <img class="search-icon" src="{% static 'Site/img/header/search_icon.svg' %}" alt="СОСИ)">
             <form class="search-form" method="GET" action="#">
