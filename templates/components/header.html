@@ -4,9 +4,11 @@
     <div class="logo">
         <a href="/"><img class="header-logo" src="{% static 'Site/img/header/header_logo.png' %}" alt="СОСИ)"></a>>
     </div>
-    <div class="gradient-white font-Comfortaa">
-        <a href="/encyclopedia/" class="gradient-white">Энциклопедия</a>
-    </div>
+    {% if page_name != 'ЭНЦИКЛОПЕДИЯ' %}
+        <div class="gradient-white font-Comfortaa">
+            <a href="/encyclopedia/" class="gradient-white">Энциклопедия</a>
+        </div>
+    {% endif %}
     <div class="page-name">
         <p>{{ page_name }}</p>
     </div>
@@ -39,7 +41,7 @@
                     <li><a href="/login" class="font-Comfortaa">Войти</a></li>
                 {% endif %}
                 {% if request.user.is_authenticated %}
-                <li><a href="/logout" class="font-Comfortaa">Выйти</a></li>
+                    <li><a href="/logout" class="font-Comfortaa">Выйти</a></li>
                 {% endif %}
             </ul>
 

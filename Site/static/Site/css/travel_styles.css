@@ -157,3 +157,28 @@ section {
 #advices .memes-horizontal-container,.memes-vertical-container {
     width: 70%;
 }
+
+.back-to-top {
+    /*display: none;*/
+    opacity: 0;
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    z-index: 99;
+    outline: none;
+    color: white;
+    padding: 15px;
+    background: url(../img/profile/change-password-icon.svg) no-repeat transparent center;
+    rotate: -90deg;
+    background-size: 60%;
+    height: 50px;
+    width: 50px;
+    border-radius: 20px;
+    border: 1px solid white;
+    cursor: pointer;
+}
+
+#back-to-top:hover {
+    background-color: #555;
+    transition: 0.2s ease;
+}

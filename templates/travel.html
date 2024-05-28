@@ -12,7 +12,7 @@
 </head>
 <body>
 {% include 'components/header.html' %}
-<div class="sections-box font-Comfortaa">
+<div class="sections-box font-Comfortaa" id="sections-box">
     <section id="Introduction">
         <h1 class="introduction-title gradient-white">
             Мем - вещь глубокая. Глубочайшая. Фольклор от постмодерна, способ сформулировать и донести свои мысли.
@@ -200,5 +200,43 @@
         <p style="font-size: 60px; font-weight: bold" class="gradient-white">TO BE COCINUED</p>
     </section>
 </div>
+<button class="back-to-top" id="back-to-top" title="Go to top"></button>
+<script>
+    var element = document.querySelector('#sections-box');
+    element.onscroll = function () {
+        scrollFunction();
+    };
+
+    function scrollFunction() {
+        if (element.scrollTop > 20) {
+            document.getElementById("back-to-top").style.display = "block";
+            show("back-to-top", 300);
+
+        } else {
+            document.getElementById("back-to-top").style.display = "none";
+            document.getElementById("back-to-top").style.opacity = 0;
+        }
+    }
+
+    function show(id, speed) {
+        let vars;
+        var ID = setInterval(function () {
+            (vars = Number(document.getElementById(id).style.opacity));
+            if (vars > 1) {
+                clearInterval(ID);
+            }
+            vars += 0.1;
+            document.getElementById(id).style.opacity = vars;
+        }, speed);
+    }
+
+    document.getElementById("back-to-top").onclick = function () {
+        scrollToTop();
+    };
+
+    function scrollToTop() {
+        element.scroll({top: 0, behavior: 'smooth'});
+    }
+</script>
 </body>
 </html>

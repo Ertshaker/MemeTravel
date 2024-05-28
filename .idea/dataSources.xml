@@ -8,7 +8,7 @@
       <jdbc-url>jdbc:sqlite:C:\Users\Daniil\PycharmProjects\MemeTravel\db.sqlite3</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="MAXON" uuid="4fdc8eb3-cd30-412d-9583-1381f546d958">
+    <data-source source="LOCAL" name="db [2]" uuid="4fdc8eb3-cd30-412d-9583-1381f546d958">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
