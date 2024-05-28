@@ -29,6 +29,8 @@
 
         </div>
         <input type="submit" class="addmeme gradient-dark font-Comfortaa" value="Добавить">
+        <button id="delete-meme-btn" class="addmeme gradient-dark font-Comfortaa">УДАЛИТЬ МЕММ АААА</button>
+        <input type="hidden" id="meme-id" value="{{ meme.id }}">
     </form>
 </div>
 
@@ -37,5 +39,39 @@
         {{ message }}
     </div>
 {% endfor %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#delete-meme-btn').click(function() {
+        var memeId = $('#meme-id').val();
+        var csrfToken = '{{ csrf_token }}';
+
+        if (confirm('Вы уверены, что хотите удалить этот мем?')) {
+            console.log("Отправка запроса на удаление мема с ID: " + memeId);
+            $.ajax({
+                url: '/meme/' + memeId + '/delete/',
+                type: 'POST',
+                data: {
+                    'csrfmiddlewaretoken': csrfToken
+                },
+                success: function(response) {
+                    console.log("Ответ сервера: ", response);
+                    if (response.success) {
+                        alert('Мем успешно удален');
+                        window.location.href = '/encyclopedia/';
+                    } else {
+                        alert('Ошибка при удалении мема: ' + response.error);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log("Ошибка запроса: ", xhr.responseText);
+                    alert('Ошибка при удалении мема');
+                }
+            });
+        }
+    });
+});
+</script>
 </body>
 </html>

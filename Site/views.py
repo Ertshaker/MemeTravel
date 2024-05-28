@@ -4,8 +4,9 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, get_object_or_404, redirect
 from django.views.generic import DetailView, UpdateView
+from django.views.decorators.http import require_POST
 
 from Site.models import *
 from .forms import *
@@ -340,7 +341,6 @@ def remove_friend_request(request):
             return JsonResponse({'success': False, 'error': 'НЕСУЩЕСТВФУЕТ АААААА'})
     return JsonResponse({'success': False, 'error': 'ИНВАЛИД'})
 
-
 def add_to_favorites(request):
     if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
         current_user = request.user
@@ -424,3 +424,24 @@ def autocomplete1(request):
 
 def travel_view(request):
     return render(request, 'travel.html', context={'page_name': 'ПУТЕШЕСТВИЕ'})
+
+def delete_meme(request, meme_id):
+    if request.method == 'POST':
+        try:
+            meme = Meme.objects.get(id=meme_id)
+            print(f"Удаление мема с ID: {meme_id}")
+            meme.delete()
+            return JsonResponse({'success': True})
+        except Meme.DoesNotExist:
+            print(f"Мем с ID {meme_id} не найден")
+            return JsonResponse({'success': False, 'error': 'Мем не найден'})
+        except Exception as e:
+            print(f"Ошибка при удалении мема: {e}")
+            return JsonResponse({'success': False, 'error': 'Произошла ошибка при удалении мема'})
+    else:
+        print("Неверный метод запроса")
+        return JsonResponse({'success': False, 'error': 'Неверный метод запроса'})
+
+
+
+

@@ -36,10 +36,14 @@ urlpatterns = [
     path('meme/id<int:pk>/update/', MemesUpdateView.as_view()),
     path('remove_friend_request/', views.remove_friend_request, name='remove_friend_request'),
     path('add_friend_request/', views.add_friend_request, name='add_friend_request'),
+    path('friends_add/', views.friends_add, name='friends_add'),
     path('add_to_favorites/', views.add_to_favorites, name='add_to_favorites'),
     path('remove_from_favorites/', views.remove_from_favorites, name='remove_from_favorites'),
     path('autocomplete/', views.autocomplete, name='autocomplete'),
-    path('travel/', travel_view)
+    path('travel/', travel_view),
+    path('meme/<int:meme_id>/delete/', delete_meme, name='delete_meme'),
+    path('encyclopedia/', views.encyclopedia, name='encyclopedia'),
+
 ]
 
 if settings.DEBUG:

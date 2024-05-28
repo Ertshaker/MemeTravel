@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{% static 'Site/css/profile_styles.css' %}">
     <link rel="stylesheet" href="{% static 'Site/css/header_styles.css' %}">
     <link rel="stylesheet" href="{% static 'Site/css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'Site/css/MODAL.css' %}">
     <title>{{ user.username }}</title>
 </head>
 <body>
@@ -25,7 +26,7 @@
                   class="Change_avatar gradient-white">
                 {% csrf_token %}
                 {{ ChangeAvatarForm.image }}
-                <input name="change_avatar_input" type="submit" class="change-avatar" value="Сменить аватар">
+                <input name="change_avatar_input" type="submit" class="change-avatar" value="После выбора - ТЫК">
             </form>
         </div>
         <div class="user-info gradient-white font-Comfortaa">
@@ -64,11 +65,13 @@
         <div class="friends_title">
             {% if is_current_user %}
                 <div class="friend_options gradient-white font-Comfortaa">
-                    <a class="requests" href="{{ user.username }}/friends/">Входящие заявки
+                    <a class="requests" id="incoming-requests-btn" href="#">Входящие заявки
                         <div class="counter">{% if got_requests %}{{ got_requests.count }}{% else %}0{% endif %}</div>
                     </a>
-                    <a class="requests" href="{{ user.username }}/friends/">Отправленные заявки
+                    <a class="requests" id="sent-requests-btn" href="#">Отправленные заявки
                         <div class="counter">{% if send_requests %}{{ send_requests.count }}{% else %}0{% endif %}</div>
+                    </a>
+                    <a class="requests" id="add-friend-btn" href="#">Добавить друга</a>
                     </a>
                 </div>
             {% endif %}
@@ -199,6 +202,180 @@
             });
         }
     });
+</script>
+</body>
+</html>
+
+<!-- САСАЛЬНЫЕ ОКНА -->
+<div id="incoming-requests-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Список полученных заявок</h2>
+<table>
+    <tr><th>Имя друга</th><th>Статус</th></tr>
+    {% for friend in got_requests %}
+    <tr>
+        <td><a class="logo" href="/user/{{ friend.user }}">{{ friend.user }}</a></td>
+        <td>
+            <button class="add-friend-button" data-friend-id="{{ friend.id }}">Добавить</button>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.add-friend-button').on('click', function() {
+        var friendId = $(this).data('friend-id');
+        addFriendRequest(friendId);
+    });
+
+    function addFriendRequest(friendId) {
+    var csrfToken = '{{ csrf_token }}';
+
+    var deferred = $.Deferred();
+
+    $.ajax({
+        url: '/add_friend_request/',
+        type: 'POST',
+        data: {
+            friend_id: friendId,
+            csrfmiddlewaretoken: csrfToken
+        }
+    })
+    .done(function(response) {
+        if (response.success) {
+            deferred.resolve(response);
+            toastr.success('Запрос в друзья ЗОМБИТЕЛЕН!');
+            setTimeout(function() { location.reload(); }, 2000);
+        } else {
+            deferred.reject(response.error);
+            console.error(response.error);
+        }
+    })
+    .fail(function(xhr, status, error) {
+        deferred.reject(error);
+        console.error(error);
+    });
+
+    return deferred.promise();
+}
+
+});
+</script>
+
+<div id="sent-requests-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Отправленные заявки в друзья</h2>
+        <ul>
+            {% for friend in send_requests %}
+                <li><a class="logo" href="/user/{{ friend.friend }}">{{ friend.friend }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div id="add-friend-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Добавить друга</h2>
+        <form id="add-friend-form" method="POST">
+            {% csrf_token %}
+            <input type="text" name="friend_name" placeholder="Имя друга" required>
+            <button type="submit">Добавить друга</button>
+        </form>
+    </div>
+</div>
+
+<script>
+
+var addFriendModal = document.getElementById("add-friend-modal");
+var addFriendButton = document.getElementById("add-friend-btn");
+var closeButton = document.querySelector("#add-friend-modal .close");
+var incomingRequestsModal = document.getElementById("incoming-requests-modal");
+var sentRequestsModal = document.getElementById("sent-requests-modal");
+var incomingCloseButton = document.querySelector("#incoming-requests-modal .close");
+var sentCloseButton = document.querySelector("#sent-requests-modal .close");
+var scrollPosition;
+
+function openModal() {
+    document.body.style.overflow = 'hidden';
+    scrollPosition = window.pageYOffset;
+}
+
+function closeModal() {
+    window.scrollTo(0, scrollPosition);
+    document.body.style.overflow = 'visible';
+}
+
+
+document.getElementById("incoming-requests-btn").onclick = function() {
+    openModal();
+    incomingRequestsModal.style.display = "block";
+}
+
+document.getElementById("sent-requests-btn").onclick = function() {
+    openModal();
+    sentRequestsModal.style.display = "block";
+}
+
+incomingCloseButton.onclick = function() {
+    closeModal();
+    incomingRequestsModal.style.display = "none";
+}
+
+sentCloseButton.onclick = function() {
+    closeModal();
+    sentRequestsModal.style.display = "none";
+}
+
+addFriendButton.onclick = function() {
+    addFriendModal.style.display = "block";
+}
+
+closeButton.onclick = function() {
+    addFriendModal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == incomingRequestsModal) {
+        closeModal();
+        incomingRequestsModal.style.display = "none";
+    }
+    if (event.target == sentRequestsModal) {
+        closeModal();
+        sentRequestsModal.style.display = "none";
+    }
+}
+
+$(document).ready(function() {
+    $('#add-friend-btn').on('click', function() {
+        addFriendModal.style.display = "block";
+    });
+
+    $('#add-friend-form').submit(function(e) {
+        e.preventDefault();
+
+        var formData = $(this).serialize();
+
+        $.ajax({
+            type: 'POST',
+            url: '/friends_add/',
+            data: formData,
+            success: function(data) {
+                toastr.success('Запрос в друзья ЗОМБИТЕЛЕН!');
+                $('#add-friend-modal').hide(); // Скрыть модальное окно
+            },
+            error: function(data) {
+                toastr.error('В чом то вы неправы...! СЭР!');
+            }
+        });
+    });
+});
 </script>
 </body>
 </html>
