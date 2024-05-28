@@ -20,6 +20,6 @@ const observer = new IntersectionObserver((entries) => {
 
 var scrollingBox = document.getElementById('sections-box');
 let isScrolling = false;
-const hiddenElements = document.querySelectorAll('.hidden');
+const hiddenElements = document.querySelectorAll('section');
 hiddenElements.forEach((el) => observer.observe(el))
 
