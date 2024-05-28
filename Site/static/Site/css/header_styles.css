@@ -228,13 +228,15 @@ header {
   100% {opacity: 1;}
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     .page-name {
-        font-size: 50px; /* Уменьшение размера текста на малых экранах */
+        display: none;
     }
+}
 
+@media (max-width: 768px) {
     .nav-bar {
-        gap: 20px; /* Уменьшение расстояния между элементами на малых экранах */
+        gap: 10px; /* Уменьшение расстояния между элементами на малых экранах */
     }
 
     .nav-bar .page-navigation-button {
@@ -252,7 +254,7 @@ header {
 
 @media (max-width: 480px) {
     .page-name {
-        font-size: 40px; /* Еще большее уменьшение размера текста на очень малых экранах */
+        font-size: 40px;
     }
 
     .nav-bar {
@@ -264,7 +266,6 @@ header {
         width: 100%; /* Полная ширина кнопок на очень малых экранах */
         margin-bottom: 10px; /* Отступ между кнопками */
     }
-
     .search {
         width: 100%; /* Полная ширина поиска на очень малых экранах */
         margin-bottom: 10px; /* Отступ между элементами */
