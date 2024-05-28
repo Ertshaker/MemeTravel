@@ -64,14 +64,16 @@
         <div class="meme_control">
             {% if request.user|has_group:"Админ" or request.user|has_group:"Модератор" %}
                 <div class="button">
-                    <button onclick="location.href = '/meme/id{{ meme.id }}/update'" class="meme_option gradient-white font-Comfortaa">
+                    <button onclick="location.href = '/meme/id{{ meme.id }}/update'"
+                            class="meme_option gradient-white font-Comfortaa">
                         Редактировать
                     </button>
                 </div>
             {% endif %}
             {% if request.user.is_authenticated %}
                 <div class="button">
-                    <button class="add-to-favorites-button meme_option gradient-white font-Comfortaa" data-meme-id="{{ meme.id }}">
+                    <button class="add-to-favorites-button meme_option gradient-white font-Comfortaa"
+                            data-meme-id="{{ meme.id }}">
                         Добавить в избранное!
                     </button>
                 </div>
@@ -80,9 +82,11 @@
     </div>
     <div class="meme-gallery">
         <img class="main-image" src="{{ meme.path_to_img.url }}"/>
-        {% for meme_image in meme_gallery %}
-            <img src="{{ meme_image.image.url }}" alt="">
-        {% endfor %}
+        {% if meme_gallery %}
+            {% for meme_image in meme_gallery %}
+                <img src="{{ meme_image.image.url }}" alt="">
+            {% endfor %}
+        {% endif %}
     </div>
 
 
