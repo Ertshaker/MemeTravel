@@ -182,9 +182,9 @@ header > * {
 }
 
 .dropdown li a {
-
     background: linear-gradient(60deg, #000000 0%, #0D1946 11%, #461452 22%, #610F4A 33%, #67165C 44%, #0C0E4A 87%, #01001C  100%);
     background-clip: text;
+    border-radius: 0;
     -webkit-text-fill-color: transparent;
     display: block;
     padding: 10px;

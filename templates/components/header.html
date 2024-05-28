@@ -31,7 +31,6 @@
                                                          src="{% static 'Site/img/header/profile_icon.svg' %}"
                                                          alt="СОСИ)"></a>
             {% endif %}
-            </a>
             <ul class="dropdown">
                 {% if request.user.is_authenticated %}
                     <li><a href="/user/{{ request.user.username }}"

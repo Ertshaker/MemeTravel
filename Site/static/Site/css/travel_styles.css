@@ -6,6 +6,8 @@ body {
 .sections-box {
     overflow-y: auto;
     padding-inline: 8%;
+    scroll-snap-type: y mandatory;
+    height: 87vh;
 }
 
 .sections-box::-webkit-scrollbar {
@@ -25,6 +27,9 @@ body {
 section {
     height: auto;
     position: relative;
+    padding-block: 100px;
+    width: auto;
+    scroll-snap-align: center;
 }
 
 .section-title {
@@ -39,7 +44,7 @@ section {
     margin-top: 10%;
 }
 
-.prehistoric-block {
+.start-XX-block {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: auto;
@@ -62,12 +67,35 @@ section {
     font-size: 24px;
 }
 
-.memes-2000-container {
+.memes-horizontal-container {
     display: flex;
     flex-direction: row;
+    color: white;
+    font-size: 24px;
     justify-content: space-evenly;
-    justify-items: flex-start;
     gap: 50px;
+    margin-inline: auto;
+}
+
+.memes-horizontal-container > img {
+    object-fit: scale-down;
+}
+
+.memes-vertical-container {
+    display: grid;
+    grid-template-columns: auto;
+    grid-auto-rows: auto;
+    color: white;
+    font-size: 24px;
+    justify-content: center;
+    justify-items: center;
+    gap: 50px;
+    margin-inline: auto;
+}
+
+.memes-vertical-container > img {
+    object-fit: scale-down;
+    height: auto;
 }
 
 .olbansky_language-description {
@@ -86,4 +114,46 @@ section {
     justify-content: start;
     justify-items: center;
     gap: 30px;
+}
+
+.image-boards {
+    color: white;
+    font-size: 24px;
+}
+
+.row-description {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 40px;
+    margin-bottom: 20px;
+}
+
+.paragraphs {
+    color: white;
+    font-size: 24px;
+}
+
+.meme-paragraph {
+    font-size: 24px;
+    color: white;
+}
+
+#Prehistoric .memes-horizontal-container,.memes-vertical-container {
+    width: 85%;
+}
+
+/*#start-XX-century .start-XX-block {*/
+/*    width: 80%;*/
+/*}*/
+
+#demotivators .memes-horizontal-container,.memes-vertical-container {
+    width: 70%;
+}
+
+#social-media .memes-horizontal-container,.memes-vertical-container {
+    width: 70%;
+}
+
+#advices .memes-horizontal-container,.memes-vertical-container {
+    width: 70%;
 }
