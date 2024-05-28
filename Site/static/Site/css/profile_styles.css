@@ -5,12 +5,13 @@ body {
     background-position: center;
     background-size: cover;
 }
-body::-webkit-scrollbar{
+
+body::-webkit-scrollbar {
     width: 10px;
-    background: linear-gradient(60deg, #000000 0%, #0D1946 11%, #461452 22%, #610F4A 33%, #67165C 44%, #0C0E4A 87%, #01001C  100%);
+    background: linear-gradient(60deg, #000000 0%, #0D1946 11%, #461452 22%, #610F4A 33%, #67165C 44%, #0C0E4A 87%, #01001C 100%);
 }
 
-body::-webkit-scrollbar-thumb{
+body::-webkit-scrollbar-thumb {
     background: #F4AAEA;
     border-radius: 100px;
 }
@@ -111,7 +112,7 @@ input[type="password"] {
     -webkit-text-fill-color: transparent;
     font-size: 28px;
     border-radius: 40px;
-        padding-left: 17px;
+    padding-left: 17px;
     padding-top: 2px;
     border: 3px solid white;
     margin-right: 20px;
@@ -234,7 +235,7 @@ input[type="password"] {
     margin-left: 5px;
 }
 
-.remove-from-favorites-button{
+.remove-from-favorites-button {
     border-radius: 9px;
     border: 2px solid black;
     cursor: pointer;
@@ -245,7 +246,7 @@ input[type="password"] {
     margin-right: 10px;
 }
 
-.Change_avatar{
+.Change_avatar {
     font-size: 24px;
     background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
     background-clip: text;
@@ -254,7 +255,7 @@ input[type="password"] {
     width: 426px;
 }
 
-.change-avatar{
+.change-avatar {
     background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
     background-clip: text;
     font-family: Comfortaa;
@@ -262,4 +263,9 @@ input[type="password"] {
     -webkit-text-fill-color: transparent;
     border-radius: 40px;
     border: 0px solid white;
+}
+
+.no-friends {
+    font-size: 32px;
+    width: 1000px;
 }
