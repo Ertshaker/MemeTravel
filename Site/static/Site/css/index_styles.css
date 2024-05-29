@@ -182,6 +182,11 @@ section {
     transition: 0.2s ease;
 }
 
+#transition {
+    padding-block: 100px;
+    height: auto;
+}
+
 .show {
     animation: eblan 1s ease-in;
 }
