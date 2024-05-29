@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="{% static 'Site/css/global.css' %}"/>
     <link rel="stylesheet" href="{% static 'Site/css/header_styles.css' %}"/>
     <link rel="stylesheet" href="{% static 'Site/css/travel_styles.css' %}"/>
-    <script defer src="{% static 'Site/js/index_script.js' %}"></script>
+    <script defer src="{% static 'Site/js/section_scroll_script.js' %}"></script>
+    <script defer src="{% static 'Site/js/travel-script.js' %}"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -27,23 +28,26 @@
             <div class="paragraphs">
                 <p>Мемом, в узком смысле слова, можно считать укоренившееся выражение/визуальное представление,
                     известное определенному кругу людей и стремительно распространяющееся. Например, в Среднековье
-                    любили погыгыкать над рыцарями, изображая их до смерти перепуганных перед улитками.</p>
-                <p>Хейтеры бронированного сословия просто хотели донести свое убеждение о трусости рыцарей, о том что в
-                    эту касту входит "кто попало" и меч свой поднимают они только на слабаков.</p>
+                    любили погыгыкать над рыцарями, изображая их до смерти перепуганных перед улитками.
+                </p>
+                <p>
+                    Хейтеры бронированного сословия просто хотели донести свое убеждение о трусости рыцарей, о том что в
+                    эту касту входит "кто попало" и меч свой поднимают они только на слабаков.
+                </p>
             </div>
-            <img src="{% static 'Site/img/travel/medieval.png' %}">
+            <img class="mem-image" src="{% static 'Site/img/travel/medieval.png' %}" alt="">
         </div>
     </section>
     <section id="start-XX-century">
         <h2 class="section-title gradient-white">Мемы начала ХХ века</h2>
         <div class="start-XX-block">
-            <img src="{% static 'Site/img/travel/kilroy.png' %}" alt="">
+            <img class="mem-image" src="{% static 'Site/img/travel/kilroy.png' %}" alt="">
             <p class="kilroy-description">
                 Происхождение - неизвестно, а рисовалось это графити в 40х-50х годах, как раз в период военных действий.
                 Зародился где то на западном фронте, среди англосаксов. Смысл - у каждого свой. Но просто увидеть такого
                 чувачка на бетоне своих фортификаций было явно забавно обычному западному солдату.
             </p>
-            <p style="grid-column: span 2" class="kilroy-description">
+            <p class="kilroy-description">
                 Ходит байка, что уже после войны, "Килроя" увидел в своей ванной опешивший Сталин. А Гитлер на
                 захваченных позициях думал, что это шифр или обозначение какого то крутого агентства.
             </p>
@@ -51,10 +55,10 @@
     </section>
     <section id="start-2000">
         <h2 class="section-title gradient-white">Начало двухтысячных</h2>
-        <div class="memes-horizontal-container">
+        <div class="memes-horizontal-container-for-2000">
             <div class="olbansky_language-description">
                 <h3>ОЛБАНСКИЙ или ЯЗЫК ПАДОНКАФФ</h3>
-                <img src="{% static 'Site/img/travel/olbansky_language.png' %}" alt="">
+                <img class="mem-image" src="{% static 'Site/img/travel/olbansky_language.png' %}" alt="">
                 <p style="padding-right: 20px">
                     Пытаясь подражать евреям, а также прикидываясь пациентами больницы, некие товарищи начали коверкать
                     русские слова, будто их пишет неадекватный, неграмотный школьник. "АФФТАР ЖЖОТ", "РЖУНИМАГУ" -
@@ -63,9 +67,9 @@
                     десятые года.
                 </p>
             </div>
-            <div class="masyanya-description">
-                <h3 style="grid-column: span 2">Масяня</h3>
-                <img src="{% static 'Site/img/travel/masyanya.png' %}" alt="">
+            <div class="olbansky_language-description">
+                <h3 >Масяня</h3>
+                <img class="mem-image" src="{% static 'Site/img/travel/masyanya.png' %}" alt="">
                 <p>
                     Сатирический русский анимационный сериал, высмеивающий серые будни, глупость народа, стереотипы и
                     всё
@@ -80,7 +84,7 @@
         <h2 class="section-title gradient-white">Имиджборды</h2>
         <div class="image-boards">
             <div class="row-description">
-                <img src="{% static 'Site/img/travel/4chan.png' %}" alt="">
+                <img class="mem-image" src="{% static 'Site/img/travel/4chan.png' %}" alt="">
                 <p>
                     Переняв западное веяние, русские диванные специалисты не отстали и создали свой "Двач" и "Фоч", и
                     сотни
@@ -105,7 +109,7 @@
                         конспирологические теории, бред, нецензурщина, фотожабы, мемы и тотальный хаос.
                     </p>
                 </div>
-                <img src="{% static 'Site/img/travel/2ch.png' %}" alt="">
+                <img class="mem-image" src="{% static 'Site/img/travel/2ch.png' %}" alt="">
             </div>
             <p>Большинство информации и мемов в интернете сначала "обсасываются" или рождаются на имиджбордах, западных
                 или
@@ -119,7 +123,7 @@
         <h2 class="section-title gradient-white">Конец нулевых,<br>начало десятых</h2>
         <h2 class="section-title gradient-white">Луркоморье</h2>
         <div class="memes-horizontal-container">
-            <img src="{% static 'Site/img/travel/Lurkmore.png' %}" alt="">
+            <img class="mem-image" src="{% static 'Site/img/travel/Lurkmore.png' %}" alt="">
             <div class="paragraphs">
                 <p>
                     Луркоморье, он же "Лурк" стал "местной википедией" в вопросах современного юмора и субкультур.
@@ -145,7 +149,7 @@
                     употреблял выражение "Я знаю это чувство, когда..."</p>
                 <p>неймфаг - пользователь подписывающийся ником на анонимных бордах</p>
             </div>
-            <img src="{% static 'Site/img/travel/wojak.png' %}" alt="">
+            <img class="mem-image" src="{% static 'Site/img/travel/wojak.png' %}" alt="">
             <div class="paragraphs">
                 <p>Смысл этого мема и запечатлен в данном высказывании - передать чувства. Столь повседневные, но столь
                     тоскливые. И всем знакомые.</p>
@@ -159,15 +163,15 @@
             присутствующим долгое время обитал в интернете. Далее его взор
             устрастился на куртизанок, креветок и прочих живностей.</p>
         <div class="memes-horizontal-container">
-            <img src="{% static 'Site/img/travel/preved-1.png' %}" alt="">
-            <img src="{% static 'Site/img/travel/preved-2.png' %}" alt="">
-            <img src="{% static 'Site/img/travel/preved-3.png' %}" alt="">
+            <img class="mem-image" src="{% static 'Site/img/travel/preved-1.png' %}" alt="">
+            <img class="mem-image" src="{% static 'Site/img/travel/preved-2.png' %}" alt="">
+            <img class="mem-image" src="{% static 'Site/img/travel/preved-3.png' %}" alt="">
         </div>
     </section>
     <section id="demotivators">
         <h2 class="section-title gradient-white">Демотиваторы</h2>
         <div class="memes-horizontal-container">
-            <img src="{% static 'Site/img/travel/demotivator.png' %}" alt="">
+            <img class="mem-image" src="{% static 'Site/img/travel/demotivator.png' %}" alt="">
             <p>Уникальнейший формат создан был от обратного: западные мотиваторы поставили со знаком "-", создав шаблон
                 изображений в черной рамке и циничными/абсурдными высказываниями.</p>
         </div>
@@ -175,7 +179,7 @@
     <section id="social-media">
         <h2 class="section-title gradient-white">Социальные сети</h2>
         <div class="memes-vertical-container">
-            <img src="{% static 'Site/img/travel/social-media.png' %}" alt="">
+            <img class="mem-image"  src="{% static 'Site/img/travel/social-media.png' %}" alt="">
             <div class="paragraphs">
                 <p>Переломный момент - соцсети стали массовыми. </p>
                 <p>Если имиджборды притягали в основном битардов, хикк, неадекватов и неформалов, то соцсетями
@@ -193,7 +197,7 @@
                 <p>Картинки иллюстрировали и высмеивали привычные моменты бытия, исключая, наверное, только шаблон с
                     Филосораптором, который явно выходил за грани.</p>
             </div>
-            <img src="{% static 'Site/img/travel/advices.png' %}" alt="">
+            <img class="mem-image"  src="{% static 'Site/img/travel/advices.png' %}" alt="">
         </div>
     </section>
     <section>
@@ -201,43 +205,5 @@
         <p style="font-size: 60px; font-weight: bold" class="gradient-white">TO BE COCINUED</p>
     </section>
 </div>
-<button class="back-to-top" id="back-to-top" title="Go to top"></button>
-<script>
-    var element = document.querySelector('#sections-box');
-    element.onscroll = function () {
-        scrollFunction();
-    };
-
-    function scrollFunction() {
-        if (element.scrollTop > 20) {
-            document.getElementById("back-to-top").style.display = "block";
-            show("back-to-top", 300);
-
-        } else {
-            document.getElementById("back-to-top").style.display = "none";
-            document.getElementById("back-to-top").style.opacity = 0;
-        }
-    }
-
-    function show(id, speed) {
-        let vars;
-        var ID = setInterval(function () {
-            (vars = Number(document.getElementById(id).style.opacity));
-            if (vars > 1) {
-                clearInterval(ID);
-            }
-            vars += 0.1;
-            document.getElementById(id).style.opacity = vars;
-        }, speed);
-    }
-
-    document.getElementById("back-to-top").onclick = function () {
-        scrollToTop();
-    };
-
-    function scrollToTop() {
-        element.scroll({top: 0, behavior: 'smooth'});
-    }
-</script>
 </body>
 </html>

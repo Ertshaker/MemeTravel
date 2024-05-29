@@ -1,19 +1,20 @@
 body {
-    background: url(../img/travel/background_image.png) no-repeat transparent;
+    background: url(../img/travel/background_image.png) transparent;
     background-size: cover;
     overflow: hidden;
+    margin: 0;
 }
 
 .sections-box {
     padding-inline: 8%;
-    height: 87vh;
     overflow-y: scroll;
     scroll-behavior: smooth;
     overflow-x: hidden;
+    height: 85vh;
 }
 
 .sections-box::-webkit-scrollbar {
-    width: 0px;
+    width: 0;
 }
 
 .sections-box::-webkit-scrollbar-track {
@@ -27,23 +28,24 @@ body {
 }
 
 section {
-    height: auto;
+    height: 100vh;
     position: relative;
     padding-block: 100px;
+    margin-bottom: 30%;
     width: auto;
-    scroll-snap-align: center;
 }
 
 .section-title {
-    font-size: 90px;
+    font-size: calc(32px + 40 * (100vw - 425px) / 880);
+    margin-top: 0;
     text-align: center;
 }
 
 .introduction-title {
-    font-size: 58px;
+    font-size: calc(26px + 22 * (100vw - 425px) / 880);
     text-align: center;
     align-self: center;
-    margin-top: 10%;
+    margin-top: 5%;
 }
 
 .start-XX-block {
@@ -55,26 +57,30 @@ section {
 
 .kilroy-description {
     color: white;
-    font-size: 30px;
+    font-size: calc(14px + 10 * (100vw - 425px) / 880);
 }
 
 #start-2000 h3 {
     display: inline;
-    font-size: 40px;
-    text-align: center;
-}
-
-#start-2000 {
-    display: inline;
-    font-size: 24px;
+    font-size: calc(20px + 20 * (100vw - 425px) / 880);
 }
 
 .memes-horizontal-container {
     display: flex;
     flex-direction: row;
     color: white;
-    font-size: 24px;
-    justify-content: space-evenly;
+    font-size: calc(14px + 10 * (100vw - 425px) / 880);
+    justify-content: space-around;
+    gap: 50px;
+    margin-inline: auto;
+}
+
+.memes-horizontal-container-for-2000 {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    font-size: calc(14px + 10 * (100vw - 425px) / 880);
+    justify-content: space-around;
     gap: 50px;
     margin-inline: auto;
 }
@@ -88,7 +94,7 @@ section {
     grid-template-columns: auto;
     grid-auto-rows: auto;
     color: white;
-    font-size: 24px;
+    font-size: calc(14px + 10 * (100vw - 425px) / 880);
     justify-content: center;
     justify-items: center;
     gap: 50px;
@@ -104,23 +110,13 @@ section {
     display: grid;
     color: white;
     grid-auto-rows: auto;
-    justify-content: left;
+    justify-content: center;
     gap: 20px
-}
-
-.masyanya-description {
-    display: grid;
-    color: white;
-    grid-auto-rows: auto;
-    grid-template-columns: auto auto;
-    justify-content: start;
-    justify-items: center;
-    gap: 30px;
 }
 
 .image-boards {
     color: white;
-    font-size: 24px;
+    font-size: calc(14px + 10 * (100vw - 425px) / 880);
 }
 
 .row-description {
@@ -132,21 +128,17 @@ section {
 
 .paragraphs {
     color: white;
-    font-size: 24px;
+    calc(14px + 10 * (100vw - 425px) / 880);
 }
 
 .meme-paragraph {
-    font-size: 24px;
+    calc(14px + 10 * (100vw - 425px) / 880);
     color: white;
 }
 
 #Prehistoric .memes-horizontal-container,.memes-vertical-container {
     width: 85%;
 }
-
-/*#start-XX-century .start-XX-block {*/
-/*    width: 80%;*/
-/*}*/
 
 #demotivators .memes-horizontal-container,.memes-vertical-container {
     width: 70%;
@@ -160,37 +152,27 @@ section {
     width: 70%;
 }
 
-.back-to-top {
-    /*display: none;*/
-    opacity: 0;
-    position: fixed;
-    bottom: 50px;
-    right: 50px;
-    z-index: 99;
-    outline: none;
-    color: white;
-    padding: 15px;
-    background: url(../img/profile/change-password-icon.svg) no-repeat transparent center;
-    rotate: -90deg;
-    background-size: 60%;
-    height: 50px;
-    width: 50px;
-    border-radius: 20px;
-    border: 1px solid white;
-    cursor: pointer;
-}
-
-#back-to-top:hover {
-    background-color: #555;
-    transition: 0.2s ease;
-}
-
 .show {
     animation: eblan 1s ease-in-out;
 }
 
+.mem-image {
+    max-width: 100%;
+    min-width: 40%;
+    height: auto;
+}
+
 .sections-box.no-scroll {
     overflow: hidden; /* Отключаем прокрутку */
+}
+
+@media (max-width: 768px) {
+    .sections-box {
+        padding-inline: 2%;
+    }
+    .memes-horizontal-container {
+        gap: 10px;
+    }
 }
 
 @keyframes eblan {

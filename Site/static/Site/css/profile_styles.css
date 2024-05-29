@@ -2,8 +2,9 @@
 
 body {
     background: url(../img/Profile_background.png) no-repeat transparent;
-    background-position: center;
     background-size: cover;
+    width: 100vw;
+    overflow-x: hidden;
 }
 
 body::-webkit-scrollbar {
@@ -36,21 +37,23 @@ body::-webkit-scrollbar-thumb {
 section {
     position: relative;
     padding-inline: 8%;
-    height: auto;
     margin-bottom: 10%;
+    width: 100vw;
 }
 
 .section-title {
-    font-size: 90px;
+    font-size: calc(70px + 60 * (100vw - 425px) / 880);
 }
 
 .user-parameters {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .avatar-block {
-    margin-right: 5%;
+    display: flex;
+    flex-direction: column;
 }
 
 .avatar {
@@ -64,7 +67,7 @@ section {
     position: relative;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    flex-shrink: 0.5;
 }
 
 .user-info .label {
@@ -75,10 +78,13 @@ section {
     margin-block: 20px;
 }
 
+.user-detail {
+    max-width: 100%;
+}
+
 .user-info .value {
     box-sizing: border-box;
     height: 62px;
-    width: auto;
     font-size: 28px;
     border-radius: 40px;
     border: 3px solid white;
@@ -171,6 +177,9 @@ input[type="password"] {
 }
 
 .friend_options {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
     position: relative;
     align-self: center;
     font-size: 28px;
@@ -251,32 +260,21 @@ input[type="password"] {
     margin-left: 5px;
 }
 
-
-
-.Change_avatar {
-    font-size: 24px;
-    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
-    background-clip: text;
-    font-family: Comfortaa;
-    -webkit-text-fill-color: transparent;
-    width: 426px;
+.change-avatar-form {
+    display: flex;
+    flex-direction: column;
 }
 
-.change-avatar {
-    background: linear-gradient(60deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
-    background-clip: text;
-    font-family: Comfortaa;
-    font-size: 25px;
-    -webkit-text-fill-color: transparent;
-    border-radius: 40px;
-    border: 0px solid white;
+.change-avatar-form input {
+    border: 0 solid white;
+    font-size: 24px;
+    font-family: Comfortaa, sans-serif;
 }
 
 .no-friends {
     font-size: 32px;
     width: 1000px;
 }
-
 
 
 .friend .button_delete {
@@ -336,4 +334,62 @@ input[type="password"] {
 .meme .button_delete:hover {
     background: rgba(0, 0, 0, 0.75);
     transition: 0.2s ease;
+}
+
+@media (max-width: 768px) {
+    section {
+        padding-inline: 2%;
+        width: 90vw;
+        margin-bottom: 30%;
+    }
+
+    .user-parameters {
+        flex-direction: column;
+    }
+
+    .avatar {
+        width: 284px;
+        height: 378px;
+    }
+
+    .user-info .value {
+        width: 80vw;
+    }
+
+    .change-password {
+        width: 80vw;
+        flex-direction: column;
+        margin-left: 20px;
+        margin-bottom: 5%;
+        gap: 20px;
+        align-items: center;
+    }
+
+    .friends_title {
+        width: 90vw;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .friend_options {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .friends {
+        width: 100vw;
+    }
+
+    .favorites {
+        width: 100vw;
+    }
+    .requests {
+        font-size: 22px;
+    }
+    input[type="password"] {
+        padding-block: 10px;
+    }
+    .change-password-button {
+        padding-block: 10px;
+    }
 }

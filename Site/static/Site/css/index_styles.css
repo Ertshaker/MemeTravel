@@ -1,16 +1,12 @@
 body {
-    background: url(../img/index/introduction_image.png) no-repeat center center transparent ;
+    background: url(../img/index/background.png) center center black ;
     background-size: cover;
-    overflow: hidden;
 }
 
 .sections-box {
     height: 85vh;
-    display: flex;
-    flex-direction: column;
     padding-inline: 8%;
     font-family: Comfortaa, sans-serif;
-    overflow-y: scroll;
     scroll-behavior: smooth;
     overflow-x: hidden;
 }
@@ -30,23 +26,23 @@ body {
 }
 
 section {
-    scroll-snap-align: start;
-    position: relative;
-    margin-bottom: 10%;
-    padding-block: 5%;
+    height: 100vh;
+    margin-bottom: 30%;
+    padding-block: 100px;
 }
 
+#introduction {
+    padding-top: 50px;
+}
 .introduction {
     position: relative;
     display: block;
-    margin-top: 15%;
     margin-bottom: 10%;
     font-family: Comfortaa, sans-serif;
-    margin-bottom: 10%;
 }
 
 .introduction h2 {
-    font-size: 70px;
+    font-size: calc(32px + 30 * (100vw - 320px) / 880);
 }
 
 .introduction p {
@@ -54,7 +50,7 @@ section {
 }
 
 .made-by {
-    font-size: 24px;
+    font-size: calc(14px + 8 * (100vw - 425px) / 880);
     position: relative;
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
@@ -66,25 +62,28 @@ section {
 
 .made-by .person {
     width: 85%;
-    display: inline-block;
-    margin-right: auto;
     border-bottom: 1px solid white;
+}
+
+.made-by .person span {
+    display: inline-block;
+    padding-bottom: 10px;
 }
 
 .text-section {
     margin-block: 50px;
     display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
-
 
 .description-wrapper .description-header {
     margin-block: 0;
     display: inline;
     width: 50%;
-    margin-inline: 1%;
     position: relative;
-    font-size: 194px;
-    font-weight: 700;
+    font-size: calc(45px + 76 * (100vw - 320px) / 880);
+    font-weight: bold;
     word-wrap: break-word;
     align-self: center;
 }
@@ -92,11 +91,9 @@ section {
 .description-wrapper .description-text {
     margin-block: 0;
     width: 50%;
-    margin-inline: 1%;
-    font-size: 51px;
+    font-size: calc(20px + 28 * (100vw - 320px) / 880);
     color: white;
-    text-wrap: normal;
-    word-break: break-all;
+    word-break: break-word;
     flex-flow: row wrap;
 }
 
@@ -113,18 +110,19 @@ section {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    padding: 15px;
+    padding: 15px 15px 10px;
     border-radius: 38px;
-    width: 20%;
-    height: 350px;
+    width: 300px;
+    min-width: 150px;
+    height: 300px;
     margin-right: 20px;
+    margin-bottom: 20px;
     justify-content: space-evenly;
     align-items: center;
     overflow: hidden;
-    min-width: 150px;
 }
 
-.function p {
+.function span {
     text-wrap: normal;
     word-break: break-word;
     font-size: 24px;
@@ -134,28 +132,31 @@ section {
 }
 
 #functionality h2 {
-    font-size: 110px;
+    font-size: calc(20px + 48 * (100vw - 320px) / 880);
+    padding-left: 20px;
     font-family: Montserrat, sans-serif;
 }
 
 .function img {
     max-width: 100%;
     max-height: 100%;
-    object-fit: fill;
+    min-height: 50%;
+    min-width: 50%;
+    object-fit: cover;
+    padding: 10px;
 }
 
 .transition-wrapper {
     display: grid;
     grid-template-rows: 1fr 1fr;
-    border-top: 2px solid white;
     justify-items: center;
 }
 
 .transition-wrapper div {
     margin-block: 50px;
     font-weight: bold;
-    font-size: 65px;
-    padding: 30px 0px;
+    font-size: calc(34px + 30 * (100vw - 425px) / 880);
+    padding: 30px 0;
     border-radius: 75px;
     align-self: center;
 }
@@ -182,7 +183,7 @@ section {
 }
 
 .show {
-    animation: eblan 1s ease-in-out;
+    animation: eblan 1s ease-in;
 }
 
 .sections-box.no-scroll {
@@ -191,7 +192,7 @@ section {
 
 @keyframes eblan {
     from {
-        filter: blur(10px);
+        filter: blur(15px);
         opacity: 0;
     }
     to {
@@ -201,44 +202,24 @@ section {
 }
 
 @media (max-width: 800px) {
-    .introduction h2 {
-        font-size: 48px;
-    }
-
-    .description-wrapper .description-header {
-        font-size: 70px;
-    }
-
-    .description-wrapper .description-text {
-        font-size: 20px;
-        word-break: break-word;
-    }
-
-    #functionality h2 {
-        font-size: 40px;
-    }
-
-    .functionality-wrapper {
-        padding: 0;
-        gap: 20px;
+    .sections-box {
+        padding-inline: 4%;
     }
 
     .function {
+        width: 150px;
         height: 150px;
     }
 
-    .function p {
+    #functionality h2 {
+        padding-left: 0;
+    }
+
+    .function span {
         font-size: 14px;
     }
 
-    .function img{
-        flex-shrink: 0;
-        padding-bottom: 15px;
-        height: 100px;
-        width: 100px;
-    }
-
     .transition-wrapper div {
-        font-size: 36px;
+        padding: 10px 0;
     }
 }

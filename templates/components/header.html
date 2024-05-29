@@ -11,7 +11,7 @@
         {% if page_name != "ЭНЦИКЛОПЕДИЯ" and page_name != 'MemeTravel' %}
             <div class="button_encyclopedia">
                 <a href="/encyclopedia/">
-                    <img height="62" width="62" src="{% static 'Site/img/header/encyclopedia-icon.svg' %}" alt=""
+                    <img height="62" width="62" class="button_encyclopedia_icon" src="{% static 'Site/img/header/encyclopedia-icon.svg' %}" alt=""
                          title="Энциклопедия">
                 </a>
             </div>
@@ -20,7 +20,7 @@
         {% if page_name != "ПУТЕШЕСТВИЕ" and page_name != 'MemeTravel' %}
             <div class="button_travel">
                 <a href="/travel/">
-                    <img height="62" width="62" src="{% static 'Site/img/header/travel-icon.svg' %}"
+                    <img height="62" width="62" class="button_travel_icon" src="{% static 'Site/img/header/travel-icon.svg' %}"
                          alt="" title="Путешествие">
                 </a>
             </div>
@@ -109,40 +109,5 @@
                 }
             });
         });
-        {#document.addEventListener('DOMContentLoaded', function () {#}
-        {#    const searchInput = document.getElementById('search');#}
-        {#    const suggestionsBox = document.getElementById('suggestions');#}
-        {##}
-        {#    searchInput.addEventListener('input', function () {#}
-        {#        const query = this.value;#}
-        {#        if (query.length > 1) {#}
-        {#            fetch(`/autocomplete/?term=${encodeURIComponent(query)}`)#}
-        {#                .then(response => response.json())#}
-        {#                .then(data => {#}
-        {#                    suggestionsBox.innerHTML = '';#}
-        {#                    if (data.length > 0) {#}
-        {#                        data.forEach(item => {#}
-        {#                            const suggestion = document.createElement('div');#}
-        {#                            suggestion.classList.add('autocomplete-suggestion');#}
-        {#                            suggestion.textContent = item;#}
-        {#                            suggestion.addEventListener('click', function () {#}
-        {#                                searchInput.value = item;#}
-        {#                                suggestionsBox.innerHTML = '';#}
-        {#                            });#}
-        {#                            suggestionsBox.appendChild(suggestion);#}
-        {#                        });#}
-        {#                    }#}
-        {#                });#}
-        {#        } else {#}
-        {#            suggestionsBox.innerHTML = '';#}
-        {#        }#}
-        {#    });#}
-        {##}
-        {#    document.addEventListener('click', function (e) {#}
-        {#        if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {#}
-        {#            suggestionsBox.innerHTML = '';#}
-        {#        }#}
-        {#    });#}
-        {# });#}
     </script>
 </header>

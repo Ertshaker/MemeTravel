@@ -1,16 +1,16 @@
 body {
-    background: transparent url(../img/encyclopedia/background.png) no-repeat center;
+    background: url(../img/encyclopedia/background.png) center center transparent;
+    background-size: cover;
+    overflow: hidden;
 }
 
 .memes-box {
-    position: relative;
-    height: 75vh;
+    height: 85vh;
     overflow-y: auto;
     font-family: Comfortaa, sans-serif;
-    padding-inline: 8%;
+    padding: 5% 8%;
     justify-items: center;
-    padding-top: 5%;
-
+    overflow-x: hidden;
 }
 
 .memes-box::-webkit-scrollbar {
@@ -37,9 +37,9 @@ body {
 }
 
 .memes-group-title {
-    font-size: 64px;
+    font-size: calc(20px + 24 * (100vw - 425px) / 880);
     writing-mode: vertical-lr;
-    margin: 0 30px 30px;
+    margin-bottom: 30px;
     align-self: start;
 }
 
@@ -47,6 +47,10 @@ body {
     transform: rotate(180deg);
     text-align: end;
     margin-block: 0;
+}
+
+.memes-group-title > img {
+    height: calc(120px + 170 * (100vw - 425px) / 880);
 }
 
 .memes {
@@ -63,19 +67,24 @@ body {
 }
 
 .meme-info > img {
-    width: 400px;
-    height: 400px;
+    width: calc(100px + 200 * (100vw - 425px) / 880);
+    height: calc(100px + 200 * (100vw - 425px) / 880);
     object-fit: cover;
     border-radius: 40px;
 }
 
 .meme-info .meme-name {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
     margin-left: 70px;
 }
 
 .meme-info .meme-name > p {
-    font-size: 64px;
+    font-size: calc(20px + 20 * (100vw - 425px) / 880);
+    text-wrap: normal;
     letter-spacing: -3px;
+    margin-block: 0;
 }
 
 .meme-info .meme-name > .button {
@@ -83,8 +92,8 @@ body {
     background: transparent;
     color: white;
     border-radius: 30px;
-    font-size: 30px;
-    width: 380px;
+    font-size: calc(12px + 24 * (100vw - 425px) / 880);
+    width: 35vw;
     cursor: pointer;
     text-align: center;
 }
@@ -99,8 +108,7 @@ body {
     background-clip: text;
     -webkit-text-fill-color: transparent;
     display: block;
-    padding: 15px 0px 15px 0px;
-
+    padding: 15px 0 15px 0;
 }
 
 .meme-info .meme-name > .button > a:hover {
@@ -162,5 +170,23 @@ body {
 .meme_control .button:hover {
     background: rgba(217, 217, 217, 0.75);
     transition: 0.2s ease;
+}
+
+@media (max-width: 768px) {
+    .memes-box {
+        padding: 5% 2%;
+    }
+    .meme-info .meme-name {
+        margin-left: 30px
+    }
+    .meme-info > img {
+        border-radius: 10px;
+    }
+    .meme-info .meme-name > .button > a {
+        padding: 10px 0;
+    }
+    .meme-info .meme-name > .button{
+        border: 1px solid white;
+    }
 }
 

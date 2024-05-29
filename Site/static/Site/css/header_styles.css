@@ -4,17 +4,16 @@
 header {
     box-sizing: border-box;
     display: flex;
-    flex-wrap: wrap;
     z-index: 100;
     border-bottom: 2px solid white;
     margin-top: 20px;
     margin-inline: 5%;
     padding-inline: 20px;
     padding-bottom: 30px;
-    height: 10vh;
     justify-content: space-between;
     align-content: center;
     align-items: flex-end;
+    height: 100px;
 }
 
 .page-name {
@@ -31,7 +30,7 @@ header {
     flex-direction: row;
     gap: 34px;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
     flex-wrap: wrap;
 }
 
@@ -65,16 +64,11 @@ header {
     box-sizing: border-box;
     overflow: hidden;
     flex: 1 1 auto;
-    max-width: 100%;
 }
 
-.search-icon{
+.search-icon {
     flex-shrink: 0;
     margin-right: 10px;
-}
-
-.search .search-field {
-    font-size: 24px;
 }
 
 .search .search-form {
@@ -101,8 +95,7 @@ header {
 }
 
 .autocomplete-suggestions {
-    box-sizing: border-box;
-    top: 45px;
+    top: 85px;
     max-height: 200px;
     overflow-y: auto;
     position: absolute;
@@ -179,7 +172,7 @@ header {
 }
 
 .dropdown li a {
-    background: linear-gradient(60deg, #000000 0%, #0D1946 11%, #461452 22%, #610F4A 33%, #67165C 44%, #0C0E4A 87%, #01001C  100%);
+    background: linear-gradient(60deg, #000000 0%, #0D1946 11%, #461452 22%, #610F4A 33%, #67165C 44%, #0C0E4A 87%, #01001C 100%);
     background-clip: text;
     border-radius: 0;
     -webkit-text-fill-color: transparent;
@@ -193,15 +186,15 @@ header {
     background-color: #474747;
 }
 
-.dropdown li:hover a{
+.dropdown li:hover a {
     background: linear-gradient(90deg, #F1F3FC 0%, #EDF1FF 11%, #F5D9FC 22%, #F9BFE8 33%, #F4AAEA 44%, #D7D9FF 87%, #F6F5FF 100%);
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .dropdown {
-  opacity: 0;
-  animation: ani 0.5s forwards;
+    opacity: 0;
+    animation: ani 0.5s forwards;
 }
 
 .show {
@@ -224,8 +217,12 @@ header {
 }
 
 @keyframes ani {
-  0% {opacity: 0;}
-  100% {opacity: 1;}
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 @media (max-width: 1200px) {
@@ -235,40 +232,63 @@ header {
 }
 
 @media (max-width: 768px) {
-    .nav-bar {
-        gap: 10px; /* Уменьшение расстояния между элементами на малых экранах */
-    }
-
-    .nav-bar .page-navigation-button {
-        font-size: 24px; /* Уменьшение размера текста кнопок на малых экранах */
-    }
-
-    .search {
-        padding-inline: 5px; /* Уменьшение отступов на малых экранах */
-    }
-
-    .search-field {
-        font-size: 20px; /* Уменьшение размера текста поля ввода на малых экранах */
-    }
-}
-
-@media (max-width: 480px) {
-    .page-name {
-        font-size: 40px;
+    header {
+        height: 50px;
+        padding-bottom: 10px;
+        padding-inline: 5px;
     }
 
     .nav-bar {
-        flex-direction: column; /* Перевод элементов в колонку на очень малых экранах */
-        align-items: center; /* Центрирование элементов */
+        gap: 5px;
     }
 
-    .nav-bar .page-navigation-button {
-        width: 100%; /* Полная ширина кнопок на очень малых экранах */
-        margin-bottom: 10px; /* Отступ между кнопками */
+    .button_travel_icon {
+        width: 30px;
+        height: 30px;
     }
+
+    .button_encyclopedia_icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .logo {
+        width: 76px;
+        height: 38px;
+    }
+
+    .logo > a > img {
+        width: 76px;
+        height: 38px;
+    }
+
+    .search-icon {
+        width: 25px;
+        height: 25px;
+        margin-right: 0;
+    }
+
+    .profile-icon {
+        width: 22px;
+        height: 25px;
+    }
+
+    .profile-button {
+        width: 22px;
+    }
+
     .search {
-        width: 100%; /* Полная ширина поиска на очень малых экранах */
-        margin-bottom: 10px; /* Отступ между элементами */
+        width: 100px;
+        height: 32px;
+    }
+
+    .search .search-form {
+        width: 100%;
+    }
+
+    .search .search-field {
+        font-size: 14px;
+        width: 100%;
     }
 }
 
@@ -290,3 +310,4 @@ header {
         opacity: 1;
     }
 }
+

@@ -365,12 +365,12 @@ def encyclopedia(request):
         memes = memes.filter(name__icontains=query)
 
     years = {
-        'ДО 2000': (datetime.date.min, datetime.date(2000, 1, 1)),
+        'до 2000': (datetime.date.min, datetime.date(2000, 1, 1)),
         '2000-2005': (datetime.date(2000, 1, 2), datetime.date(2005, 1, 1)),
         '2005-2010': (datetime.date(2005, 1, 2), datetime.date(2010, 1, 1)),
         '2010-2015': (datetime.date(2010, 1, 2), datetime.date(2015, 1, 1)),
         '2015-2020': (datetime.date(2015, 1, 2), datetime.date(2020, 1, 1)),
-        'ПОСЛЕ 2020': (datetime.date(2020, 1, 2), datetime.date.max),
+        'после 2020': (datetime.date(2020, 1, 2), datetime.date.max),
     }
 
     filtered_memes = {}

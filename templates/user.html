@@ -22,11 +22,10 @@
             {% else %}
                 <img src="/media/svofard_404.png" width="300" alt="Привет)" class="avatar"/>
             {% endif %}
-            <form id="change-avatar-form" method="post" enctype="multipart/form-data"
-                  class="Change_avatar gradient-white">
+            <form class="change-avatar-form gradient-white" id="change-avatar-form" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ ChangeAvatarForm.image }}
-                <input name="change_avatar_input" type="submit" class="change-avatar" value="После выбора - ТЫК">
+                <input name="change_avatar_input" type="submit" class="gradient-white" value="После выбора - [ТЫК]">
             </form>
         </div>
         <div class="user-info gradient-white font-Comfortaa">
