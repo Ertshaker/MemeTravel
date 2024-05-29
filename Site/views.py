@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, reverse, get_object_or_404, redirect
 from django.views.generic import DetailView, UpdateView
 from django.views.decorators.http import require_POST
+from django.views.decorators.cache import cache_page
 
 from Site.models import *
 from .forms import *
@@ -118,14 +119,14 @@ class MemeDetailView(DetailView):
         context['meme_gallery'] = meme_gallery
         return context
 
-
+@cache_page(60*15)
 def index(request):
     context = {
         'page_name': 'MemeTravel'
     }
     return render(request, 'index.html', context=context)
 
-
+@cache_page(60*15)
 def encyclopedia(request):
     memes = Meme.objects.all()
 
@@ -410,7 +411,7 @@ def autocomplete1(request):
         return JsonResponse(names, safe=False)
     return JsonResponse([], safe=False)
 
-
+@cache_page(60*15)
 def travel_view(request):
     return render(request, 'travel.html', context={'page_name': 'ПУТЕШЕСТВИЕ'})
 
