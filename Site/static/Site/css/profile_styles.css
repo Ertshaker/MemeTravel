@@ -42,7 +42,7 @@ section {
 }
 
 .section-title {
-    font-size: calc(70px + 60 * (100vw - 425px) / 880);
+    font-size: calc(60px + 60 * (100vw - 425px) / 880);
 }
 
 .user-parameters {

@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
@@ -9,14 +11,16 @@ from django.views.generic import DetailView, UpdateView
 from Site.models import *
 from .forms import *
 
-import datetime
-
 
 class MemesUpdateView(UpdateView):
     model = Meme
     template_name = 'create/meme_test.html'
 
     form_class = AddMemeForm
+
+    @cache_page(60 * 15)
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -118,29 +122,11 @@ class MemeDetailView(DetailView):
         return context
 
 
-@cache_page(60 * 15)
 def index(request):
     context = {
         'page_name': 'MemeTravel'
     }
     return render(request, 'index.html', context=context)
-
-
-@cache_page(60 * 15)
-def encyclopedia(request):
-    memes = Meme.objects.all()
-
-    gallery = MemeGallery.objects.all()
-
-    context = {
-        "memes": memes,
-        "user": request.user,
-        "MemeGallery": gallery,
-        'page_name': 'ЭНЦИКЛОПЕДИЯ'
-    }
-
-    return render(request, 'encyclopedia.html', context=context)
-
 
 def user_login(request):
     if request.method == 'POST':
@@ -341,7 +327,7 @@ def remove_from_favorites(request):
             return JsonResponse({'success': False, 'error': 'Мем не найден?'})
     return JsonResponse({'success': False, 'error': 'IИНВАЛИИД'})
 
-
+@cache_page(60 * 15)
 def encyclopedia(request):
     query = request.GET.get('q')
     memes = Meme.objects.all()

@@ -36,11 +36,11 @@
         </div>
         <div class="profile-button">
             {% if request.user.is_authenticated %}
-                <a class="nav-button" href="/user/{{ request.user.username }}">
+                <a class="nav-button">
                     <img class="profile-icon" src="{% static 'Site/img/header/profile_icon.svg' %}" alt="СОСИ)">
                 </a>
             {% else %}
-                <a class="nav-button" href="/login">
+                <a class="nav-button">
                     <img class="profile-icon" src="{% static 'Site/img/header/profile_icon.svg' %}" alt="СОСИ)">
                 </a>
             {% endif %}

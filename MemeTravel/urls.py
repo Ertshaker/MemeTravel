@@ -24,16 +24,18 @@ from Site.views import *
 
 urlpatterns = [
     path('', index),
+    path('admin/', admin.site.urls),
     path('meme/id<int:pk>', MemeDetailView.as_view()),
     path('user/<slug:username>', UserDetailView.as_view(), name='user-detail'),
-    path('admin/', admin.site.urls),
     path('encyclopedia/', encyclopedia),
-    path('authorization/', user_register),
+    path('encyclopedia/', views.encyclopedia, name='encyclopedia'),
     path('login/', user_login),
+    path('authorization/', user_register),
     path('logout/', user_logout),
     re_path(r'create/(\D*)/$', create_route),
     path('meme/id<int:pk>/update/', MemesUpdateView.as_view()),
     path('remove_friend_request/', views.remove_friend_request, name='remove_friend_request'),
+
     path('add_friend_request/', views.add_friend_request, name='add_friend_request'),
     path('friends_add/', views.friends_add, name='friends_add'),
     path('add_to_favorites/', views.add_to_favorites, name='add_to_favorites'),
@@ -41,7 +43,6 @@ urlpatterns = [
     path('autocomplete/', views.autocomplete, name='autocomplete'),
     path('travel/', travel_view),
     path('meme/<int:meme_id>/delete/', delete_meme, name='delete_meme'),
-    path('encyclopedia/', views.encyclopedia, name='encyclopedia'),
 
 ]
 

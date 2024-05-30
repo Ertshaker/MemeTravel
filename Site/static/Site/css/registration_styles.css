@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 body {
-    background: url(../img/Background_registration.png) fixed center;
+    background: url(../img/login&registration/Background_registration.png) fixed center;
     background-size: cover;
 
 }
@@ -92,7 +92,7 @@ input ::placeholder {
 }
 
 .button_back {
-    background: rgb(217, 217, 217) url('../img/back_button.svg') no-repeat center;
+    background: rgb(217, 217, 217) url('../img/login&registration/back_button.svg') no-repeat center;
     background-size: 70%;
     position: absolute;
     border: none;
