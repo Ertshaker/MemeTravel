@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
 
 body {
-    background: url(../img/Profile_background.png) no-repeat transparent;
+    background: url(../img/profile/Profile_background.png) no-repeat transparent;
     background-size: cover;
     width: 100vw;
     overflow-x: hidden;

@@ -1,140 +1,64 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Мемопедия</title>
-    <style>
-    </style>
-</head>
-<body class="container">
-<header>
-    <a class="logo" href="/">На главную</a>
-</header>
-<h2>Список мемов</h2>
+{% load static %}
+{% load get_group %}
 
-<form method="GET" action="">
-    <input type="text" id="search" name="q" placeholder="Поиск мемов по названию" value="{{ query }}" autocomplete="off">
-    <button type="submit">Поиск</button>
-</form>
-<div id="suggestions" class="autocomplete-suggestions"></div>
-    <button type="button" onclick="window.location.href='/encyclopedia/'">Сброс результатов поиска</button>
-</form>
-<div id="suggestions" class="autocomplete-suggestions"></div>
-
-{% for year, memes in filtered_memes.items %}
-    <h3>{{ year }}</h3>
-    <table>
-        <tr><th>Номер</th><th>Название</th><th>Картиночка</th></tr>
-        {% for meme in memes %}
-            <tr>
-                <td>{{ meme.id }}</td>
-                <td>{{ meme.name }}</td>
-                <td><img src="{{ meme.path_to_img.url }}" width="300" /></td>
-                <td><button onclick="location.href = '{{ meme.get_absolute_url }}'">Подробнее</button></td>
-            </tr>
-        {% endfor %}
-    </table>
-{% endfor %}
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('search');
-    const suggestionsBox = document.getElementById('suggestions');
-
-    searchInput.addEventListener('input', function() {
-        const query = this.value;
-        if (query.length > 1) {
-            fetch(`/autocomplete/?term=${encodeURIComponent(query)}`)
-                .then(response => response.json())
-                .then(data => {
-                    suggestionsBox.innerHTML = '';
-                    if (data.length > 0) {
-                        data.forEach(item => {
-                            const suggestion = document.createElement('div');
-                            suggestion.classList.add('autocomplete-suggestion');
-                            suggestion.textContent = item;
-                            suggestion.addEventListener('click', function() {
-                                searchInput.value = item;
-                                suggestionsBox.innerHTML = '';
-                            });
-                            suggestionsBox.appendChild(suggestion);
-                        });
-                    }
-                });
-        } else {
-            suggestionsBox.innerHTML = '';
-        }
-    });
-
-    document.addEventListener('click', function(e) {
-        if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
-            suggestionsBox.innerHTML = '';
-        }
-    });
-});
-</script>
-
-</body>
-</html>
-
-
-<!-- ЭТА КНОПКА НАВЕРХ ПЕРЕМЕСТИТЕСЬ -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Example Page</title>
-    <style>
-        #back-to-top {
-            display: none;
-            position: fixed;
-            bottom: 830px;
-            right: 870px;
-            z-index: 99;
-            font-size: 24px;
-            border: none;
-            outline: none;
-            background-color: #423562;
-            color: white;
-            cursor: pointer;
-            padding: 15px;
-            border-radius: 10px;
-        }
-
-        #back-to-top:hover {
-            background-color: #555;
-        }
-    </style>
+    <title>Энциклопедия</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'Site/css/header_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'Site/css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'Site/css/encyclopedia.css' %}">
+    <script defer src="{% static 'Site/js/back-to-top-button.js' %}"></script>
 </head>
-<body>
-
-<button id="back-to-top" title="Go to top">⬆️</button>
-
-<script>
-    window.onscroll = function() {
-        scrollFunction();
-    };
-
-    function scrollFunction() {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            document.getElementById("back-to-top").style.display = "block";
-        } else {
-            document.getElementById("back-to-top").style.display = "none";
-        }
-    }
-
-    document.getElementById("back-to-top").onclick = function() {
-        scrollToTop();
-    };
-
-    function scrollToTop() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-    }
-</script>
+<body class="container">
+{% include 'components/header.html' %}
+<div class="memes-box" id="memes-box">
+    <div class="meme_control">
+        {% if request.user|has_group:"Админ" %}
+            <div class="button">
+                <button onclick="location.href = '/create/meme/'"
+                        class="meme_option gradient-white font-Comfortaa">Добавить новый мем
+                </button>
+            </div>
+        {% endif %}
+    </div>
+    {% for year, memes in filtered_memes.items %}
+        <div class="memes-group">
+            <div class="memes-group-title">
+                <img src="{% static 'Site/img/encyclopedia/arrow.svg' %}" alt=""/>
+                <p class="gradient-white">{{ year }}</p>
+            </div>
+            <div class="memes">
+                {% for meme in memes %}
+                    <div class="meme-info">
+                        <img src="{{ meme.path_to_img.url }}" width="300"/>
+                        <div class="meme-name">
+                            <p class="font-Comfortaa gradient-white">{{ meme.name }}</p>
+                            <div class="font-Comfortaa button">
+                                <a href="{{ meme.get_absolute_url }}">Узнать подробнее</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+<button class="back-to-top" id="back-to-top" title="Go to top"></button>
 </body>
 </html>
 
 
+{#<form method="GET" action="">#}
+{#    <input type="text" id="search" name="q" placeholder="Поиск мемов по названию" value="{{ query }}"#}
+{#           autocomplete="off">#}
+{#    <button type="submit">Поиск</button>#}
+{#</form>#}
+{#<div id="suggestions" class="autocomplete-suggestions">#}
+{#    <button type="button" onclick="window.location.href='/encyclopedia/'">Сброс результатов поиска</button>#}
+{#</div>#}
 
+
+{#<button type="button" onclick="window.location.href='/encyclopedia/'">Сброс результатов поиска</button>#}

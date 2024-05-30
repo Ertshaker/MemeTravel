@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{% static 'Site/css/create_meme_styles.css' %}">
     <link rel="stylesheet" href="{% static 'Site/css/header_styles.css' %}">
     <link rel="stylesheet" href="{% static 'Site/css/global.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script defer src="{% static 'Site/js/meme-delete-themom-script.js' %}"></script>
     <title>Добавление мема</title>
 </head>
 <body>
@@ -40,38 +42,5 @@
     </div>
 {% endfor %}
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
-    $('#delete-meme-btn').click(function() {
-        var memeId = $('#meme-id').val();
-        var csrfToken = '{{ csrf_token }}';
-
-        if (confirm('Вы уверены, что хотите удалить этот мем?')) {
-            console.log("Отправка запроса на удаление мема с ID: " + memeId);
-            $.ajax({
-                url: '/meme/' + memeId + '/delete/',
-                type: 'POST',
-                data: {
-                    'csrfmiddlewaretoken': csrfToken
-                },
-                success: function(response) {
-                    console.log("Ответ сервера: ", response);
-                    if (response.success) {
-                        alert('Мем успешно удален');
-                        window.location.href = '/encyclopedia/';
-                    } else {
-                        alert('Ошибка при удалении мема: ' + response.error);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.log("Ошибка запроса: ", xhr.responseText);
-                    alert('Ошибка при удалении мема');
-                }
-            });
-        }
-    });
-});
-</script>
 </body>
 </html>

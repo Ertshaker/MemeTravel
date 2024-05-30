@@ -132,7 +132,7 @@ section {
 }
 
 .meme-paragraph {
-    calc(14px + 10 * (100vw - 425px) / 880);
+    font-size: calc(14px + 10 * (100vw - 425px) / 880);
     color: white;
 }
 
@@ -163,7 +163,18 @@ section {
 }
 
 .sections-box.no-scroll {
-    overflow: hidden; /* Отключаем прокрутку */
+    overflow: hidden;
+}
+
+@keyframes eblan {
+    from {
+        filter: blur(15px);
+        opacity: 0;
+    }
+    to {
+        filter: blur(0px) ;
+        opacity: 1;
+    }
 }
 
 @media (max-width: 768px) {
@@ -172,16 +183,5 @@ section {
     }
     .memes-horizontal-container {
         gap: 10px;
-    }
-}
-
-@keyframes eblan {
-    from {
-        filter: blur(10px);
-        opacity: 0;
-    }
-    to {
-        filter: blur(0px);
-        opacity: 1;
     }
 }

@@ -31,7 +31,6 @@ urlpatterns = [
     path('authorization/', user_register),
     path('login/', user_login),
     path('logout/', user_logout),
-    path('user/<str:name>/friends/', friends_view),
     re_path(r'create/(\D*)/$', create_route),
     path('meme/id<int:pk>/update/', MemesUpdateView.as_view()),
     path('remove_friend_request/', views.remove_friend_request, name='remove_friend_request'),

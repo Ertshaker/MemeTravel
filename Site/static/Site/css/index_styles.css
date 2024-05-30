@@ -195,17 +195,6 @@ section {
     overflow: hidden; /* Отключаем прокрутку */
 }
 
-@keyframes eblan {
-    from {
-        filter: blur(15px);
-        opacity: 0;
-    }
-    to {
-        filter: blur(0px);
-        opacity: 1;
-    }
-}
-
 @media (max-width: 800px) {
     .sections-box {
         padding-inline: 4%;
@@ -226,5 +215,16 @@ section {
 
     .transition-wrapper div {
         padding: 10px 0;
+    }
+}
+
+@keyframes eblan {
+    from {
+        filter: blur(10px) hue-rotate(180deg);
+        opacity: 0;
+    }
+    to {
+        filter: blur(0px) hue-rotate(0);
+        opacity: 1;
     }
 }

@@ -1,73 +1,27 @@
 {% load static %}
+
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'Site/css/registration_styles.css' %}">
-    <title>Регистрация</title>
-    <style>
-        /* Стили для модального окна */
-        #errorModal {
-            display: none;
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-            padding-top: 60px;
-        }
-
-        #errorModal .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
-        }
-
-        #errorModal .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        #errorModal .close:hover,
-        #errorModal .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        #errorModal .message {
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #f8f8f8;
-        }
-    </style>
-</head>
-
-
-<! DOCTYPE html>
-<html Lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'Site/css/registration_styles.css' %}">
-    <!--link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'-->
+    <link rel="stylesheet" href="{% static 'Site/css/registration-modal-styles.css' %}">
+    <script defer src="{% static 'Site/js/registration-modal-script.js' %}"></script>
     <title>Регистрация</title>
 </head>
-
 <body>
-
+<div id="errorModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="modalMessages">
+            {% for message in messages %}
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 <div class="wrapper">
     <button onclick="location.href = '/'" class="button_back"></button>
     <h2>Регистрация</h2>
@@ -84,47 +38,6 @@
             <a href="/login">войти</a>
         </p>
     </form>
-
 </div>
 </body>
-
-</html>
-
-
-<div id="errorModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <div id="modalMessages">
-            {% for message in messages %}
-                <div class="message {{ message.tags }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-</div>
-
-<script>
-    var modal = document.getElementById("errorModal");
-    var span = document.getElementsByClassName("close")[0];
-    document.addEventListener("DOMContentLoaded", function () {
-        var hasMessages = document.querySelectorAll("#modalMessages .message").length > 0;
-        if (hasMessages) {
-            modal.style.display = "block";
-        }
-    });
-
-    span.onclick = function () {
-        modal.style.display = "none";
-    };
-
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    };
-</script>
-
-</body>
-
 </html>

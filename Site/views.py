@@ -1,17 +1,15 @@
-import datetime
-
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
-from django.shortcuts import render, reverse, get_object_or_404, redirect
-from django.views.generic import DetailView, UpdateView
-from django.views.decorators.http import require_POST
+from django.shortcuts import render, reverse
 from django.views.decorators.cache import cache_page
+from django.views.generic import DetailView, UpdateView
 
 from Site.models import *
 from .forms import *
-from .models import Meme
+
+import datetime
 
 
 class MemesUpdateView(UpdateView):
@@ -108,7 +106,7 @@ class UserDetailView(DetailView):
 
 class MemeDetailView(DetailView):
     model = Meme
-    template_name = 'meme_test.html'
+    template_name = 'meme.html'
     context_object_name = 'meme'
 
     def get_context_data(self, **kwargs):
@@ -119,14 +117,16 @@ class MemeDetailView(DetailView):
         context['meme_gallery'] = meme_gallery
         return context
 
-@cache_page(60*15)
+
+@cache_page(60 * 15)
 def index(request):
     context = {
         'page_name': 'MemeTravel'
     }
     return render(request, 'index.html', context=context)
 
-@cache_page(60*15)
+
+@cache_page(60 * 15)
 def encyclopedia(request):
     memes = Meme.objects.all()
 
@@ -187,14 +187,10 @@ def user_register(request):
         email = form.cleaned_data.get('email')
         first_name = form.cleaned_data.get('first_name')
         last_name = form.cleaned_data.get('last_name')
-        # avatar = form.cleaned_data.get('avatar')
         status = Group.objects.get(name="Пользователь")
-        # favorites = form.cleaned_data.get('favorite_memes')
         user = Account.objects.create_user(username, email, password)
         user.last_name = last_name
         user.first_name = first_name
-        # user.avatar = avatar
-        # user.favorites.set(favorites)
 
         if user is None:
             return HttpResponseRedirect('/login', locals())
@@ -234,7 +230,8 @@ def add_meme(request):
         image = form.cleaned_data.get('path_to_img')
         additional_image = form.cleaned_data.get('additional_image')
 
-        meme = Meme(name=name, date=date, description=description, path_to_img=image, meaning=meaning, cultural_influence=cultural_influence, using_examples=using_examples, history=history)
+        meme = Meme(name=name, date=date, description=description, path_to_img=image, meaning=meaning,
+                    cultural_influence=cultural_influence, using_examples=using_examples, history=history)
 
         if meme is None:
             print("Invalid meme details: {0}, {1}, {2}, {3}".format(name, date, description, image))
@@ -261,21 +258,6 @@ def create_route(request, *args, **kwargs):
         return add_meme(request)
 
 
-def test_view(request):
-    return render(request, 'index.html')
-
-
-def friends_view(request, name: str):
-    user = Account.objects.get(username=name)
-    friends = Friend.objects.filter(user=user.id, accepted=True) | Friend.objects.filter(friend=user.id,
-                                                                                         accepted=True)
-    sended_requests = Friend.objects.filter(user=user.id, accepted=False)
-    got_requests = Friend.objects.filter(friend=user.id, accepted=False)
-    return render(request, 'friends.html',
-                  {'friends': friends, 'is_current_user': request.user == user, 'sended_requests': sended_requests,
-                   'got_requests': got_requests, 'user': user})
-
-
 def friends_add(request):
     if request.method == 'POST':
         user = request.user
@@ -288,7 +270,8 @@ def friends_add(request):
             return JsonResponse({'error': 'Пользователь не найден.'}, status=404)
 
         possible_friend = Account.objects.get(username=name)
-        if Friend.objects.filter(user_id=user.id, friend_id=possible_friend.id).exists() or Friend.objects.filter(user_id=possible_friend.id, friend_id=user.id).exists():
+        if Friend.objects.filter(user_id=user.id, friend_id=possible_friend.id).exists() or Friend.objects.filter(
+                user_id=possible_friend.id, friend_id=user.id).exists():
             return JsonResponse({'error': 'Заявка уже существует или вы уже друзья.'}, status=409)
 
         friend_request = Friend(user=user, friend=possible_friend, accepted=False)
@@ -330,6 +313,7 @@ def remove_friend_request(request):
         except Friend.DoesNotExist:
             return JsonResponse({'success': False, 'error': 'НЕСУЩЕСТВФУЕТ АААААА'})
     return JsonResponse({'success': False, 'error': 'ИНВАЛИД'})
+
 
 def add_to_favorites(request):
     if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
@@ -381,7 +365,7 @@ def encyclopedia(request):
         if memes:
             filtered_memes[key] = memes
 
-    return render(request, 'encyclopedia_test.html',
+    return render(request, 'encyclopedia.html',
                   {'filtered_memes': filtered_memes, 'page_name': 'ЭНЦИКЛОПЕДИЯ'})
 
 
@@ -411,9 +395,11 @@ def autocomplete1(request):
         return JsonResponse(names, safe=False)
     return JsonResponse([], safe=False)
 
-@cache_page(60*15)
+
+@cache_page(60 * 15)
 def travel_view(request):
     return render(request, 'travel.html', context={'page_name': 'ПУТЕШЕСТВИЕ'})
+
 
 def delete_meme(request, meme_id):
     if request.method == 'POST':
@@ -431,7 +417,3 @@ def delete_meme(request, meme_id):
     else:
         print("Неверный метод запроса")
         return JsonResponse({'success': False, 'error': 'Неверный метод запроса'})
-
-
-
-
