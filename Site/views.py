@@ -128,6 +128,7 @@ def index(request):
     }
     return render(request, 'index.html', context=context)
 
+
 def user_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -327,6 +328,7 @@ def remove_from_favorites(request):
             return JsonResponse({'success': False, 'error': 'Мем не найден?'})
     return JsonResponse({'success': False, 'error': 'IИНВАЛИИД'})
 
+
 @cache_page(60 * 15)
 def encyclopedia(request):
     query = request.GET.get('q')
@@ -370,15 +372,6 @@ def autocomplete(request):
             results.append(item)
         print(results)  # Добавьте это для отладки
         return JsonResponse(results, safe=False)
-    return JsonResponse([], safe=False)
-
-
-def autocomplete1(request):
-    if 'term' in request.GET:
-        query: str = request.GET.get('term')
-        memes = Meme.objects.filter(name__icontains=query)
-        names = list(memes.values_list('name', flat=True))
-        return JsonResponse(names, safe=False)
     return JsonResponse([], safe=False)
 
 

@@ -27,7 +27,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('meme/id<int:pk>', MemeDetailView.as_view()),
     path('user/<slug:username>', UserDetailView.as_view(), name='user-detail'),
-    path('encyclopedia/', encyclopedia),
     path('encyclopedia/', views.encyclopedia, name='encyclopedia'),
     path('login/', user_login),
     path('authorization/', user_register),
